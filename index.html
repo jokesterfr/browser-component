@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TsTerminal - browser</title>
+		<meta charset="UTF-8" />
+		<link href="./components/fira/fira.css" type="text/css" rel="stylesheet" />
+		<link href="css/browser.css" type="text/css" rel="stylesheet" />
+		<script src="./components/platform/platform.js"></script>
+	</head>
+	
+	<body>
+		<div class="browser">
+
+			<!-- OuterContainer [Start] -->
+			<div class="outerContainer">
+	
+				<!-- TabBar [Start] -->
+				<div class="tabBar">
+					<div class="tab">
+						<div class="favicon"></div>
+						<div class="label">Chromatic Pixel</div>
+						<div class="close"></div>
+					</div>
+					<div class="tabSeparatorHidden"></div>
+					<div class="tab active">
+						<div class="label">New Tab</div>
+						<div class="close"></div>
+					</div>
+					<div class="tabSeparatorHidden"></div>
+					<div class="tab">
+						<div class="label">Customize Your Firefox</div>
+						<div class="close"></div>
+					</div>
+					<div class="tabSeparator"></div>
+					<div class="tab newTab">
+						<div class="favicon"></div>
+					</div>
+				</div>
+				<!-- TabBar [End] -->
+				
+				<!-- InnerContainer [Start] -->
+				<div class="innerContainer">
+	
+					<!-- NavBar [Start] -->
+					<div class="navBar">
+						<div class="toolbarButton backButton"><div class="iconContainer"></div></div>
+						<div class="toolbarButton forwardButton"><div class="iconContainer"></div></div>
+						<div class="locationBar">
+							<div class="urlText" contenteditable="true">about:customize</div>
+							<div class="locationBarButton stopGoReload"><div class="iconContainer"></div></div>
+						</div>
+						<div class="toolbarButton homeButton"><div class="iconContainer"></div></div>
+						<div class="toolbarButton zoomIn"><div class="iconContainer"></div></div>
+						<div class="toolbarButton zoomOut"><div class="iconContainer"></div></div>
+					</div>
+					<!-- NavBar [End] -->
+				</div>
+				<!-- InnerContainer [End] -->
+				
+			</div>
+			<!-- OuterContainer [End] -->
+						
+		</div>
+		<!-- Window [End] -->
+		
+		<div class="imagePreloader"></div>
+		<div><button id="clickMe">Click me</button></div>
+
+		<script>
+			var locationBar = document.querySelector('.locationBar');
+			var urlText = locationBar && locationBar.querySelector('.locationBar div.urlText');
+			if (urlText) {
+				urlText.addEventListener('focus', function (evt) {
+					locationBar.classList.add('focus');
+				}, false);
+				urlText.addEventListener('blur', function (evt) {
+					locationBar.classList.remove('focus');
+				}, false);
+			}
+
+			var clickMe = document.getElementById('clickMe');
+			clickMe.addEventListener('click', function(evt) {
+				var locationBar = document.querySelector('.locationBar');
+				var forwardButton = document.querySelector('.forwardButton');
+				if (forwardButton) {
+					forwardButton.classList.add('removing');
+				} else if (locationBar) {
+					var forwardButton = document.createElement('div');
+					forwardButton.classList.add('toolbarButton', 'forwardButton', 'adding');
+					forwardButton.innerHTML = '<div class="iconContainer"></div>';
+					locationBar.parentNode.insertBefore(forwardButton, locationBar);
+				}
+			}, false);
+
+			function onAnimationEnd(evt) {
+				// Delete element on fadeOut end
+				if (evt.animationName.match(/[fF]adeOut$/)) {
+					var t = evt.target;
+					t.parentNode.removeChild(t);
+
+				// On fadeIn end remove adding class
+				} else if (evt.animationName.match(/[fF]adeIn$/)) {
+					var t = evt.target;
+					t.classList.remove('adding');
+				}
+			}
+			document.addEventListener('animationend', onAnimationEnd);
+			document.addEventListener('webkitAnimationEnd', onAnimationEnd);
+
+			/**
+			 * Hide separator when surrounding tabs are hovered
+			 * waiting for CSS4 property: !.tab + tabSeparator { }
+			 */
+			var tabs = document.querySelectorAll('.tab');
+			[].forEach.call(document.querySelectorAll('.tabBar .tab'), function (el) {
+				el.addEventListener('mouseover', function (evt) {
+					var nextEl = el.nextElementSibling;
+					if (nextEl && nextEl.classList.contains('tabSeparator')) {
+						nextEl.classList.add('tabSeparatorHidden');
+					}
+					var prevEl = el.previousElementSibling;
+					if (prevEl && prevEl.classList.contains('tabSeparator')) {
+						prevEl.classList.add('tabSeparatorHidden');
+					}
+				});
+				el.addEventListener('mouseout', function (evt) {
+					var nextEl = el.nextElementSibling;
+					if (nextEl && nextEl.classList.contains('tabSeparator')) {
+						nextEl.classList.remove('tabSeparatorHidden');
+					}
+					var prevEl = el.previousElementSibling;
+					if (prevEl && prevEl.classList.contains('tabSeparator')) {
+						prevEl.classList.remove('tabSeparatorHidden');
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

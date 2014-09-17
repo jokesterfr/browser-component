@@ -1,0 +1,21 @@
+{
+  "name": "browser-component",
+  "version": "0.0.1",
+  "authors": [
+    "jokesterfr <main@jokester.fr>"
+  ],
+  "description": "Components for rendering browser style UIs",
+  "main": "browser-component.html",
+  "license": "Mozilla Public Licence version 2",
+  "homepage": "http://jokester.fr",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "fira": "~0.1.0"
+  }
+}

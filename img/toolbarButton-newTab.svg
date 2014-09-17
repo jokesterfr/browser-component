@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg version="1.1" id="toolbarButton-newTab" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+
+  <defs>
+    <linearGradient id="gradientOverlay" x1="0" y1="0" x2="0" y2="100%">
+      <stop id="transparentStop" style="stop-color:#ffffff;stop-opacity:0" offset="0"/>
+      <stop id="translucentStop" style="stop-color:#ffffff;stop-opacity:0.15" offset="1"/>
+    </linearGradient>
+
+    <filter id="blur">
+      <feGaussianBlur stdDeviation=".3" in="SourceGraphic"/>
+    </filter>
+
+  	<path id="glyphShape" d="M14.501,15.001h-13c-0.828,0-1.5-0.672-1.5-1.5v-6 c0-0.828,0.672-1.5,1.5-1.5h0.5c0.553,0,1-0.447,1-1V2.5c0-0.828,0.671-1.499,1.5-1.499H11.5c0.83,0,1.501,0.671,1.501,1.499V5 c0,0.553,0.448,1,1,1h0.5c0.828,0,1.5,0.672,1.5,1.5v6C16.001,14.329,15.329,15.001,14.501,15.001z M11,8.001H9.001V6h-2v2h-2V10h2 v2.001h2V10H11V8.001z" />
+
+    <clipPath id="mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+      <use xlink:href="#glyphShape" style="fill: white;" />
+    </clipPath>
+
+  </defs>
+ 
+  <use xlink:href="#glyphShape" style="fill: ButtonText; fill-opacity: .8;" />
+
+  <use xlink:href="#glyphShape" style="fill: url(#gradientOverlay);" />
+
+	<path id="innerShadow" d="M14.625,15.516H1.484c-0.984,0-1.983-0.953-1.983-1.781V7.501c0-0.828,0.905-1.5,2.374-1.5H1.858c0.553,0,0.626-0.447,0.626-1V2.5 c0-0.828,0.671-1.499,1.5-1.499h8c0.83,0,1.501,0.671,1.501,1.499V5c0,0.553,0.448,1,1,1c0,0,0.142,0,0.904,0 c0.799,0,1.096,0.968,1.096,1.625v5.922C16.484,14.375,15.797,15.516,14.625,15.516z M11.5,8.001H9.484V6H6.5v2h-2V10.5h2v2h3v-2h2 V8.001z"
+	      style="fill: none; stroke: ButtonText; stroke-opacity: .7; filter: url(#blur); clip-path: url(#mask); stroke-miterlimit: 10;" />
+
+</svg>
+
