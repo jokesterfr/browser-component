@@ -2,7 +2,8 @@ Browser-component
 =================
 
 Browser component is a web component designed for displaying browser headers into the browser itself. It can be used to extend a headless browser, or give some more features to a web application, such as firefox/xulrunner/chrome/chromium based apps.
-You can get it by directly cloning this repository, or using bower:
+
+Get it by directly cloning this repository, or using bower:
 
 ```bash
 bower install browser-component
@@ -37,60 +38,60 @@ And use it:
 
 ## Components API
 
-### <browser-component>
+### browser-component
 
 TODO
 
-### <browser-tabsbar>
+### browser-tabsbar
 
 TODO
 
-### <browser-tab>
+### browser-tab>
 
 TODO
 
-### <browser-add-tab>
+### browser-add-tab
 
 TODO
 
-### <browser-toolbar>
+### browser-toolbar
 
 TODO
 
-### <browser-button>
+### browser-button
 
 TODO
 
-### <browser-back-button>
+### browser-back-button
 
 TODO
 
-### <browser-forward-button>
+### browser-forward-button
 
 TODO
 
-### <browser-location>
+### browser-location
 
 TODO
 
-### <browser-home-button>
+### browser-home-button
 
 TODO
 
-### <browser-zoomin-button>
+### browser-zoomin-button
 
 TODO
 
-### <browser-zoomout-button>
+### browser-zoomout-button
 
 TODO
 
-### <browser-content>
+### browser-content
 
 TODO
 
 # Licence
 
-This work is a largely inspired by Firefox Australis UI.
+This work is largely inspired by Firefox Australis UI.
 
 [Mozilla Public License - Version 2.0](https://www.mozilla.org/MPL/2.0/)
