@@ -1,0 +1,83 @@
+<template>
+	<style>
+		:host {
+			position: relative;
+			display: -webkit-box;
+			display: flex;
+			margin: 4px 0 0;
+			width: 100%;
+			height: 45px;
+		}
+	</style>
+	<content></content>
+</template>
+<script>
+	(function () {
+		'use strict';
+		var prototype = Object.create(HTMLElement.prototype);
+		var currentScript = document.currentScript;
+
+		prototype.createdCallback = function() {
+			var self = this;
+			
+			// Create shadow dom
+			var shadow = this.createShadowRoot()
+			var template = currentScript.ownerDocument.querySelector('template');;
+			shadow.appendChild(template.content.cloneNode(true));
+
+			// Register listeners
+			this.addEventListener('new-tab', newTabListener, false);
+			this.addEventListener('closed-tab', closedTabListener, false);
+			this.addEventListener('select-tab', selectTabListener, false);
+			
+		};
+		
+		/**
+		 * Activate the last added tab
+		 * @param {CustomEvent} evt 
+		 */
+		function newTabListener(evt) {
+			var tabs = this.querySelectorAll('browser-tab');
+			[].forEach.call(tabs, function (tab) {
+				tab.classList.remove('active');
+			})
+			evt.detail.source.classList.add('active');
+		}
+
+		/**
+		 * Close the tab and activate the last added tab
+		 * @param {CustomEvent} evt 
+		 */
+		function closedTabListener(evt) {
+			this.removeChild(evt.detail.source);
+			var tabs = this.querySelectorAll('browser-tab');
+			if (!tabs.length) {
+				tabs[0].classList.add('active');
+			} else {
+				[].forEach.call(tabs, function (tab, i) {
+					if ((i + 1) === tabs.length) {
+						tab.classList.add('active');
+					} else {
+						tab.classList.remove('active');
+					}
+				})
+			}
+		}
+
+		/**
+		 * Select the given tab
+		 * @param {CustomEvent} evt 
+		 */
+		function selectTabListener(evt) {
+			var tabs = this.querySelectorAll('browser-tab');
+			[].forEach.call(tabs, function (tab) {
+				tab.classList.remove('active');
+			})
+			evt.detail.source.classList.add('active');
+		}
+
+		document.registerElement('browser-tabsbar', {
+			prototype: prototype
+		});
+	})();
+</script>

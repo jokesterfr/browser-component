@@ -1,0 +1,211 @@
+<template>
+	<style>
+		:host {
+			display: -webkit-box;
+			display: flex;
+			padding: 8px 25px 7px 40px;
+			height: 29px;
+			margin-left: -16px;
+			min-width: 250px;
+			max-width: 250px;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+			cursor: default;
+			font-family: "Fira Sans Medium", Arial, sans-serif;
+		}
+		:host(:first-child) {
+			margin-left: 0;
+		}
+
+		:host(.appTab),
+		:host(.newTab) {
+			width: 36px;
+			min-width: 36px;
+			padding-left: 25px;
+		}
+
+		:host(.newTab) #favicon {
+			background-image: url("./img/newTab-Icon.svg");
+			width: 32px;
+			height: 32px;
+			background-size: 32px 32px;
+			margin-top: 0px;
+			margin-left: 2px;
+		}
+
+		:host(:hover) {
+			position: relative;
+			background: url("./img/tabBackgroundStart.svg") no-repeat left,
+						url("./img/tabBackgroundMiddle.svg") no-repeat 43px,
+						url("./img/tabBackgroundEnd.svg") no-repeat right;
+		}
+
+		:host(.appTab:hover),
+		:host(.newTab:hover) {
+			position: relative;
+			background: url("./img/tabBackgroundStart.svg") no-repeat left,
+						url("./img/tabBackgroundEnd.svg") no-repeat right;
+		}
+
+		/**
+		Because for now Chrome does not support these instructions :(
+		 I had to change the size of tabActiveMiddle precisely to the size we want it to.
+		:host:hover {
+			background-image: url("./img/tabBackgroundStart.svg"),
+												url("./img/tabBackgroundMiddle.svg"),
+												url("./img/tabBackgroundEnd.svg");
+			background-repeat: no-repeat,
+												 no-repeat,
+												 no-repeat;
+			background-position: left,
+													 43px,
+													 right;
+			background-size: 43px 45px,
+											 calc(100% - 86px) 45px,
+											 43px 45px;
+		}
+		*/
+
+		/* CSS4 spec.. :(
+		 * :host:hover + :hostSeparator,
+		!:host:hover + :hostSeparator, {
+			background-image: none;
+		}*/
+
+		:host(.active) {
+			background: url("./img/tabActiveStart.svg") no-repeat left,
+						url("./img/tabActiveMiddle.svg") no-repeat 42px,
+						url("./img/tabActiveEnd.svg") no-repeat right;
+			z-index: 399;
+			margin-top: 1px;
+		}
+
+		/**
+		 Because for now Chrome does not support these instructions :(
+		 I had to change the size of tabActiveMiddle precisely to the size we want it to.
+		:host.active {
+			position: relative;
+			background-image: url("./img/tabActiveStart.svg"),
+												url("./img/tabActiveMiddle.svg"),
+												url("./img/tabActiveEnd.svg");
+			background-repeat: no-repeat,
+												 no-repeat,
+												 no-repeat;
+			background-position: left,
+													 43px,
+													 right;
+			background-size: 43px 45px,
+											 calc(100% - 86px) 45px,
+											 43px 45px;
+			z-index: 399;
+		}
+		*/
+
+		:host > #favicon {
+			margin-right: 6px;
+			width: 16px;
+			height: 16px;
+			background-image: url("./img/defaultFavicon.png");
+			opacity: .9;
+			margin-top: 10px;
+		}
+		:host(.appTab) > #favicon,
+		:host(.newTab) > #favicon {
+			margin-right: 0;
+		}
+
+		:host > #label {
+			-webkit-box-flex: 1;
+			flex: 1;
+			height: 34px;
+			color: #DFDBD2;
+			font-size: 16px;
+			line-height: 34px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+		:host(.active) > #label {
+			color: #4C4C4C;
+		}
+
+		:host #close {
+			width: 32px;
+			height: 32px;
+			background-image: url("./img/icon-close.svg");
+			background-repeat: no-repeat;
+			background-position: -100px center;
+			opacity: .8;
+		}
+
+		:host(.active) #close {
+			background-position: 0px center;
+		}
+
+		:host #close:hover {
+			background-position: -32px center;
+		}
+		:host #close:hover:active {
+			background-position: -69px center;
+		}
+	</style>
+	<div id="favicon"></div>
+	<div id="label"></div>
+	<div id="close"></div>
+</template>
+<script>
+	(function () {
+		'use strict';
+		var prototype = Object.create(HTMLElement.prototype);
+		var currentScript = document.currentScript;
+
+		prototype.createdCallback = function() {
+			var self = this;
+			
+			// Create shadow dom
+			var shadow = this.createShadowRoot();
+			var template = currentScript.ownerDocument.querySelector('template');
+			shadow.appendChild(template.content.cloneNode(true));
+
+			// Register inner components
+			this.close = shadow.querySelector('#close');
+			this.label = shadow.querySelector('#label');
+			this.favicon = shadow.querySelector('#favicon');
+
+			// Fill label
+			var label = this.getAttribute('label');
+			label = label || 'New tab';
+			this.label.textContent = label;
+
+			// Register close event
+			this.close.addEventListener('click', function (evt) {
+				var event = new CustomEvent('closed-tab', { detail: { source: self }});
+				self.parentNode.dispatchEvent(event);
+			});
+
+			// Register select event
+			this.addEventListener('click', function (evt) {
+				var event = new CustomEvent('select-tab', { detail: { source: self }});
+				self.parentNode.dispatchEvent(event);
+			});
+		};
+
+		prototype.attachedCallback = function() {
+			var self = this;
+			var event = new CustomEvent('new-tab', { detail: { source: self }});
+			self.parentNode.dispatchEvent(event);
+		};
+
+		prototype.attributeChangedCallback = function (attr) {
+			if (attr === 'url') {
+				console.log('url attribute changed!!');
+				// var label = this.shadow.getElementById('label');
+			}
+		};
+
+		document.registerElement('browser-tab', {
+			prototype: prototype
+		});
+	})();
+</script>
