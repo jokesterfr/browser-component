@@ -1,0 +1,32 @@
+<template>
+	<style>
+		:host {
+			width: 3px;
+			height: 45px;
+			background-image: url("./img/tabSeparator.png");
+			background-repeat: no-repeat;
+			margin-left: -16px;
+		}
+	</style>
+	<content></content>
+</template>
+<script>
+	(function () {
+		'use strict';
+		var prototype = Object.create(HTMLElement.prototype);
+		var currentScript = document.currentScript;
+
+		prototype.createdCallback = function() {
+			var self = this;
+			
+			// Create shadow dom
+			var shadow = this.createShadowRoot()
+			var template = currentScript.ownerDocument.querySelector('template');;
+			shadow.appendChild(template.content.cloneNode(true));
+		};
+		
+		document.registerElement('browser-tab-separator', {
+			prototype: prototype
+		});
+	})();
+</script>

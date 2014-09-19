@@ -4,9 +4,11 @@
 		<title>Browser component</title>
 		<meta charset="UTF-8" />
 		<link href="./components/fira/fira.css" type="text/css" rel="stylesheet" />
-        <link rel="import" href="./lib/browser-component.html"></link>
-        <link rel="import" href="./lib/browser-tabsbar.html"></link>
-        <link rel="import" href="./lib/browser-tab.html"></link>
+		<link rel="import" href="./lib/browser-component.html"></link>
+		<link rel="import" href="./lib/browser-tabsbar.html"></link>
+		<link rel="import" href="./lib/browser-tab.html"></link>
+		<link rel="import" href="./lib/browser-tab-separator.html"></link>
+		<link rel="import" href="./lib/browser-tab-new.html"></link>
         <style>
 			html, body {
 				margin: 0;
@@ -21,7 +23,9 @@
 			<browser-tabsbar>
 				<browser-tab url="https://www.google.fr"></browser-tab>
 				<browser-tab url="http://lestrans.com"></browser-tab>
-				<!-- <browser-addtab></browser-addtab> -->
+				<browser-tab url="http://lost.com"></browser-tab>
+				<browser-tab-separator></browser-tab-separator>
+				<browser-tab-new></browser-tab-new>
 			</browser-tabsbar>
 			<!-- <browser-toolbar>
 				<browser-back-button rounded></browser-back-button>
