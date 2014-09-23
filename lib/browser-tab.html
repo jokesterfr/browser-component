@@ -108,7 +108,7 @@
 			height: 16px;
 			background-image: url("./img/defaultFavicon.png");
 			opacity: .9;
-			margin-top: 10px;
+			margin-top: 8px;
 		}
 		:host(.appTab) > #favicon,
 		:host(.newTab) > #favicon {
@@ -180,30 +180,57 @@
 
 			// Register close event
 			this.close.addEventListener('click', function (evt) {
-				var event = new CustomEvent('closed-tab', { detail: { source: self }});
-				self.parentNode.dispatchEvent(event);
-			});
+				closeTab.call(self, evt);
+			}, false);
 
 			// Register select event
 			this.addEventListener('click', function (evt) {
-				var event = new CustomEvent('select-tab', { detail: { source: self }});
-				self.parentNode.dispatchEvent(event);
-			});
+				selectTab.call(self, evt);
+			}, false);
 		};
 
 		prototype.attachedCallback = function() {
 			var self = this;
-			var event = new CustomEvent('new-tab', { detail: { source: self }});
-			self.parentNode.dispatchEvent(event);
+			var evt = new CustomEvent('new-tab', { detail: { source: self }});
+			self.parentNode.dispatchEvent(evt);
 		};
 
 		prototype.attributeChangedCallback = function (attr) {
-			if (attr === 'url') {
-				console.log('url attribute changed!!');
-				// var label = this.shadow.getElementById('label');
+			switch (attr) {
+				case 'url':
+					console.log('url attribute changed!!');
+					// var label = this.shadow.getElementById('label');
+					break;
+
+				case 'label':
+					var label = this.getAttribute('label');
+					label = label || 'New tab';
+					this.label.textContent = label;
+					break;
 			}
 		};
 
+		/**
+		 * Select the current tab
+		 */
+		function selectTab(evt) {
+			evt.stopPropagation();
+			evt = new CustomEvent('select-tab', { detail: { source: this }});
+			this.parentNode.dispatchEvent(evt);
+		}
+
+		/**
+		 * On clicking close icon, destroy current tab
+		 */
+		function closeTab(evt) {
+			evt.stopPropagation();
+			evt = new CustomEvent('closed-tab', { detail: { source: this }});
+			this.parentNode.dispatchEvent(evt);
+		}
+
+		/**
+		 * Register the element protoype
+		 */
 		document.registerElement('browser-tab', {
 			prototype: prototype
 		});

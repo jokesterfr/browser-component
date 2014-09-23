@@ -26,13 +26,19 @@
 		'use strict';
 		var prototype = Object.create(HTMLElement.prototype);
 		var template = document.currentScript.ownerDocument.querySelector('template');
+
 		prototype.createdCallback = function () {
 			var shadow = this.createShadowRoot();
 			shadow.appendChild(template.content.cloneNode(true));
+			this.addEventListener('select-tab', function (evt) {
+				console.log('lfkdfldkjldfkjk')
+			});
 		};
+
 		prototype.attributeChangedCallback = function () {
 			console.log('browser component attribute changed!!');
 		};
+
 		document.registerElement('browser-component', {
 			prototype: prototype
 		});

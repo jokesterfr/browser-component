@@ -1,7 +1,9 @@
 Browser-component
 =================
 
-Browser component is a web component designed for displaying browser headers into the browser itself. It can be used to extend a headless browser, or give some more features to a web application, such as firefox/xulrunner/chrome/chromium based apps.
+Browser component is a web component designed for displaying browser headers into the browser itself. It can be used to extend a headless browser, or give some more features to a web application, such as firefox/xulrunner or chrome/chromium apps. Browser component is made of many sub components, so you are free to customize your browser like you want.
+
+## Overview
 
 Get it by directly cloning this repository, or using bower:
 
@@ -89,6 +91,33 @@ TODO
 ### browser-content
 
 TODO
+
+# CORS Policy
+
+Browser's CORS (Cross-origin resource sharing) policy may prevent this component to be fully suitable for testing. If you try to launch it from a standard hosted page, or even from the locale filesystem, you may refer to these commands to start-up your brower:
+
+## Chrome
+
+```bash
+google-chrome --disable-web-security file:///path-to-browser-component/index.html
+```
+
+## Chromium
+
+```bash
+chromium --disable-web-security file:///path-to-browser-component/index.html
+```
+
+## Firefox
+
+Open "about:config" in a page, then modify the property "security.fileuri.strict_origin_policy" to false.
+
+## Browser compatibility
+
+At this date, web components are not natively supported by Firefox 32, and you won't be able to test this out.
+Chrome and chromium support web components since version 35.
+
+[Check browser compatibility](http://caniuse.com/#feat=shadowdom).
 
 # Licence
 
