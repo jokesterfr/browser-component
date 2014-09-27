@@ -214,6 +214,9 @@
 		 * Select the current tab
 		 */
 		function selectTab(evt) {
+			if (evt.which === 2) {
+				return closeTab.call(this, evt);
+			}
 			evt.stopPropagation();
 			evt = new CustomEvent('select-tab', { detail: { source: this }});
 			this.parentNode.dispatchEvent(evt);
