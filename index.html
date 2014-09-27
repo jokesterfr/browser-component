@@ -4,11 +4,15 @@
 		<title>Browser component</title>
 		<meta charset="UTF-8" />
 		<link href="./components/fira/fira.css" type="text/css" rel="stylesheet" />
+		<link rel="import" href="./lib/browser-button.html"></link>
 		<link rel="import" href="./lib/browser-component.html"></link>
-		<link rel="import" href="./lib/browser-tabsbar.html"></link>
+		<link rel="import" href="./lib/browser-tabbar.html"></link>
 		<link rel="import" href="./lib/browser-tab.html"></link>
 		<link rel="import" href="./lib/browser-tab-separator.html"></link>
 		<link rel="import" href="./lib/browser-tab-new.html"></link>
+		<link rel="import" href="./lib/browser-toolbar.html"></link>
+		<link rel="import" href="./lib/browser-navigation.html"></link>
+		<link rel="import" href="./lib/browser-location.html"></link>
         <style>
 			html, body {
 				margin: 0;
@@ -20,19 +24,36 @@
 	</head>
 	<body>
 		<browser-component type="iframe" defaultPage="https://github.com">
-			<browser-tabsbar>
+			<browser-tabbar>
 				<browser-tab url="https://www.google.fr"></browser-tab>
 				<browser-tab url="http://lestrans.com"></browser-tab>
 				<browser-tab-new></browser-tab-new>
-			</browser-tabsbar>
-			<!-- <browser-toolbar>
-				<browser-back-button rounded></browser-back-button>
-				<browser-forward-button ></browser-forward-button>
+			</browser-tabbar>
+			 <browser-toolbar>
+			 <browser-navigation></browser-navigation>
 				<browser-location></browser-location>
-				<browser-home-button homepage="https://www.google.fr"></browser-home-button>
-				<browser-zoomin-button></browser-zoomin-button>
-				<browser-zoomout-button></browser-zoomout-button>
-			</browser-toolbar>-->
+				<!-- <browser-back-button rounded></browser-back-button>
+				<browser-button type="home" homepage="https://www.google.fr"></browser-button>
+				<browser-button type="zoom-in"></browser-button>
+				<browser-button> type="zoom-out"</browser-button> -->
+			</browser-toolbar>
+			<browser-toolbar>
+				<browser-button type="back"></browser-button>
+				<browser-button type="bookmark"></browser-button>
+				<browser-button type="download"></browser-button>
+				<browser-button type="feed"></browser-button>
+				<browser-button type="forward"></browser-button>
+				<browser-button type="fullscreen"></browser-button>
+				<browser-button type="history"></browser-button>
+				<browser-button type="home"></browser-button>
+				<browser-button type="menu"></browser-button>
+				<browser-button type="new-window"></browser-button>
+				<browser-button type="print"></browser-button>
+				<browser-button type="reload"></browser-button>
+				<browser-button type="zoom-in"></browser-button>
+				<browser-button type="zoom-out"></browser-button>
+				<browser-button type="zoom"></browser-button>
+			</browser-toolbar>
 		</browser-component>
 	</body>
 </html>

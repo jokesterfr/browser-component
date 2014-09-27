@@ -1,0 +1,205 @@
+<link rel="import" href="./browser-button.html"></link>
+<template>
+	<style>
+		:host {
+			display: flex;
+			align-items: center;
+			min-height: 100%;
+		}
+
+		:host::shadow browser-button[type="back"] {
+			position: relative;
+			z-index: 100;
+		}
+
+		:host::shadow browser-button[type="forward"] {
+			position: relative;
+			z-index: 0;
+			left: 1px;
+			padding: 2px 2px 2px 20px;
+			margin-left: -20px;
+			margin-right: 0px;
+			background-color: #F2F1F0;
+			background-image: -webkit-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+			background-image: linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+			background-clip: padding-box;
+			border: 1px solid #B2AEAA;
+			box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
+						0 0 0 1px hsla(0,0%,100%,.3) inset,
+						0 1px 0 hsla(0,0%,0%,.03);
+			border-top-right-radius: 0px;
+			border-bottom-right-radius: 0px;
+			overflow: hidden;
+		}
+
+		:host::shadow browser-button[type="forward"]:hover {
+			border: 1px solid #B2AEAA;
+			background-color: #F2F1F0;
+			background-image: -webkit-linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
+			background-image: linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
+			border-color: hsla(0,0%,10%,.3) hsla(0,0%,10%,.35) hsla(0,0%,10%,.4);
+			box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
+				0 0 0 1px hsla(0,0%,100%,.3) inset,
+				0 1px 0 hsla(0,0%,10%,.03),
+				0 0 2px hsla(0,0%,10%,.2);
+		}
+		:host::shadow browser-button[type="forward"]:hover:active {
+			background-color: #B2AEAA;
+		}
+
+		:host::shadow browser-button[type="forward"].hidding {
+			-webkit-animation: hidingFadeOut 300ms;
+			-moz-animation: hidingFadeOut 300ms;
+			animation: hidingFadeOut 300ms;
+		}
+
+		:host::shadow browser-button[type="forward"].showing {
+			-webkit-animation: hidingFadeIn 300ms;
+			-moz-animation: hidingFadeIn 300ms;
+			animation: hidingFadeIn 300ms;
+			border-right-width: 0px;
+			width: 0px;
+			margin-left: -45px;
+			padding: 2px 8px 2px 0px;
+			padding-left: 0px;
+			width: auto;
+		}
+
+		@-webkit-keyframes hidingFadeOut {
+			to {
+				border-right-width: 0px;
+				border-left: 0px;
+				border-top-left-radius: 100%;
+				border-bottom-left-radius: 100%;
+				margin-left: -51px;
+				padding-left: 0px;
+				background: rgba(255,255,255,0);
+			}
+		}
+
+		@keyframes hidingFadeOut {
+			to {
+				border-right-width: 0px;
+				width: 0px;
+				margin-left: -45px;
+				padding-left: 0px;
+				padding-right: 0px;
+			}
+		}
+
+		@-webkit-keyframes hidingFadeIn {
+			to {
+				padding-left: 14px;
+				margin-left: -20px;
+				background-color: #F2F1F0;
+				background-image: -webkit-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+				background-image: linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+				background-clip: padding-box;
+				border: 1px solid #B2AEAA;
+				border-top-right-radius: 0px;
+				border-bottom-right-radius: 0px;
+			}
+		}
+
+		@keyframes hidingFadeIn {
+			to {
+				padding-left: 14px;
+				margin-left: -20px;
+				background-color: #F2F1F0;
+				background-image: -webkit-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+				background-image: linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+				background-clip: padding-box;
+				border: 1px solid #B2AEAA;
+				border-top-right-radius: 0px;
+				border-bottom-right-radius: 0px;
+			}
+		}*/
+		/*
+		:host([type="forward"]) + .locationBar {
+			border-top-left-radius: 0px;
+			border-bottom-left-radius: 0px;
+			border-left: 0px;
+			-moz-padding-start: 10px;
+			-webkit-padding-start: 10px;
+		}*/
+
+		/*:host([type="reload"]) {
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+			padding: 3px 4px;
+			font-size: 0;
+			line-height: 0;
+			background-image: linear-gradient(rgba(227, 227, 227, 1), rgba(222, 222, 222, 1));
+			border-left: 1px solid hsla(220,82%,11%,.2);
+			box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1),
+			inset 0 0 2px hsla(0,0%,100%,.15),
+			0 0 0 1px hsla(42,11%,18%,.1);
+		}
+		:host([type="reload"]:hover) {
+			background-image: -webkit-linear-gradient(#73adff, #4c91ff);
+			background-image: linear-gradient(#73adff, #4c91ff);
+			border-left: 1px solid hsla(220,82%,11%,.2);
+			box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1),
+			inset 0 0 2px hsla(0,0%,100%,.15),
+			0 0 0 1px hsla(42,11%,18%,.1);
+		}
+		:host([type="reload"]:hover:active) {
+			background-image: -webkit-linear-gradient(hsla(220,82%,11%,.05), hsla(220,82%,11%,.05)),
+			-webkit-linear-gradient(#73adff, #4c91ff);
+			background-image: linear-gradient(hsla(220,82%,11%,.05), hsla(220,82%,11%,.05)),
+			linear-gradient(#73adff, #4c91ff);
+			box-shadow: inset 0 1px 0 hsla(220,82%,11%,.2),
+			inset 0 0 3px hsla(220,82%,11%,.25);
+		}
+
+		:host([type="reload"])::shadow .icon {
+			background-image: url("./img/reload.svg");
+			background-position: 0px 2px;
+			background-repeat: no-repeat;
+		}*/
+	</style>
+	<!-- 
+	 added programatically because not known yet at this time:
+	<browser-button type="back" class="rounded"></browser-button>
+	<browser-button type="forward" class="hidable"></browser-button>
+	-->
+</template>
+<script>
+	(function () {
+		'use strict';
+		var prototype = Object.create(HTMLElement.prototype);
+		var currentScript = document.currentScript;
+
+		prototype.createdCallback = function() {
+			var self = this;
+			
+			// Create shadow dom
+			var shadow = this.createShadowRoot();
+			var template = currentScript.ownerDocument.querySelector('template');
+			shadow.appendChild(template.content.cloneNode(true));
+
+			var button = document.createElement('browser-button');
+			button.setAttribute('type', 'back');
+			button.classList.add('rounded');
+			shadow.appendChild(button);
+
+			var button = document.createElement('browser-button');
+			button.setAttribute('type', 'forward');
+			button.classList.add('hidable');
+			shadow.appendChild(button);
+
+			var browser = self;
+			while (browser = browser.parentNode) {
+				if (browser.tagName === 'BROWSER-COMPONENT') break;
+			}
+			browser.addEventListener('history-changed', function (evt) {
+				console.log('TODO');
+			});
+		};
+		
+		document.registerElement('browser-navigation', {
+			prototype: prototype
+		});
+	})();
+</script>

@@ -20,8 +20,8 @@
 			var self = this;
 			
 			// Create shadow dom
-			var shadow = this.createShadowRoot()
-			var template = currentScript.ownerDocument.querySelector('template');;
+			var shadow = this.createShadowRoot();
+			var template = currentScript.ownerDocument.querySelector('template');
 			shadow.appendChild(template.content.cloneNode(true));
 		};
 		

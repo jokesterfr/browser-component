@@ -1,0 +1,99 @@
+<link rel="import" href="./browser-button.html"></link>
+<template>
+	<style>
+		::selection {
+			background-color: #4C9ED9;
+			color: white;
+		}
+
+		/* Gecko Browsers */
+		::-moz-selection {
+			background-color: #4C9ED9;
+			color: white;
+		}
+
+		:host {
+			display: -webkit-box;  
+			display: flex;
+			-webkit-box-flex: 1;
+			flex: 1;
+			margin: 8px 6px 8px 0;
+			-webkit-padding-start: 20px;
+			-webkit-padding-end: 0;
+			-moz-padding-start: 20px;
+			-moz-padding-end: 0;
+			background-color: #FFF;
+			border: 1px solid #B2AEAA;
+			height: 36px;
+			box-shadow: 0 1px 0 hsla(0,0%,0%,.01) inset, 0 1px 0 hsla(0,0%,100%,.1);
+			color: #4C4C4C;
+			font-size: 20px;
+			line-height: 40px;
+			outline-style: none;
+			z-index: 49;
+			opacity: .8;
+			border-bottom-right-radius: 4px;
+			border-top-right-radius: 4px;
+		}
+
+		:host(:hover) {
+			box-shadow: 0 1px 0 hsla(0,0%,0%,.01) inset,
+			0 1px 0 hsla(0,0%,100%,.1),
+			0 0 1px hsla(0,0%,0%,.1);
+			opacity: .9;
+		}
+
+		:host(:focus) {
+			border-color: #3866b4;
+			box-shadow: 0 0px 1px #3866b4 inset;
+			opacity: 1;
+		}
+
+		:host::shadow input {
+			-webkit-box-flex: 1;
+			flex: 1;
+			color: #4C4C4C;
+			outline-style: none;
+			cursor: text;
+			overflow: hidden;
+			white-space: nowrap;
+			border: none;
+			background-color: transparent;
+			padding: 0px;
+			font-family: 'Fira Sans', Arial, sans-serif;
+			font-size: 1em;
+		}
+
+		:host::shadow input:focus {
+			color: #1a1a1a;
+		}
+	</style>
+	<input type="input" class="input" maxlength="2048" contenteditable="true" value="about:customize" />
+	<!-- 
+	 added programatically because not known yet at this time:
+	 <browser-button type="back"></browser-button>
+	-->
+</template>
+<script>
+	(function () {
+		'use strict';
+		var prototype = Object.create(HTMLElement.prototype);
+		var currentScript = document.currentScript;
+
+		prototype.createdCallback = function() {
+			var self = this;
+			
+			// Create shadow dom
+			var shadow = this.createShadowRoot();
+			var template = currentScript.ownerDocument.querySelector('template');
+			shadow.appendChild(template.content.cloneNode(true));
+			var button = document.createElement('browser-button');
+			button.setAttribute('type', 'reload');
+			shadow.appendChild(button);
+		};
+		
+		document.registerElement('browser-location', {
+			prototype: prototype
+		});
+	})();
+</script>

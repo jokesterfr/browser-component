@@ -21,11 +21,11 @@ And use it:
 
 ```html
 <browser-component>
-  <browser-tabsbar>
+  <browser-tabbar>
     <browser-tab url="https://www.google.fr"></browser-tab>
     <browser-tab url="http://lestrans.com"></browser-tab>
     <browser-addtab></browser-addtab>
-  </browser-tabsbar>
+  </browser-tabbar>
   <browser-toolbar>
     <browser-back-button rounded></browser-back-button>
     <browser-forward-button ></browser-forward-button>
@@ -44,7 +44,7 @@ And use it:
 
 TODO
 
-### browser-tabsbar
+### browser-tabbar
 
 TODO
 

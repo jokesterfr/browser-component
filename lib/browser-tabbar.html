@@ -21,8 +21,8 @@
 			var self = this;
 			
 			// Create shadow dom
-			var shadow = this.createShadowRoot()
-			var template = currentScript.ownerDocument.querySelector('template');;
+			var shadow = this.createShadowRoot();
+			var template = currentScript.ownerDocument.querySelector('template');
 			shadow.appendChild(template.content.cloneNode(true));
 
 			// Register listeners
@@ -97,7 +97,7 @@
 			evt.detail.source.classList.add('active');
 		}
 
-		document.registerElement('browser-tabsbar', {
+		document.registerElement('browser-tabbar', {
 			prototype: prototype
 		});
 
