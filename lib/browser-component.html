@@ -17,7 +17,6 @@
 	</style>
 	<div>
 		<content></content>
-		<iframe id="browser" src="" width="100%" height="100%" frameBorder="0"></iframe>
 	</div>
 </template>
 <script>
@@ -29,8 +28,35 @@
 		prototype.createdCallback = function () {
 			var shadow = this.createShadowRoot();
 			shadow.appendChild(template.content.cloneNode(true));
+
+			// Add browser against type
+			switch (this.getAttribute('type')) {
+				case 'webview':
+					var webview = document.createElement('webview');
+					webview.setAttribute('id', 'browser');
+					var content = shadow.querySelector('content');
+					content.parentNode.insertBefore(webview, content.nextSibling);
+					break;
+				case 'iframe':
+					var iframe = document.createElement('iframe');
+					iframe.setAttribute('id', 'browser');
+					iframe.setAttribute('width', '100%');
+					iframe.setAttribute('height', '100%');
+					iframe.setAttribute('frameBorder', '0');
+					iframe.setAttribute('seamless', 'seamless');
+					iframe.setAttribute('sandbox', 'allow-forms allow-scripts allow-top-navigation allow-same-origin');
+					var content = shadow.querySelector('content');
+					content.parentNode.insertBefore(iframe, content.nextSibling);
+				default:
+					break;
+			}
 			this.addEventListener('select-tab', function (evt) {
 				console.log('lfkdfldkjldfkjk')
+			});
+
+			this.addEventListener('location-changed', function (evt) {
+				var uri = evt.detail.uri;
+				shadow.querySelector('#browser').src = uri;
 			});
 		};
 

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Embeded web components</title>
+</head>
+<body>
+<!-- Explain this principle on a blog post -->
+  <template id="buttonTpl">
+    <style>
+      :host button {
+        background-color: red;
+      }
+    </style>
+    <button>Test this button</button>
+  </template>
+
+  <script>
+    var prototype = Object.create(HTMLElement.prototype);
+    
+    prototype.createdCallback = function() {
+      var tpl = document.querySelector('#buttonTpl');
+      var shadow = this.createShadowRoot();
+      shadow.appendChild(tpl.content.cloneNode(true));
+  };
+    
+  document.registerElement('x-button', {
+    prototype: prototype
+  });    
+
+  </script>
+  
+  <template id="toolbarTpl">
+    <h2>This is the controls:</h2>
+    <x-button></x-button>
+  </template>
+  <script>
+    var prototype = Object.create(HTMLElement.prototype);
+    
+    prototype.createdCallback = function() {
+      var tpl = document.querySelector('#toolbarTpl');
+      var shadow = this.createShadowRoot();
+      shadow.appendChild(tpl.content.cloneNode(true));
+  };
+    
+  document.registerElement('x-toolbar', {
+    prototype: prototype
+  });    
+  </script>
+    <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Embeded web components</title>
+</head>
+<body>
+
+  <template id="buttonTpl">
+    <style>
+      :host::shadow button {
+        background-color: red;
+      }
+    </style>
+    <button>Test this button</button>
+  </template>
+
+  <script>
+    var prototype = Object.create(HTMLElement.prototype);
+    
+    prototype.createdCallback = function() {
+      var tpl = document.querySelector('#buttonTpl');
+      var shadow = this.createShadowRoot();
+      shadow.appendChild(tpl.content.cloneNode(true));
+    };
+    
+    document.registerElement('test-button', {
+      prototype: prototype
+    });
+  </script>
+  
+  <template id="toolbarTpl">
+    <h2>This is the controls:</h2>
+    <test-button></test-button>
+  </template>
+  <script>
+    var prototype = Object.create(HTMLElement.prototype);
+    
+    prototype.createdCallback = function() {
+      var tpl = document.querySelector('#toolbarTpl');
+      var shadow = this.createShadowRoot();
+      shadow.appendChild(tpl.content.cloneNode(true));
+      var btn = document.createElement('test-button');
+      shadow.appendChild(btn);
+    };
+    
+    document.registerElement('test-toolbar', {
+      prototype: prototype
+    });
+  </script>
+  
+  <!-- Test zone -->
+  <test-toolbar></test-toolbar>
+</body>
+</html>

@@ -13,11 +13,9 @@
 		}
 
 		:host {
-			display: -webkit-box;  
 			display: flex;
-			-webkit-box-flex: 1;
 			flex: 1;
-			margin: 8px 6px 8px 0;
+			margin: 8px 0px 8px 0px;
 			-webkit-padding-start: 20px;
 			-webkit-padding-end: 0;
 			-moz-padding-start: 20px;
@@ -67,11 +65,40 @@
 		:host::shadow input:focus {
 			color: #1a1a1a;
 		}
+
+		:host::shadow browser-button {
+			border: none;
+			border-radius: 0px;
+			padding: 2px 4px;
+			margin: 0;
+			font-size: 0;
+			line-height: 0;
+			background-image: linear-gradient(rgba(227, 227, 227, 1), rgba(222, 222, 222, 1));
+			border-left: 1px solid hsla(220,82%,11%,.2);
+			box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1), inset 0 0 2px hsla(0,0%,100%,.15), 0 0 0 1px hsla(42,11%,18%,.1);
+		}
+
+		:host::shadow browser-button:hover {
+			background-image: -webkit-linear-gradient(#73adff, #4c91ff);
+			background-image: linear-gradient(#73adff, #4c91ff);
+			border-left: 1px solid hsla(220,82%,11%,.2);
+			box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1), inset 0 0 2px hsla(0,0%,100%,.15), 0 0 0 1px hsla(42,11%,18%,.1);
+		}
+
+		:host::shadow browser-button:hover:active {
+			background-image: -webkit-linear-gradient(hsla(220,82%,11%,.05), hsla(220,82%,11%,.05)), -webkit-linear-gradient(#73adff, #4c91ff);
+			background-image: linear-gradient(hsla(220,82%,11%,.05), hsla(220,82%,11%,.05)), linear-gradient(#73adff, #4c91ff);
+			box-shadow: inset 0 1px 0 hsla(220,82%,11%,.2), inset 0 0 3px hsla(220,82%,11%,.25);
+		}
+
+		:host::shadow browser-button .icon {
+			background-image: url("./img/reload-hover.svg");
+		}
 	</style>
 	<input type="input" class="input" maxlength="2048" contenteditable="true" value="about:customize" />
 	<!-- 
 	 added programatically because not known yet at this time:
-	 <browser-button type="back"></browser-button>
+	 <browser-button class="blue" type="reload"></browser-button>
 	-->
 </template>
 <script>
@@ -89,7 +116,29 @@
 			shadow.appendChild(template.content.cloneNode(true));
 			var button = document.createElement('browser-button');
 			button.setAttribute('type', 'reload');
+			button.classList.add('blue');
 			shadow.appendChild(button);
+
+			// Get browser parent
+			var parent = self;
+			while (parent = parent.parentNode) {
+				if (parent && parent.tagName.toLowerCase() === 'browser-component') break;
+			}
+
+			// Listen input change
+			var input = shadow.querySelector('input');
+			input.addEventListener('keypress', function (evt) {
+				button.setAttribute('type', 'forward');
+			}, false);
+
+			input.addEventListener('change', function (evt) {
+				evt = new CustomEvent('location-changed', {
+					detail: {
+						uri: input.value
+					}
+				});
+				parent.dispatchEvent(evt);
+			}, false);
 		};
 		
 		document.registerElement('browser-location', {
