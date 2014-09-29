@@ -1,11 +1,17 @@
 Browser-component
 =================
 
-Browser component is a web component designed for displaying browser headers into the browser itself. It can be used to extend a headless browser, or give some more features to a web application, such as firefox/xulrunner or chrome/chromium apps. Browser component is made of many sub components, so you are free to customize your browser like you want.
+*Browser component* is a web component designed to get a browser into the browser itself. It can be used to extend a headless browser, or give some more features to a web application, such as *firefox/xulrunner* or *chrome/chromium apps*. This project comes with many sub components, to let you customize the browser of your wish.
 
 ## Overview
 
-Get it by directly cloning this repository, or using bower:
+Get it directly by cloning this repository:
+
+```bash
+git clone https://github.com/jokesterfr/browser-component.git
+```
+
+Or use bower:
 
 ```bash
 bower install browser-component
@@ -61,7 +67,7 @@ The browser tabbar will display all tabs you filled in, you can use the selected
 
 If you add the `<browser-addtab>` component, you will be able to add some more tabs dynamically.
 
-### browser-tab>
+### browser-tab
 
 Tabs sorting out currently browsed contents. Here are the available attributes for tabs:
 * __url__: URL of the content to browse
