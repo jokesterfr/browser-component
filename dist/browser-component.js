@@ -409,13 +409,13 @@
 		prototype.createdCallback = function () {
 			var shadow = this.createShadowRoot();
 			shadow.appendChild(template.content.cloneNode(true));
+			var content = shadow.querySelector('content');
 
 			// Add browser against type
 			switch (this.getAttribute('type')) {
 				case 'webview':
 					var webview = document.createElement('webview');
 					webview.setAttribute('id', 'browser');
-					var content = shadow.querySelector('content');
 					content.parentNode.insertBefore(webview, content.nextSibling);
 					break;
 				case 'iframe':
@@ -426,12 +426,12 @@
 					iframe.setAttribute('frameBorder', '0');
 					iframe.setAttribute('seamless', 'seamless');
 					iframe.setAttribute('sandbox', 'allow-forms allow-scripts allow-top-navigation allow-same-origin');
-					var content = shadow.querySelector('content');
 					content.parentNode.insertBefore(iframe, content.nextSibling);
+					break;
 				default:
 					break;
 			}
-			this.addEventListener('select-tab', function (evt) {
+			this.addEventListener('select-tab', function () {
 				console.log('lfkdfldkjldfkjk')
 			});
 

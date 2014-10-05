@@ -37,9 +37,27 @@ module.exports = function(grunt) {
         },
       },
     },
+
+    watch: {
+      svg: {
+        files: ['img/src/*.svg'],
+        tasks: ['svgmin'],
+        options: {
+          spawn: false,
+        },
+      },
+      components: {
+        files: ['lib/*'],
+        tasks: ['vulcanize', 'dataUri'],
+        options: {
+          spawn: false,
+        }
+      }
+    }
   });
 
   // Load grunt plugins
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-vulcanize');
   grunt.loadNpmTasks('grunt-data-uri');
   grunt.loadNpmTasks('grunt-svgmin');

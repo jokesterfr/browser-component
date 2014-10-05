@@ -47,12 +47,12 @@ Browser component can be based upon *"iframe"* element, or "webview" (default) e
 
 #### webview
 
-A webview is a non standard HTML5 element, designed for usage in a __chrome/chromium__ app or extension. This component is specifically designed for safely browsing within the browser, iframe is not.
+A webview is a non standard *HTML5* element, designed to be used a __chrome/chromium__ app or extension context.
 Please refer to the [following documentation](https://developer.chrome.com/apps/tags/webview) for more information. 
 
 #### iframe
 
-If you use an iframe, you may encounter many issues, due to protections activated by your browser. This is not recommended, and experimental. To unlock your browser protections, please read down this page the [CORS Policy](#cors-policy) and [X-Frame-Options](#x-frame-options) sections.
+This feature is not recommended, and experimental because you may encounter many issues, due to your browser protections. If you still want to keep on this way, you can read down this how to deal with the [CORS Policy](#cors-policy) and the [X-Frame-Options](#x-frame-options) *HTTP* header.
 
 ### browser-tabbar
 
@@ -130,7 +130,7 @@ chromium --disable-web-security file:///path-to-browser-component/index.html
 
 ## Firefox
 
-Open "about:config" in a page, then modify the property "security.fileuri.strict_origin_policy" to false.
+Open "about:config" in a page, then modify the property __security.fileuri.strict_origin_policy__ to false.
 
 # X-Frame-Options
 
@@ -153,6 +153,6 @@ Chrome and chromium support web components since version 35.
 
 # Licence
 
-This work is largely inspired by Firefox Australis UI.
+This work is largely inspired by Firefox Australis UI, therefore the same licence applies here:
 
 [Mozilla Public License - Version 2.0](https://www.mozilla.org/MPL/2.0/)

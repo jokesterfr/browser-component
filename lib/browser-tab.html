@@ -140,21 +140,21 @@
 		:host #close {
 			width: 32px;
 			height: 32px;
-			background-image: url("../img/icon-close.svg");
+			background-image: url("../img/close-simple.svg");
 			background-repeat: no-repeat;
-			background-position: -100px center;
+			background-position: center center;
 			opacity: .8;
 		}
 
 		:host(.active) #close {
-			background-position: 0px center;
+			background-image: url("../img/close-simple.svg");
 		}
 
 		:host #close:hover {
-			background-position: -32px center;
+			background-image: url("../img/close-hover.svg");
 		}
 		:host #close:hover:active {
-			background-position: -69px center;
+			background-image: url("../img/close-active.svg");
 		}
 	</style>
 	<div id="favicon"></div>
