@@ -1,0 +1,28 @@
+{
+  "name": "browser-component",
+  "version": "0.0.2",
+  "description": "Components for rendering browser style UIs.",
+  "private": true,
+  "directories": {
+    "example": "examples"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-vulcanize": "~0.4.1",
+    "grunt-data-uri": "~0.2.0",
+    "grunt-svgmin": "~1.0.0",
+    "grunt-contrib-watch": "~0.6.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jokesterfr/browser-component.git"
+  },
+  "author": "Clément Désiles <main@jokester.fr>",
+  "license": "Mozilla Public Licence version 2",
+  "bugs": {
+    "url": "https://github.com/jokesterfr/browser-component/issues"
+  }
+}

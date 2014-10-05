@@ -1,4 +1,11 @@
-<template>
+<!--
+  file: browser-tab-new.html
+  author: Clément Désiles <main@jokester.fr>
+  repository: https://github.com/jokesterfr/browser-component
+  licence: Mozilla Public License Version 2.0
+  description: A special tab to create a new empty one
+-->
+<template id="browser-tab-new">
 	<style>
 		:host {
 			display: -webkit-box;
@@ -20,12 +27,12 @@
 
 		:host(:hover) {
 			position: relative;
-			background: url("./img/tabBackgroundStart.svg") no-repeat left,
-						url("./img/tabBackgroundEnd.svg") no-repeat right;
+			background: url("../img/tabBackgroundStart.svg") no-repeat left,
+						url("../img/tabBackgroundEnd.svg") no-repeat right;
 		}
 
 		:host #favicon {
-			background-image: url("./img/newTab-Icon.svg");
+			background-image: url("../img/newTab-Icon.svg");
 			width: 32px;
 			height: 32px;
 			background-size: 32px 32px;
@@ -43,39 +50,40 @@
 	</content>
 </template>
 <script>
-	(function () {
-		'use strict';
-		var prototype = Object.create(HTMLElement.prototype);
-		var currentScript = document.currentScript;
+/* browser-tab-new */
+(function () {
+	'use strict';
+	var prototype = Object.create(HTMLElement.prototype);
+	var currentScript = document.currentScript;
+	var template = currentScript.ownerDocument.querySelector('template#browser-tab-new');
 
-		prototype.createdCallback = function() {
-			var self = this;
-			
-			// Create shadow dom
-			var shadow = this.createShadowRoot()
-			var template = currentScript.ownerDocument.querySelector('template');
-			shadow.appendChild(template.content.cloneNode(true));
-
-			// Register new tab event
-			this.addEventListener('click', function (evt) {
-				addTab.call(self, evt);
-			}, false);
-		};
+	prototype.createdCallback = function() {
+		var self = this;
 		
-		/**
-		 * Select the current tab
-		 */
-		function addTab(evt) {
-			evt.stopPropagation();
-			evt = new CustomEvent('add-tab', { detail: { source: this }});
-			this.parentNode.dispatchEvent(evt);
-		}
+		// Create shadow dom
+		var shadow = this.createShadowRoot()
+		shadow.appendChild(template.content.cloneNode(true));
 
-		/**
-		 * Register the element protoype
-		 */
-		document.registerElement('browser-tab-new', {
-			prototype: prototype
-		});
-	})();
+		// Register new tab event
+		this.addEventListener('click', function (evt) {
+			addTab.call(self, evt);
+		}, false);
+	};
+	
+	/**
+	 * Select the current tab
+	 */
+	function addTab(evt) {
+		evt.stopPropagation();
+		evt = new CustomEvent('add-tab', { detail: { source: this }});
+		this.parentNode.dispatchEvent(evt);
+	}
+
+	/**
+	 * Register the element protoype
+	 */
+	document.registerElement('browser-tab-new', {
+		prototype: prototype
+	});
+})();
 </script>

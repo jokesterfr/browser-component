@@ -1,5 +1,12 @@
+<!--
+  file: browser-location.html
+  author: Clément Désiles <main@jokester.fr>
+  repository: https://github.com/jokesterfr/browser-component
+  licence: Mozilla Public License Version 2.0
+  description: A custom input to let the user enter a query
+-->
 <link rel="import" href="./browser-button.html"></link>
-<template>
+<template id="browser-location">
 	<style>
 		::selection {
 			background-color: #4C9ED9;
@@ -92,7 +99,7 @@
 		}
 
 		:host::shadow browser-button .icon {
-			background-image: url("./img/reload-hover.svg");
+			background-image: url("../img/reload-hover.svg");
 		}
 	</style>
 	<input type="input" class="input" maxlength="2048" contenteditable="true" value="about:customize" />
@@ -102,47 +109,48 @@
 	-->
 </template>
 <script>
-	(function () {
-		'use strict';
-		var prototype = Object.create(HTMLElement.prototype);
-		var currentScript = document.currentScript;
+/* browser-location */
+(function () {
+	'use strict';
+	var prototype = Object.create(HTMLElement.prototype);
+	var currentScript = document.currentScript;
+	var template = currentScript.ownerDocument.querySelector('template#browser-location');
 
-		prototype.createdCallback = function() {
-			var self = this;
-			
-			// Create shadow dom
-			var shadow = this.createShadowRoot();
-			var template = currentScript.ownerDocument.querySelector('template');
-			shadow.appendChild(template.content.cloneNode(true));
-			var button = document.createElement('browser-button');
-			button.setAttribute('type', 'reload');
-			button.classList.add('blue');
-			shadow.appendChild(button);
-
-			// Get browser parent
-			var parent = self;
-			while (parent = parent.parentNode) {
-				if (parent && parent.tagName.toLowerCase() === 'browser-component') break;
-			}
-
-			// Listen input change
-			var input = shadow.querySelector('input');
-			input.addEventListener('keypress', function (evt) {
-				button.setAttribute('type', 'forward');
-			}, false);
-
-			input.addEventListener('change', function (evt) {
-				evt = new CustomEvent('location-changed', {
-					detail: {
-						uri: input.value
-					}
-				});
-				parent.dispatchEvent(evt);
-			}, false);
-		};
+	prototype.createdCallback = function() {
+		var self = this;
 		
-		document.registerElement('browser-location', {
-			prototype: prototype
-		});
-	})();
+		// Create shadow dom
+		var shadow = this.createShadowRoot();
+		shadow.appendChild(template.content.cloneNode(true));
+		var button = document.createElement('browser-button');
+		button.setAttribute('type', 'reload');
+		button.classList.add('blue');
+		shadow.appendChild(button);
+
+		// Get browser parent
+		var parent = self;
+		while (parent = parent.parentNode) {
+			if (parent && parent.tagName.toLowerCase() === 'browser-component') break;
+		}
+
+		// Listen input change
+		var input = shadow.querySelector('input');
+		input.addEventListener('keypress', function (evt) {
+			button.setAttribute('type', 'forward');
+		}, false);
+
+		input.addEventListener('change', function (evt) {
+			evt = new CustomEvent('location-changed', {
+				detail: {
+					uri: input.value
+				}
+			});
+			parent.dispatchEvent(evt);
+		}, false);
+	};
+	
+	document.registerElement('browser-location', {
+		prototype: prototype
+	});
+})();
 </script>

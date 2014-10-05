@@ -1,5 +1,12 @@
+<!--
+  file: browser-navigation.html
+  author: Clément Désiles <main@jokester.fr>
+  repository: https://github.com/jokesterfr/browser-component
+  licence: Mozilla Public License Version 2.0
+  description: A location bar for browser searching
+-->
 <link rel="import" href="./browser-button.html"></link>
-<template>
+<template id="browser-navigation">
 	<style>
 		:host {
 			display: flex;
@@ -154,7 +161,7 @@
 		}
 
 		:host([type="reload"])::shadow .icon {
-			background-image: url("./img/reload.svg");
+			background-image: url("../img/reload.svg");
 			background-position: 0px 2px;
 			background-repeat: no-repeat;
 		}*/
@@ -166,40 +173,41 @@
 	-->
 </template>
 <script>
-	(function () {
-		'use strict';
-		var prototype = Object.create(HTMLElement.prototype);
-		var currentScript = document.currentScript;
+/* browser-navigation */
+(function () {
+	'use strict';
+	var prototype = Object.create(HTMLElement.prototype);
+	var currentScript = document.currentScript;
+	var template = currentScript.ownerDocument.querySelector('template#browser-navigation');
 
-		prototype.createdCallback = function() {
-			var self = this;
-			
-			// Create shadow dom
-			var shadow = this.createShadowRoot();
-			var template = currentScript.ownerDocument.querySelector('template');
-			shadow.appendChild(template.content.cloneNode(true));
-
-			var button = document.createElement('browser-button');
-			button.setAttribute('type', 'back');
-			button.classList.add('rounded');
-			shadow.appendChild(button);
-
-			var button = document.createElement('browser-button');
-			button.setAttribute('type', 'forward');
-			button.classList.add('hidable');
-			shadow.appendChild(button);
-
-			var browser = self;
-			while (browser = browser.parentNode) {
-				if (browser.tagName === 'BROWSER-COMPONENT') break;
-			}
-			browser.addEventListener('history-changed', function (evt) {
-				console.log('TODO');
-			});
-		};
+	prototype.createdCallback = function() {
+		var self = this;
 		
-		document.registerElement('browser-navigation', {
-			prototype: prototype
+		// Create shadow dom
+		var shadow = this.createShadowRoot();
+		shadow.appendChild(template.content.cloneNode(true));
+
+		var button = document.createElement('browser-button');
+		button.setAttribute('type', 'back');
+		button.classList.add('rounded');
+		shadow.appendChild(button);
+
+		var button = document.createElement('browser-button');
+		button.setAttribute('type', 'forward');
+		button.classList.add('hidable');
+		shadow.appendChild(button);
+
+		var browser = self;
+		while (browser = browser.parentNode) {
+			if (browser.tagName === 'BROWSER-COMPONENT') break;
+		}
+		browser.addEventListener('history-changed', function (evt) {
+			console.log('TODO');
 		});
-	})();
+	};
+	
+	document.registerElement('browser-navigation', {
+		prototype: prototype
+	});
+})();
 </script>

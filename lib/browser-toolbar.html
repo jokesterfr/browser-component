@@ -1,4 +1,11 @@
-<template>
+<!--
+  file: browser-toolbar.html
+  author: Clément Désiles <main@jokester.fr>
+  repository: https://github.com/jokesterfr/browser-component
+  licence: Mozilla Public License Version 2.0
+  description: A space where browser elements can be displayed in line.
+-->
+<template id="browser-toolbar">
 	<style>
 		:host {
 			display: flex;
@@ -14,24 +21,23 @@
 	<content></content>
 </template>
 <script>
-	(function () {
-		'use strict';
-		var prototype = Object.create(HTMLElement.prototype);
-		var currentScript = document.currentScript;
+/* browser-toolbar */
+(function () {
+	'use strict';
+	var prototype = Object.create(HTMLElement.prototype);
+	var currentScript = document.currentScript;
+	var template = currentScript.ownerDocument.querySelector('template#browser-toolbar');
 
-		prototype.createdCallback = function() {
-			var self = this;
-			
-			// Create shadow dom
-			var shadow = this.createShadowRoot();
-			var template = currentScript.ownerDocument.querySelector('template');
-			shadow.appendChild(template.content.cloneNode(true));
-		};
+	prototype.createdCallback = function() {
+		var self = this;
+		
+		// Create shadow dom
+		var shadow = this.createShadowRoot();
+		shadow.appendChild(template.content.cloneNode(true));
+	};
 
-		document.registerElement('browser-toolbar', {
-			prototype: prototype
-		});
-
-
-	})();
+	document.registerElement('browser-toolbar', {
+		prototype: prototype
+	});
+})();
 </script>

@@ -1,4 +1,11 @@
-<template>
+<!--
+  file: browser-tabbar.html
+  author: Clément Désiles <main@jokester.fr>
+  repository: https://github.com/jokesterfr/browser-component
+  licence: Mozilla Public License Version 2.0
+  description: A space where tabs are displayed and can be selected
+-->
+<template id="browser-tabbar">
 	<style>
 		:host {
 			position: relative;
@@ -12,122 +19,123 @@
 	<content></content>
 </template>
 <script>
-	(function () {
-		'use strict';
-		var prototype = Object.create(HTMLElement.prototype);
-		var currentScript = document.currentScript;
+/* browser-tabbar */
+(function () {
+	'use strict';
+	var prototype = Object.create(HTMLElement.prototype);
+	var currentScript = document.currentScript;
+	var template = currentScript.ownerDocument.querySelector('template#browser-tabbar');
 
-		prototype.createdCallback = function() {
-			var self = this;
-			
-			// Create shadow dom
-			var shadow = this.createShadowRoot();
-			var template = currentScript.ownerDocument.querySelector('template');
-			shadow.appendChild(template.content.cloneNode(true));
-
-			// Register listeners
-			this.addEventListener('new-tab', newTabListener, false);
-			this.addEventListener('add-tab', addTabListener, false);
-			this.addEventListener('closed-tab', closedTabListener, false);
-			this.addEventListener('select-tab', selectTabListener, false);
-			
-		};
+	prototype.createdCallback = function() {
+		var self = this;
 		
-		/**
-		 * Append a new tab to the bar, after the last browser-tab
-		 * @param {CustomEvent} evt 
-		 */
-		function addTabListener(evt) {
-			var tab = document.createElement('browser-tab');
-			tab.setAttribute('url', 'https://google.com');
-			var lastTab = this.querySelector('browser-tab:last-of-type');
-			if (lastTab) {
-				if (lastTab.nextSibling) {
-					this.insertBefore(tab, lastTab.nextSibling);
+		// Create shadow dom
+		var shadow = this.createShadowRoot();
+		shadow.appendChild(template.content.cloneNode(true));
+
+		// Register listeners
+		this.addEventListener('new-tab', newTabListener, false);
+		this.addEventListener('add-tab', addTabListener, false);
+		this.addEventListener('closed-tab', closedTabListener, false);
+		this.addEventListener('select-tab', selectTabListener, false);
+		
+	};
+	
+	/**
+	 * Append a new tab to the bar, after the last browser-tab
+	 * @param {CustomEvent} evt 
+	 */
+	function addTabListener(evt) {
+		var tab = document.createElement('browser-tab');
+		tab.setAttribute('url', 'https://google.com');
+		var lastTab = this.querySelector('browser-tab:last-of-type');
+		if (lastTab) {
+			if (lastTab.nextSibling) {
+				this.insertBefore(tab, lastTab.nextSibling);
+			} else {
+				this.appendChild(tab);
+			}
+		} else {
+			this.insertBefore(tab, this.firstChild);
+		}
+	}
+
+
+	/**
+	 * Activate the last added tab
+	 * @param {CustomEvent} evt 
+	 */
+	function newTabListener(evt) {
+		var tabs = this.querySelectorAll('browser-tab');
+		[].forEach.call(tabs, function (tab) {
+			tab.classList.remove('active');
+		})
+		evt.detail.source.classList.add('active');
+	}
+
+	/**
+	 * Close the tab and activate the last added tab
+	 * @param {CustomEvent} evt 
+	 */
+	function closedTabListener(evt) {
+		this.removeChild(evt.detail.source);
+		var tabs = this.querySelectorAll('browser-tab');
+		if (!tabs.length) {
+			tabs[0].classList.add('active');
+		} else {
+			[].forEach.call(tabs, function (tab, i) {
+				if ((i + 1) === tabs.length) {
+					tab.classList.add('active');
 				} else {
-					this.appendChild(tab);
+					tab.classList.remove('active');
 				}
-			} else {
-				this.insertBefore(tab, this.firstChild);
-			}
-		}
-
-
-		/**
-		 * Activate the last added tab
-		 * @param {CustomEvent} evt 
-		 */
-		function newTabListener(evt) {
-			var tabs = this.querySelectorAll('browser-tab');
-			[].forEach.call(tabs, function (tab) {
-				tab.classList.remove('active');
 			})
-			evt.detail.source.classList.add('active');
 		}
+	}
 
-		/**
-		 * Close the tab and activate the last added tab
-		 * @param {CustomEvent} evt 
-		 */
-		function closedTabListener(evt) {
-			this.removeChild(evt.detail.source);
-			var tabs = this.querySelectorAll('browser-tab');
-			if (!tabs.length) {
-				tabs[0].classList.add('active');
-			} else {
-				[].forEach.call(tabs, function (tab, i) {
-					if ((i + 1) === tabs.length) {
-						tab.classList.add('active');
-					} else {
-						tab.classList.remove('active');
-					}
-				})
-			}
-		}
+	/**
+	 * Select the given tab
+	 * @param {CustomEvent} evt 
+	 */
+	function selectTabListener(evt) {
+		var tabs = this.querySelectorAll('browser-tab');
+		[].forEach.call(tabs, function (tab) {
+			tab.classList.remove('active');
+		})
+		evt.detail.source.classList.add('active');
+	}
 
-		/**
-		 * Select the given tab
-		 * @param {CustomEvent} evt 
-		 */
-		function selectTabListener(evt) {
-			var tabs = this.querySelectorAll('browser-tab');
-			[].forEach.call(tabs, function (tab) {
-				tab.classList.remove('active');
-			})
-			evt.detail.source.classList.add('active');
-		}
+	document.registerElement('browser-tabbar', {
+		prototype: prototype
+	});
 
-		document.registerElement('browser-tabbar', {
-			prototype: prototype
-		});
+	// /**
+	//  * Hide separator when surrounding tabs are hovered
+	//  * waiting for CSS4 property: !.tab + tabSeparator { }
+	//  */
+	// var tabs = document.querySelectorAll('.tab');
+	// [].forEach.call(document.querySelectorAll('.tabBar .tab'), function (el) {
+	// 	el.addEventListener('mouseover', function (evt) {
+	// 		var nextEl = el.nextElementSibling;
+	// 		if (nextEl && nextEl.classList.contains('tabSeparator')) {
+	// 			nextEl.classList.add('tabSeparatorHidden');
+	// 		}
+	// 		var prevEl = el.previousElementSibling;
+	// 		if (prevEl && prevEl.classList.contains('tabSeparator')) {
+	// 			prevEl.classList.add('tabSeparatorHidden');
+	// 		}
+	// 	});
+	// 	el.addEventListener('mouseout', function (evt) {
+	// 		var nextEl = el.nextElementSibling;
+	// 		if (nextEl && nextEl.classList.contains('tabSeparator')) {
+	// 			nextEl.classList.remove('tabSeparatorHidden');
+	// 		}
+	// 		var prevEl = el.previousElementSibling;
+	// 		if (prevEl && prevEl.classList.contains('tabSeparator')) {
+	// 			prevEl.classList.remove('tabSeparatorHidden');
+	// 		}
+	// 	});
+	// });
 
-		// /**
-		//  * Hide separator when surrounding tabs are hovered
-		//  * waiting for CSS4 property: !.tab + tabSeparator { }
-		//  */
-		// var tabs = document.querySelectorAll('.tab');
-		// [].forEach.call(document.querySelectorAll('.tabBar .tab'), function (el) {
-		// 	el.addEventListener('mouseover', function (evt) {
-		// 		var nextEl = el.nextElementSibling;
-		// 		if (nextEl && nextEl.classList.contains('tabSeparator')) {
-		// 			nextEl.classList.add('tabSeparatorHidden');
-		// 		}
-		// 		var prevEl = el.previousElementSibling;
-		// 		if (prevEl && prevEl.classList.contains('tabSeparator')) {
-		// 			prevEl.classList.add('tabSeparatorHidden');
-		// 		}
-		// 	});
-		// 	el.addEventListener('mouseout', function (evt) {
-		// 		var nextEl = el.nextElementSibling;
-		// 		if (nextEl && nextEl.classList.contains('tabSeparator')) {
-		// 			nextEl.classList.remove('tabSeparatorHidden');
-		// 		}
-		// 		var prevEl = el.previousElementSibling;
-		// 		if (prevEl && prevEl.classList.contains('tabSeparator')) {
-		// 			prevEl.classList.remove('tabSeparatorHidden');
-		// 		}
-		// 	});
-		// });
-
-	})();
+})();
 </script>

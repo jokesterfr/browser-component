@@ -1,4 +1,23 @@
-<template>
+<!--
+  file: browser-component.html
+  author: Clément Désiles <main@jokester.fr>
+  repository: https://github.com/jokesterfr/browser-component
+  licence: Mozilla Public License Version 2.0
+  description: Components for rendering browser style UIs
+-->
+
+<!-- Sub components which can be included -->
+<link rel="import" href="./browser-button.html"></link>
+<link rel="import" href="./browser-tabbar.html"></link>
+<link rel="import" href="./browser-tab.html"></link>
+<link rel="import" href="./browser-tab-separator.html"></link>
+<link rel="import" href="./browser-tab-new.html"></link>
+<link rel="import" href="./browser-toolbar.html"></link>
+<link rel="import" href="./browser-navigation.html"></link>
+<link rel="import" href="./browser-location.html"></link>
+
+<!-- Browser component -->
+<template id="browser-component">
 	<style>
 		:host {
 			display: -webkit-box;
@@ -23,18 +42,18 @@
 	(function () {
 		'use strict';
 		var prototype = Object.create(HTMLElement.prototype);
-		var template = document.currentScript.ownerDocument.querySelector('template');
+		var template = document.currentScript.ownerDocument.querySelector('template#browser-component');
 
 		prototype.createdCallback = function () {
 			var shadow = this.createShadowRoot();
 			shadow.appendChild(template.content.cloneNode(true));
+			var content = shadow.querySelector('content');
 
 			// Add browser against type
 			switch (this.getAttribute('type')) {
 				case 'webview':
 					var webview = document.createElement('webview');
 					webview.setAttribute('id', 'browser');
-					var content = shadow.querySelector('content');
 					content.parentNode.insertBefore(webview, content.nextSibling);
 					break;
 				case 'iframe':
@@ -45,12 +64,12 @@
 					iframe.setAttribute('frameBorder', '0');
 					iframe.setAttribute('seamless', 'seamless');
 					iframe.setAttribute('sandbox', 'allow-forms allow-scripts allow-top-navigation allow-same-origin');
-					var content = shadow.querySelector('content');
 					content.parentNode.insertBefore(iframe, content.nextSibling);
+					break;
 				default:
 					break;
 			}
-			this.addEventListener('select-tab', function (evt) {
+			this.addEventListener('select-tab', function () {
 				console.log('lfkdfldkjldfkjk')
 			});
 
