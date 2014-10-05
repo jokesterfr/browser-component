@@ -52,7 +52,7 @@ Please refer to the [following documentation](https://developer.chrome.com/apps/
 
 #### iframe
 
-If you use an iframe, you may encounter many issues, due to protections activated by your browser. This is not recommended, and experimental. To unlock your browser protections, please read down this page the [cors-policy](CORS Policy) and [x-frame-options](X-Frame-Options) sections.
+If you use an iframe, you may encounter many issues, due to protections activated by your browser. This is not recommended, and experimental. To unlock your browser protections, please read down this page the [CORS Policy](#cors-policy) and [X-Frame-Options](#x-frame-options) sections.
 
 ### browser-tabbar
 
