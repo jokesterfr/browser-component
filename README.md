@@ -20,7 +20,7 @@ bower install browser-component
 Import it in your page like so:
 
 ```html
-<link rel="import" href="./bower_components/browser-component/browser-component.html" />
+<link rel="import" href="./bower_components/browser-component/dist/browser-component.html" />
 ```
 
 And use it:
