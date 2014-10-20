@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="zoom-in.svg">
+   sodipodi:docname="zoom-out.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -46,7 +46,8 @@
        x1="1.8539023"
        y1="1027.9572"
        x2="30.690208"
-       y2="1049.8649" />
+       y2="1049.8649"
+       gradientTransform="translate(0,-1020.3622)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -55,17 +56,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="15.839192"
-     inkscape:cx="-0.24232348"
-     inkscape:cy="20.693474"
+     inkscape:zoom="3.959798"
+     inkscape:cx="-4.9996325"
+     inkscape:cy="16.521127"
      inkscape:document-units="px"
      inkscape:current-layer="g4496"
      showgrid="false"
-     inkscape:window-width="1871"
-     inkscape:window-height="1056"
-     inkscape:window-x="49"
-     inkscape:window-y="24"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="468"
+     inkscape:window-height="382"
+     inkscape:window-x="2406"
+     inkscape:window-y="213"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -74,7 +75,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -88,20 +89,9 @@
        style="stroke:none;fill:url(#linearGradient4508);fill-opacity:1">
       <path
          style="fill:url(#linearGradient4510);fill-opacity:1;stroke:none"
-         d="m 12.34375,1021.3935 c -6.3461749,0 -11.50000022,5.1225 -11.50000022,11.4687 0,6.3462 5.15382532,11.5 11.50000022,11.5 6.346175,0 11.5,-5.1538 11.5,-11.5 0,-6.3462 -5.153825,-11.4687 -11.5,-11.4687 z m 0.03125,1.8437 c 5.288479,0 9.5625,4.3053 9.5625,9.5938 0,5.2884 -4.274021,9.5625 -9.5625,9.5625 -5.2884792,0 -9.5937502,-4.2741 -9.5937502,-9.5625 0,-5.2885 4.305271,-9.5938 9.5937502,-9.5938 z"
-         id="path2996"
-         inkscape:connector-curvature="0" />
-      <path
-         sodipodi:nodetypes="ccscscscscc"
-         inkscape:connector-curvature="0"
-         id="path3768"
-         d="m 21.223732,1039.8404 1.261078,1.3038 c 0,0 1.047336,-0.7053 1.816805,-0.1282 0.769472,0.5771 6.455007,6.3908 6.455007,6.3908 0,0 0.769472,1.026 -0.106871,1.9878 -0.876341,0.9619 -1.903378,1.7033 -1.903378,1.7033 -0.987452,0.7335 -1.593583,0.1249 -2.042439,-0.2919 -0.604593,-0.5614 -5.950433,-5.7931 -5.950433,-5.7931 0,0 -0.524958,-0.5802 -0.149619,-1.9878 0.08549,-0.3206 -1.496194,-1.4534 -1.496194,-1.4534 z"
-         style="fill:url(#linearGradient4508);fill-opacity:1;stroke:none" />
-      <path
-         style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:url(#linearGradient4508);fill-opacity:1;stroke:none;stroke-width:2.07923436000000006;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
-         d="M 16.4375,1031.875 8.5,1031.969 a 1.0469666,1.0469666 0 1 0 0.03125,2.0937 l 7.9375,-0.125 a 1.0397211,1.0397211 0 1 0 -0.03125,-2.0625 z"
-         id="path3836"
-         inkscape:connector-curvature="0" />
+         d="M 12.34375 1.03125 C 5.9975751 1.03125 0.84375 6.1538 0.84375 12.5 C 0.84375 18.8462 5.9975751 24 12.34375 24 C 15.038608 24 17.507244 23.055349 19.46875 21.5 C 19.902773 21.827426 20.658821 22.412223 20.59375 22.65625 C 20.218411 24.06385 20.75 24.65625 20.75 24.65625 C 20.75 24.65625 26.114157 29.8761 26.71875 30.4375 C 27.167606 30.8543 27.762548 31.4835 28.75 30.75 C 28.75 30.75 29.779909 29.99315 30.65625 29.03125 C 31.532593 28.06945 30.75 27.03125 30.75 27.03125 C 30.75 27.03125 25.081972 21.23335 24.3125 20.65625 C 23.543031 20.07915 22.5 20.78125 22.5 20.78125 L 21.375 19.625 C 22.923275 17.665838 23.84375 15.188069 23.84375 12.5 C 23.84375 6.1538 18.689925 1.03125 12.34375 1.03125 z M 12.375 2.875 C 17.663479 2.875 21.9375 7.18025 21.9375 12.46875 C 21.9375 17.75715 17.663479 22.03125 12.375 22.03125 C 7.0865208 22.03125 2.78125 17.75715 2.78125 12.46875 C 2.78125 7.18025 7.0865208 2.875 12.375 2.875 z M 16.4375 11.5 L 8.5 11.59375 A 1.0469666 1.0469666 0 0 0 8.53125 13.6875 L 16.46875 13.5625 A 1.0397211 1.0397211 0 1 0 16.4375 11.5 z "
+         transform="translate(0,1020.3622)"
+         id="path2996" />
     </g>
   </g>
 </svg>

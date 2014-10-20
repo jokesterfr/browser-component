@@ -10,11 +10,17 @@ module.exports = function(grunt) {
   // Project configuration
   grunt.initConfig({
     svgmin: {
+      options: {
+        plugins: [
+            { removeViewBox: false },
+            { removeUselessStrokeAndFill: false }
+        ]
+      },
       dist: {
         expand: true,
-        cwd: 'img/src',
+        cwd: 'icons/src',
         src: ['*.svg'],
-        dest: 'img/',
+        dest: 'icons/',
         ext: '.svg'
       }
     },
@@ -24,7 +30,7 @@ module.exports = function(grunt) {
         src: ['dist/browser-component.html'],
         dest: 'dist',
         options: {
-          target: ['img/*.*']
+          target: ['icons/*.*']
         }
       }
     },
@@ -40,7 +46,7 @@ module.exports = function(grunt) {
 
     watch: {
       svg: {
-        files: ['img/src/*.svg'],
+        files: ['icons/src/*.svg'],
         tasks: ['svgmin'],
         options: {
           spawn: false,

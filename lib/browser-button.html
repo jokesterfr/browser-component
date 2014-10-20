@@ -85,23 +85,23 @@
 			background-size: 100%;
 		}
 
-		:host([type="back"])::shadow .icon { background-image: url("../img/back.svg"); }
-		:host([type="bookmark"])::shadow .icon { background-image: url("../img/bookmark.svg"); }
-		:host([type="download"])::shadow .icon { background-image: url("../img/download.svg"); }
-		:host([type="feed"])::shadow .icon { background-image: url("../img/feed.svg"); }
-		:host([type="forward"])::shadow .icon { background-image: url("../img/forward.svg"); }
-		:host([type="history"])::shadow .icon { background-image: url("../img/history.svg"); }
-		:host([type="home"])::shadow .icon { background-image: url("../img/home.svg"); }
-		:host([type="menu"])::shadow .icon { background-image: url("../img/menu.svg"); }
-		:host([type="new-window"])::shadow .icon { background-image: url("../img/new-window.svg"); }
-		:host([type="print"])::shadow .icon { background-image: url("../img/print.svg"); }
-		:host([type="reload"])::shadow .icon { background-image: url("../img/reload.svg"); }
-		:host([type="zoom-in"])::shadow .icon { background-image: url("../img/zoom-in.svg"); }
-		:host([type="zoom-out"])::shadow .icon { background-image: url("../img/zoom-out.svg"); }
-		:host([type="zoom"])::shadow .icon { background-image: url("../img/zoom.svg"); }
+		:host([type="back"])::shadow .icon { background-image: url("../icons/back.svg"); }
+		:host([type="bookmark"])::shadow .icon { background-image: url("../icons/bookmark.svg"); }
+		:host([type="download"])::shadow .icon { background-image: url("../icons/download.svg"); }
+		:host([type="feed"])::shadow .icon { background-image: url("../icons/feed.svg"); }
+		:host([type="forward"])::shadow .icon { background-image: url("../icons/forward.svg"); }
+		:host([type="history"])::shadow .icon { background-image: url("../icons/history.svg"); }
+		:host([type="home"])::shadow .icon { background-image: url("../icons/home.svg"); }
+		:host([type="menu"])::shadow .icon { background-image: url("../icons/menu.svg"); }
+		:host([type="new-window"])::shadow .icon { background-image: url("../icons/new-window.svg"); }
+		:host([type="print"])::shadow .icon { background-image: url("../icons/print.svg"); }
+		:host([type="reload"])::shadow .icon { background-image: url("../icons/reload.svg"); }
+		:host([type="zoom-in"])::shadow .icon { background-image: url("../icons/zoom-in.svg"); }
+		:host([type="zoom-out"])::shadow .icon { background-image: url("../icons/zoom-out.svg"); }
+		:host([type="zoom"])::shadow .icon { background-image: url("../icons/zoom.svg"); }
 
 		/* Exception for browser-location */
-		:host([type="reload"].blue:hover)::shadow .icon { background-image: url("../img/reload-hover.svg"); }
+		:host([type="reload"].blue:hover)::shadow .icon { background-image: url("../icons/reload-hover.svg"); }
 	</style>
 	<div class="icon"></div>
 </template>
@@ -120,7 +120,7 @@
 	// var href = new URL(style.getAttribute('href'), importBaseURL).toString();
 	// style.setAttribute('href', href);
 	var style = template.content.querySelector('style');
-	style.innerHTML.replace(/\"\.\.\/img/g, importBaseURL + '/.../img');
+	style.innerHTML.replace(/\"\.\.\/icons/g, importBaseURL + '/.../img');
 	
 	prototype.createdCallback = function() {
 		var self = this;

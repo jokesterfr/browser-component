@@ -13,7 +13,7 @@
 	// var href = new URL(style.getAttribute('href'), importBaseURL).toString();
 	// style.setAttribute('href', href);
 	var style = template.content.querySelector('style');
-	style.innerHTML.replace(/\"\.\.\/img/g, importBaseURL + '/.../img');
+	style.innerHTML.replace(/\"\.\.\/icons/g, importBaseURL + '/.../img');
 	
 	prototype.createdCallback = function() {
 		var self = this;
@@ -413,11 +413,6 @@
 
 			// Add browser against type
 			switch (this.getAttribute('type')) {
-				case 'webview':
-					var webview = document.createElement('webview');
-					webview.setAttribute('id', 'browser');
-					content.parentNode.insertBefore(webview, content.nextSibling);
-					break;
 				case 'iframe':
 					var iframe = document.createElement('iframe');
 					iframe.setAttribute('id', 'browser');
@@ -428,7 +423,11 @@
 					iframe.setAttribute('sandbox', 'allow-forms allow-scripts allow-top-navigation allow-same-origin');
 					content.parentNode.insertBefore(iframe, content.nextSibling);
 					break;
+				case 'webview':
 				default:
+					var webview = document.createElement('webview');
+					webview.setAttribute('id', 'browser');
+					content.parentNode.insertBefore(webview, content.nextSibling);
 					break;
 			}
 			this.addEventListener('select-tab', function () {

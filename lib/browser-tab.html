@@ -33,7 +33,7 @@
 		}
 
 		:host(.newTab) #favicon {
-			background-image: url("../img/newTab-Icon.svg");
+			background-image: url("../icons/newTab-Icon.svg");
 			width: 32px;
 			height: 32px;
 			background-size: 32px 32px;
@@ -43,25 +43,25 @@
 
 		:host(:hover) {
 			position: relative;
-			background: url("../img/tabBackgroundStart.svg") no-repeat left,
-						url("../img/tabBackgroundMiddle.svg") no-repeat 43px,
-						url("../img/tabBackgroundEnd.svg") no-repeat right;
+			background: url("../icons/tabBackgroundStart.svg") no-repeat left,
+						url("../icons/tabBackgroundMiddle.svg") no-repeat 43px,
+						url("../icons/tabBackgroundEnd.svg") no-repeat right;
 		}
 
 		:host(.appTab:hover),
 		:host(.newTab:hover) {
 			position: relative;
-			background: url("../img/tabBackgroundStart.svg") no-repeat left,
-						url("../img/tabBackgroundEnd.svg") no-repeat right;
+			background: url("../icons/tabBackgroundStart.svg") no-repeat left,
+						url("../icons/tabBackgroundEnd.svg") no-repeat right;
 		}
 
 		/**
 		Because for now Chrome does not support these instructions :(
 		 I had to change the size of tabActiveMiddle precisely to the size we want it to.
 		:host:hover {
-			background-image: url("../img/tabBackgroundStart.svg"),
-												url("../img/tabBackgroundMiddle.svg"),
-												url("../img/tabBackgroundEnd.svg");
+			background-image: url("../icons/tabBackgroundStart.svg"),
+												url("../icons/tabBackgroundMiddle.svg"),
+												url("../icons/tabBackgroundEnd.svg");
 			background-repeat: no-repeat,
 												 no-repeat,
 												 no-repeat;
@@ -81,9 +81,9 @@
 		}*/
 
 		:host(.active) {
-			background: url("../img/tabActiveStart.svg") no-repeat left,
-						url("../img/tabActiveMiddle.svg") no-repeat 42px,
-						url("../img/tabActiveEnd.svg") no-repeat right;
+			background: url("../icons/tabActiveStart.svg") no-repeat left,
+						url("../icons/tabActiveMiddle.svg") no-repeat 42px,
+						url("../icons/tabActiveEnd.svg") no-repeat right;
 			z-index: 399;
 			margin-top: 1px;
 		}
@@ -93,9 +93,9 @@
 		 I had to change the size of tabActiveMiddle precisely to the size we want it to.
 		:host.active {
 			position: relative;
-			background-image: url("../img/tabActiveStart.svg"),
-												url("../img/tabActiveMiddle.svg"),
-												url("../img/tabActiveEnd.svg");
+			background-image: url("../icons/tabActiveStart.svg"),
+												url("../icons/tabActiveMiddle.svg"),
+												url("../icons/tabActiveEnd.svg");
 			background-repeat: no-repeat,
 												 no-repeat,
 												 no-repeat;
@@ -113,7 +113,7 @@
 			margin-right: 6px;
 			width: 16px;
 			height: 16px;
-			background-image: url("../img/defaultFavicon.png");
+			background-image: url("../icons/defaultFavicon.png");
 			opacity: .9;
 			margin-top: 8px;
 		}
@@ -140,21 +140,21 @@
 		:host #close {
 			width: 32px;
 			height: 32px;
-			background-image: url("../img/close-simple.svg");
+			background-image: url("../icons/close-simple.svg");
 			background-repeat: no-repeat;
 			background-position: center center;
 			opacity: .8;
 		}
 
 		:host(.active) #close {
-			background-image: url("../img/close-simple.svg");
+			background-image: url("../icons/close-simple.svg");
 		}
 
 		:host #close:hover {
-			background-image: url("../img/close-hover.svg");
+			background-image: url("../icons/close-hover.svg");
 		}
 		:host #close:hover:active {
-			background-image: url("../img/close-active.svg");
+			background-image: url("../icons/close-active.svg");
 		}
 	</style>
 	<div id="favicon"></div>

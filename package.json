@@ -11,7 +11,8 @@
     "grunt-vulcanize": "~0.4.1",
     "grunt-data-uri": "~0.2.0",
     "grunt-svgmin": "~1.0.0",
-    "grunt-contrib-watch": "~0.6.1"
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-webfont": "~0.4.8"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -24,5 +25,8 @@
   "license": "Mozilla Public Licence version 2",
   "bugs": {
     "url": "https://github.com/jokesterfr/browser-component/issues"
+  },
+  "dependencies": {
+    "grunt-fontsmith": "^0.9.1"
   }
 }
