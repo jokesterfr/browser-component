@@ -1,1 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16"><defs><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".15"/></linearGradient><filter id="c"><feGaussianBlur stdDeviation=".3" in="SourceGraphic"/></filter><path id="a" d="M14.665 9.06l-5.59 5.503c-.29.29-.675.437-1.06.437-.383 0-.767-.146-1.06-.438L1.336 9.06C.75 8.475.948 8 1.772 8H5.02V2c0-.552.446-1 .998-1h3.996c.55 0 .998.448.998 1v6h3.215c.824 0 1.02.476.438 1.06z"/><clipPath id="d"><use xlink:href="#a" fill="#fff"/></clipPath></defs><use xlink:href="#a" fill="ButtonText" fill-opacity=".8"/><use xlink:href="#a" fill="url(#b)"/><path d="M14.665 9.31L9.32 15.123c-.29.29-.92.438-1.304.438s-.957-.146-1.25-.438l-5.432-5.81C.752 8.728.95 8.25 1.774 8.25h2.942V2c0-.552.75-1 1.302-1h4.265c.55 0 .998.448.998 1v6.25h2.946c.825 0 1.02.48.44 1.06z" fill="none" stroke="ButtonText" stroke-opacity=".7" filter="url(#c)" clip-path="url(#d)" stroke-miterlimit="10"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg version="1.1" id="toolbarButton-download" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" xml:space="preserve">
+
+  <defs>
+    <linearGradient id="gradientOverlay" x1="0" y1="0" x2="0" y2="100%">
+      <stop id="transparentStop" style="stop-color:#ffffff;stop-opacity:0" offset="0"/>
+      <stop id="translucentStop" style="stop-color:#ffffff;stop-opacity:0.15" offset="1"/>
+    </linearGradient>
+
+    <filter id="blur">
+      <feGaussianBlur stdDeviation=".3" in="SourceGraphic"/>
+    </filter>
+
+  	<path id="glyphShape" d="M14.665,9.059l-5.591,5.504C8.784,14.854,8.4,15,8.016,15c-0.384,0-0.768-0.146-1.06-0.438 L1.334,9.059c-0.582-0.583-0.385-1.06,0.439-1.06h3.246V2c0-0.552,0.447-1,0.999-1h3.996c0.551,0,0.998,0.448,0.998,1v5.999h3.215 C15.051,7.999,15.247,8.476,14.665,9.059z" />
+
+    <clipPath id="mask" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+      <use xlink:href="#glyphShape" style="fill: white;" />
+    </clipPath>
+
+  </defs>
+ 
+  <use xlink:href="#glyphShape" style="fill: ButtonText; fill-opacity: .8;" />
+
+  <use xlink:href="#glyphShape" style="fill: url(#gradientOverlay);" />
+
+	<path id="innerShadow" d="M14.665,9.311l-5.344,5.811 c-0.29,0.291-0.921,0.438-1.305,0.438c-0.384,0-0.957-0.146-1.249-0.438L1.334,9.311C0.752,8.729,0.949,8.25,1.773,8.25h2.943V2 c0-0.552,0.75-1,1.302-1h4.265c0.551,0,0.998,0.448,0.998,1v6.25h2.945C15.051,8.25,15.247,8.729,14.665,9.311z"
+	      style="fill: none; stroke: ButtonText; stroke-opacity: .7; filter: url(#blur); clip-path: url(#mask); stroke-miterlimit: 10;" />
+
+</svg>
+

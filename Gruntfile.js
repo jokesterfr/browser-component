@@ -9,22 +9,6 @@ module.exports = function(grunt) {
 
   // Project configuration
   grunt.initConfig({
-    svgmin: {
-      options: {
-        plugins: [
-            { removeViewBox: false },
-            { removeUselessStrokeAndFill: false }
-        ]
-      },
-      dist: {
-        expand: true,
-        cwd: 'icons/src',
-        src: ['*.svg'],
-        dest: 'icons/',
-        ext: '.svg'
-      }
-    },
-
     dataUri: {
       dist: {
         src: ['dist/browser-component.html'],
@@ -45,13 +29,6 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      svg: {
-        files: ['icons/src/*.svg'],
-        tasks: ['svgmin'],
-        options: {
-          spawn: false,
-        },
-      },
       components: {
         files: ['lib/*'],
         tasks: ['vulcanize', 'dataUri'],
@@ -66,8 +43,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-vulcanize');
   grunt.loadNpmTasks('grunt-data-uri');
-  grunt.loadNpmTasks('grunt-svgmin');
 
   // Default task(s).
-  grunt.registerTask('default', ['vulcanize', 'svgmin', 'dataUri']);
+  grunt.registerTask('default', ['vulcanize', 'dataUri']);
 };

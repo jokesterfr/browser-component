@@ -1,4 +1,5 @@
 
+
 /* browser-button */
 (function () {
 	'use strict';
@@ -15,10 +16,8 @@
 	var style = template.content.querySelector('style');
 	style.innerHTML.replace(/\"\.\.\/icons/g, importBaseURL + '/.../img');
 	
+	// Create shadow dom
 	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 	};
