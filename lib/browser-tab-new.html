@@ -5,6 +5,12 @@
   licence: Mozilla Public License Version 2.0
   description: A special tab to create a new empty one
 -->
+<style>
+	/* when no tab is displayed reset negative margin */
+	browser-tab-new:first-child {
+		margin-left: 0px;
+	}
+</style>
 <template id="browser-tab-new">
 	<style>
 		:host {
