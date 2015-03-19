@@ -39,6 +39,21 @@ And use it:
 </browser-component>
 ```
 
+## Testing example
+
+If you want to test this component in a [chrome app](https://developer.chrome.com/apps/about_apps) context, simply run:
+
+  $ npm run example
+
+## Browser compatibility
+
+As of today, web components are not natively supported by Firefox,
+Chrome and chromium support web components since version 35.
+
+[Check browser compatibility](http://caniuse.com/#feat=shadowdom).
+
+This `browser-component` uses the chrome [webview](https://developer.chrome.com/apps/tags/webview) tag. A tweak could be made to use the equivalent [XUL browser](https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XUL/browser) tag, so be supported by Firefox, therefore, the lack of Web components support does not urge me to do so.
+
 ## Components API
 
 ### browser-component
@@ -143,13 +158,6 @@ This is because *google* protected their website from phishing / clickjacking wi
 [Ignore X-Frame Header](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe/) is a Chrome extension letting you all the nasty things you want to do within an Iframe. You can also perform this kind of stuff with Firefox, using the extension [modify-headers](https://addons.mozilla.org/fr/firefox/addon/modify-headers) for example.
 
 You can also digg deeper into browsing threw a third party webservice, such as the yahoo api. A POOC is available on [jsfiddle](http://jsfiddle.net/dkdnaxaq/4/light/), I let you play with it, and won't support this kind of hack any time soon.
-
-## Browser compatibility
-
-At this date, web components are not natively supported by Firefox 32, and you won't be able to test this out.
-Chrome and chromium support web components since version 35.
-
-[Check browser compatibility](http://caniuse.com/#feat=shadowdom).
 
 # Licence
 

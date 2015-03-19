@@ -1,0 +1,26 @@
+{
+	"manifest_version": 2,
+	"name": "example",
+	"description": "an example for browser-component",
+	"version": "1.0.0",
+	"minimum_chrome_version": "30",
+	"author": "Clément Désiles <main@jokester.fr>",
+	"app": {
+		"background": {
+			"scripts": [
+				"./example/chrome.js"
+			]
+		}
+	},
+	"permissions": [
+		"app.window.fullscreen",
+		"app.window.fullscreen.overrideEsc",
+		"system.display",
+		"webview",
+		"fullscreen",
+		"tabs",
+		"notifications",
+		"http://*/",
+		"https://*/"
+	]
+}
