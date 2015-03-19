@@ -137,7 +137,7 @@
 			color: #4C4C4C;
 		}
 
-		:host #close {
+		:host #close-btn {
 			width: 32px;
 			height: 32px;
 			background-image: url("../icons/close-simple-white.svg");
@@ -146,21 +146,22 @@
 			opacity: .8;
 		}
 
-		:host(.active) #close {
+		:host(.active) #close-btn {
 			background-image: url("../icons/close-simple.svg");
 		}
 
-		:host #close:hover {
+		:host #close-btn:hover {
 			background-image: url("../icons/close-hover.svg");
 		}
-		:host #close:hover:active {
+		:host #close-btn:hover:active {
 			background-image: url("../icons/close-active.svg");
 		}
 	</style>
 	<div id="favicon"></div>
 	<div id="label"></div>
-	<div id="close"></div>
+	<div id="close-btn"></div>
 </template>
+
 <script>
 /* browser-tab */
 (function () {
@@ -174,29 +175,23 @@
 		shadow.appendChild(template.content.cloneNode(true));
 
 		// Register inner components
-		this.close = shadow.querySelector('#close');
 		this.label = shadow.querySelector('#label');
 		this.favicon = shadow.querySelector('#favicon');
+		this.closeBtn = shadow.querySelector('#close-btn');
 
 		// Fill label
-		var label = this.getAttribute('label');
-		label = label || 'New tab';
+		var label = this.getAttribute('label') || 'New tab';
 		this.label.textContent = label;
 
-		// Register close event
-		this.close.addEventListener('click', function (evt) {
-			closeTab.call(this, evt);
-		}.bind(this), false);
-
-		// Register select event
-		this.addEventListener('click', function (evt) {
-			selectTab.call(this, evt);
-		}.bind(this), false);
+		// Register select and close events
+		this.addEventListener('click', this.select.bind(this), false);
+		this.closeBtn.addEventListener('click', this.close.bind(this), false);
 	};
 
 	prototype.attachedCallback = function() {
-		var evt = new CustomEvent('new-tab', { detail: { source: this }});
-		this.parentNode.dispatchEvent(evt);
+		this.parentNode.dispatchEvent(
+			new CustomEvent('new-tab', { detail: { source: this }})
+		);
 	};
 
 	prototype.attributeChangedCallback = function (attr) {
@@ -207,32 +202,34 @@
 				break;
 
 			case 'label':
-				var label = this.getAttribute('label');
-				label = label || 'New tab';
+				var label = this.getAttribute('label') || 'New tab';
 				this.label.textContent = label;
 				break;
 		}
 	};
 
 	/**
-	 * Select the current tab
+	 * On click, select this tab as current
 	 */
-	function selectTab(evt) {
+	prototype.select = function(evt) {
 		if (evt.which === 2) {
-			return closeTab.call(this, evt);
+			// middle click button case
+			return this.close(evt);
 		}
 		evt.stopPropagation();
-		evt = new CustomEvent('select-tab', { detail: { source: this }});
-		this.parentNode.dispatchEvent(evt);
+		this.parentNode.dispatchEvent(
+			new CustomEvent('select-tab', { detail: { source: this }})
+		);
 	}
 
 	/**
-	 * On clicking close icon, destroy current tab
+	 * On close icon click, destroy this tab
 	 */
-	function closeTab(evt) {
+	prototype.close = function(evt) {
 		evt.stopPropagation();
-		evt = new CustomEvent('closed-tab', { detail: { source: this }});
-		this.parentNode.dispatchEvent(evt);
+		this.parentNode.dispatchEvent(
+			new CustomEvent('closed-tab', { detail: { source: this }})
+		);
 	}
 
 	/**

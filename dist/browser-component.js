@@ -1,5 +1,4 @@
 
-
 /* browser-button */
 (function () {
 	'use strict';
@@ -43,7 +42,6 @@
 		this.addEventListener('add-tab', addTabListener, false);
 		this.addEventListener('closed-tab', closedTabListener, false);
 		this.addEventListener('select-tab', selectTabListener, false);
-		
 	};
 	
 	/**
@@ -64,7 +62,6 @@
 			this.insertBefore(tab, this.firstChild);
 		}
 	}
-
 
 	/**
 	 * Activate the last added tab
@@ -113,35 +110,6 @@
 	document.registerElement('browser-tabbar', {
 		prototype: prototype
 	});
-
-	// /**
-	//  * Hide separator when surrounding tabs are hovered
-	//  * waiting for CSS4 property: !.tab + tabSeparator { }
-	//  */
-	// var tabs = document.querySelectorAll('.tab');
-	// [].forEach.call(document.querySelectorAll('.tabBar .tab'), function (el) {
-	// 	el.addEventListener('mouseover', function (evt) {
-	// 		var nextEl = el.nextElementSibling;
-	// 		if (nextEl && nextEl.classList.contains('tabSeparator')) {
-	// 			nextEl.classList.add('tabSeparatorHidden');
-	// 		}
-	// 		var prevEl = el.previousElementSibling;
-	// 		if (prevEl && prevEl.classList.contains('tabSeparator')) {
-	// 			prevEl.classList.add('tabSeparatorHidden');
-	// 		}
-	// 	});
-	// 	el.addEventListener('mouseout', function (evt) {
-	// 		var nextEl = el.nextElementSibling;
-	// 		if (nextEl && nextEl.classList.contains('tabSeparator')) {
-	// 			nextEl.classList.remove('tabSeparatorHidden');
-	// 		}
-	// 		var prevEl = el.previousElementSibling;
-	// 		if (prevEl && prevEl.classList.contains('tabSeparator')) {
-	// 			prevEl.classList.remove('tabSeparatorHidden');
-	// 		}
-	// 	});
-	// });
-
 })();
 ;
 
@@ -157,29 +125,23 @@
 		shadow.appendChild(template.content.cloneNode(true));
 
 		// Register inner components
-		this.close = shadow.querySelector('#close');
 		this.label = shadow.querySelector('#label');
 		this.favicon = shadow.querySelector('#favicon');
+		this.closeBtn = shadow.querySelector('#close-btn');
 
 		// Fill label
-		var label = this.getAttribute('label');
-		label = label || 'New tab';
+		var label = this.getAttribute('label') || 'New tab';
 		this.label.textContent = label;
 
-		// Register close event
-		this.close.addEventListener('click', function (evt) {
-			closeTab.call(this, evt);
-		}.bind(this), false);
-
-		// Register select event
-		this.addEventListener('click', function (evt) {
-			selectTab.call(this, evt);
-		}.bind(this), false);
+		// Register select and close events
+		this.addEventListener('click', this.select.bind(this), false);
+		this.closeBtn.addEventListener('click', this.close.bind(this), false);
 	};
 
 	prototype.attachedCallback = function() {
-		var evt = new CustomEvent('new-tab', { detail: { source: this }});
-		this.parentNode.dispatchEvent(evt);
+		this.parentNode.dispatchEvent(
+			new CustomEvent('new-tab', { detail: { source: this }})
+		);
 	};
 
 	prototype.attributeChangedCallback = function (attr) {
@@ -190,32 +152,34 @@
 				break;
 
 			case 'label':
-				var label = this.getAttribute('label');
-				label = label || 'New tab';
+				var label = this.getAttribute('label') || 'New tab';
 				this.label.textContent = label;
 				break;
 		}
 	};
 
 	/**
-	 * Select the current tab
+	 * On click, select this tab as current
 	 */
-	function selectTab(evt) {
+	prototype.select = function(evt) {
 		if (evt.which === 2) {
-			return closeTab.call(this, evt);
+			// middle click button case
+			return this.close(evt);
 		}
 		evt.stopPropagation();
-		evt = new CustomEvent('select-tab', { detail: { source: this }});
-		this.parentNode.dispatchEvent(evt);
+		this.parentNode.dispatchEvent(
+			new CustomEvent('select-tab', { detail: { source: this }})
+		);
 	}
 
 	/**
-	 * On clicking close icon, destroy current tab
+	 * On close icon click, destroy this tab
 	 */
-	function closeTab(evt) {
+	prototype.close = function(evt) {
 		evt.stopPropagation();
-		evt = new CustomEvent('closed-tab', { detail: { source: this }});
-		this.parentNode.dispatchEvent(evt);
+		this.parentNode.dispatchEvent(
+			new CustomEvent('closed-tab', { detail: { source: this }})
+		);
 	}
 
 	/**

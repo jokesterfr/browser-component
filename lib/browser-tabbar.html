@@ -18,6 +18,7 @@
 	</style>
 	<content></content>
 </template>
+
 <script>
 /* browser-tabbar */
 (function () {
@@ -35,7 +36,6 @@
 		this.addEventListener('add-tab', addTabListener, false);
 		this.addEventListener('closed-tab', closedTabListener, false);
 		this.addEventListener('select-tab', selectTabListener, false);
-		
 	};
 	
 	/**
@@ -56,7 +56,6 @@
 			this.insertBefore(tab, this.firstChild);
 		}
 	}
-
 
 	/**
 	 * Activate the last added tab
@@ -105,34 +104,5 @@
 	document.registerElement('browser-tabbar', {
 		prototype: prototype
 	});
-
-	// /**
-	//  * Hide separator when surrounding tabs are hovered
-	//  * waiting for CSS4 property: !.tab + tabSeparator { }
-	//  */
-	// var tabs = document.querySelectorAll('.tab');
-	// [].forEach.call(document.querySelectorAll('.tabBar .tab'), function (el) {
-	// 	el.addEventListener('mouseover', function (evt) {
-	// 		var nextEl = el.nextElementSibling;
-	// 		if (nextEl && nextEl.classList.contains('tabSeparator')) {
-	// 			nextEl.classList.add('tabSeparatorHidden');
-	// 		}
-	// 		var prevEl = el.previousElementSibling;
-	// 		if (prevEl && prevEl.classList.contains('tabSeparator')) {
-	// 			prevEl.classList.add('tabSeparatorHidden');
-	// 		}
-	// 	});
-	// 	el.addEventListener('mouseout', function (evt) {
-	// 		var nextEl = el.nextElementSibling;
-	// 		if (nextEl && nextEl.classList.contains('tabSeparator')) {
-	// 			nextEl.classList.remove('tabSeparatorHidden');
-	// 		}
-	// 		var prevEl = el.previousElementSibling;
-	// 		if (prevEl && prevEl.classList.contains('tabSeparator')) {
-	// 			prevEl.classList.remove('tabSeparatorHidden');
-	// 		}
-	// 	});
-	// });
-
 })();
 </script>
