@@ -170,9 +170,6 @@
 	var template = currentScript.ownerDocument.querySelector('template#browser-tab');
 
 	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 
@@ -188,19 +185,18 @@
 
 		// Register close event
 		this.close.addEventListener('click', function (evt) {
-			closeTab.call(self, evt);
-		}, false);
+			closeTab.call(this, evt);
+		}.bind(this), false);
 
 		// Register select event
 		this.addEventListener('click', function (evt) {
-			selectTab.call(self, evt);
-		}, false);
+			selectTab.call(this, evt);
+		}.bind(this), false);
 	};
 
 	prototype.attachedCallback = function() {
-		var self = this;
-		var evt = new CustomEvent('new-tab', { detail: { source: self }});
-		self.parentNode.dispatchEvent(evt);
+		var evt = new CustomEvent('new-tab', { detail: { source: this }});
+		this.parentNode.dispatchEvent(evt);
 	};
 
 	prototype.attributeChangedCallback = function (attr) {

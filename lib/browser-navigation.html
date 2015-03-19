@@ -181,9 +181,6 @@
 	var template = currentScript.ownerDocument.querySelector('template#browser-navigation');
 
 	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 
@@ -197,7 +194,7 @@
 		button.classList.add('hidable');
 		shadow.appendChild(button);
 
-		var browser = self;
+		var browser = this;
 		while (browser = browser.parentNode) {
 			if (browser.tagName === 'BROWSER-COMPONENT') break;
 		}

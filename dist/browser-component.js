@@ -16,7 +16,6 @@
 	var style = template.content.querySelector('style');
 	style.innerHTML.replace(/\"\.\.\/icons/g, importBaseURL + '/.../img');
 	
-	// Create shadow dom
 	prototype.createdCallback = function() {
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
@@ -36,9 +35,6 @@
 	var template = currentScript.ownerDocument.querySelector('template#browser-tabbar');
 
 	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 
@@ -157,9 +153,6 @@
 	var template = currentScript.ownerDocument.querySelector('template#browser-tab');
 
 	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 
@@ -175,19 +168,18 @@
 
 		// Register close event
 		this.close.addEventListener('click', function (evt) {
-			closeTab.call(self, evt);
-		}, false);
+			closeTab.call(this, evt);
+		}.bind(this), false);
 
 		// Register select event
 		this.addEventListener('click', function (evt) {
-			selectTab.call(self, evt);
-		}, false);
+			selectTab.call(this, evt);
+		}.bind(this), false);
 	};
 
 	prototype.attachedCallback = function() {
-		var self = this;
-		var evt = new CustomEvent('new-tab', { detail: { source: self }});
-		self.parentNode.dispatchEvent(evt);
+		var evt = new CustomEvent('new-tab', { detail: { source: this }});
+		this.parentNode.dispatchEvent(evt);
 	};
 
 	prototype.attributeChangedCallback = function (attr) {
@@ -242,10 +234,7 @@
 	var currentScript = document.currentScript;
 	var template = currentScript.ownerDocument.querySelector('template#browser-tab-separator');
 
-	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
+	prototype.createdCallback = function() {	
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 	};
@@ -264,16 +253,12 @@
 	var template = currentScript.ownerDocument.querySelector('template#browser-tab-new');
 
 	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
 		var shadow = this.createShadowRoot()
 		shadow.appendChild(template.content.cloneNode(true));
 
-		// Register new tab event
 		this.addEventListener('click', function (evt) {
-			addTab.call(self, evt);
-		}, false);
+			addTab.call(this, evt);
+		}.bind(this), false);
 	};
 	
 	/**
@@ -302,9 +287,6 @@
 	var template = currentScript.ownerDocument.querySelector('template#browser-toolbar');
 
 	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 	};
@@ -323,9 +305,6 @@
 	var template = currentScript.ownerDocument.querySelector('template#browser-navigation');
 
 	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 
@@ -339,7 +318,7 @@
 		button.classList.add('hidable');
 		shadow.appendChild(button);
 
-		var browser = self;
+		var browser = this;
 		while (browser = browser.parentNode) {
 			if (browser.tagName === 'BROWSER-COMPONENT') break;
 		}
@@ -361,10 +340,7 @@
 	var currentScript = document.currentScript;
 	var template = currentScript.ownerDocument.querySelector('template#browser-location');
 
-	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
+	prototype.createdCallback = function() {	
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 		var button = document.createElement('browser-button');
@@ -373,7 +349,7 @@
 		shadow.appendChild(button);
 
 		// Get browser parent
-		var parent = self;
+		var parent = this;
 		while (parent = parent.parentNode) {
 			if (parent && parent.tagName.toLowerCase() === 'browser-component') break;
 		}

@@ -116,10 +116,7 @@
 	var currentScript = document.currentScript;
 	var template = currentScript.ownerDocument.querySelector('template#browser-location');
 
-	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
+	prototype.createdCallback = function() {	
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 		var button = document.createElement('browser-button');
@@ -128,7 +125,7 @@
 		shadow.appendChild(button);
 
 		// Get browser parent
-		var parent = self;
+		var parent = this;
 		while (parent = parent.parentNode) {
 			if (parent && parent.tagName.toLowerCase() === 'browser-component') break;
 		}

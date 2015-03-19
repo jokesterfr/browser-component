@@ -30,9 +30,6 @@
 	var template = currentScript.ownerDocument.querySelector('template#browser-toolbar');
 
 	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 	};

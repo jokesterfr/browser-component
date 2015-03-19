@@ -25,10 +25,7 @@
 	var currentScript = document.currentScript;
 	var template = currentScript.ownerDocument.querySelector('template#browser-tab-separator');
 
-	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
+	prototype.createdCallback = function() {	
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 	};

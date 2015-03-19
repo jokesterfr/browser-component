@@ -58,16 +58,12 @@
 	var template = currentScript.ownerDocument.querySelector('template#browser-tab-new');
 
 	prototype.createdCallback = function() {
-		var self = this;
-		
-		// Create shadow dom
 		var shadow = this.createShadowRoot()
 		shadow.appendChild(template.content.cloneNode(true));
 
-		// Register new tab event
 		this.addEventListener('click', function (evt) {
-			addTab.call(self, evt);
-		}, false);
+			addTab.call(this, evt);
+		}.bind(this), false);
 	};
 	
 	/**
