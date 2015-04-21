@@ -10,22 +10,22 @@
 		:host {
 			display: -webkit-box;
 			display: flex;
-			padding: 9px 25px 7px 40px;
+			padding: 9px 25px 7px 35px;
 			height: 29px;
-			margin-left: -32px;
-			min-width: 250px;
-			max-width: 250px;
+			margin-left: -37px;
+			min-width: 255px;
+			max-width: 255px;
 			-webkit-user-select: none;
 			-moz-user-select: none;
 			user-select: none;
 			cursor: default;
 			font-family: "Fira Sans Medium", Arial, sans-serif;
+			margin-top: 1px;
 		}
 		:host(:first-child) {
 			margin-left: 0px;
 		}
 
-		:host(.appTab),
 		:host(.newTab) {
 			width: 36px;
 			min-width: 36px;
@@ -42,15 +42,12 @@
 		}
 
 		:host(:hover) {
-			position: relative;
 			background: url("../icons/tabBackgroundStart.svg") no-repeat left,
 						url("../icons/tabBackgroundMiddle.svg") no-repeat 43px,
 						url("../icons/tabBackgroundEnd.svg") no-repeat right;
 		}
 
-		:host(.appTab:hover),
 		:host(.newTab:hover) {
-			position: relative;
 			background: url("../icons/tabBackgroundStart.svg") no-repeat left,
 						url("../icons/tabBackgroundEnd.svg") no-repeat right;
 		}
@@ -60,17 +57,17 @@
 		 I had to change the size of tabActiveMiddle precisely to the size we want it to.
 		:host:hover {
 			background-image: url("../icons/tabBackgroundStart.svg"),
-												url("../icons/tabBackgroundMiddle.svg"),
-												url("../icons/tabBackgroundEnd.svg");
+							url("../icons/tabBackgroundMiddle.svg"),
+							url("../icons/tabBackgroundEnd.svg");
 			background-repeat: no-repeat,
-												 no-repeat,
-												 no-repeat;
+							 no-repeat,
+							 no-repeat;
 			background-position: left,
-													 43px,
-													 right;
+								 43px,
+								 right;
 			background-size: 43px 45px,
-											 calc(100% - 86px) 45px,
-											 43px 45px;
+								 calc(100% - 86px) 45px,
+								 43px 45px;
 		}
 		*/
 
@@ -85,14 +82,12 @@
 						url("../icons/tabActiveMiddle.svg") no-repeat 42px,
 						url("../icons/tabActiveEnd.svg") no-repeat right;
 			z-index: 399;
-			margin-top: 1px;
 		}
 
 		/**
 		 Because for now Chrome does not support these instructions :(
 		 I had to change the size of tabActiveMiddle precisely to the size we want it to.
 		:host.active {
-			position: relative;
 			background-image: url("../icons/tabActiveStart.svg"),
 												url("../icons/tabActiveMiddle.svg"),
 												url("../icons/tabActiveEnd.svg");
@@ -109,17 +104,39 @@
 		}
 		*/
 
-		:host > #favicon {
-			margin-right: 6px;
-			width: 16px;
-			height: 16px;
-			background-image: url("../icons/defaultFavicon.png");
-			opacity: .9;
-			margin-top: 8px;
+		:host(.loading) > #favicon {
+			width: 24px;
+			height: 24px;
+			background-repeat: no-repeat;
+			background-size: 24px 24px;
+			background-position: 0px 0px;
+			margin-top: 4px;
+			margin-right: 0.4em;
+			background-image: url("../icons/spinner-dark.gif");
 		}
-		:host(.appTab) > #favicon,
+
+		
+		:host(:hover.loading) > #favicon {
+			background-image: url("../icons/spinner-gradient.gif");
+		}
+
+		:host(.active.loading) > #favicon {
+			background-image: url("../icons/spinner.gif");
+		}
+
 		:host(.newTab) > #favicon {
 			margin-right: 0;
+		}
+		
+		:host > #favicon > img { 
+			width: 24px;
+			height: 24px;
+			margin-right: 6px;
+			margin-top: 4px;
+		}
+
+		:host(.loading) > #favicon > img {
+			display:none;
 		}
 
 		:host > #label {
@@ -170,7 +187,7 @@
 	var currentScript = document.currentScript;
 	var template = currentScript.ownerDocument.querySelector('template#browser-tab');
 
-	prototype.createdCallback = function() {
+	prototype.createdCallback = function () {
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 
@@ -178,6 +195,12 @@
 		this.label = shadow.querySelector('#label');
 		this.favicon = shadow.querySelector('#favicon');
 		this.closeBtn = shadow.querySelector('#close-btn');
+
+		// If an url attribute has been set
+		this.url = this.getAttribute('url');
+
+		// Unique tab id
+		this.id = generateUID();
 
 		// Fill label
 		var label = this.getAttribute('label') || 'New tab';
@@ -188,9 +211,12 @@
 		this.closeBtn.addEventListener('click', this.close.bind(this), false);
 	};
 
-	prototype.attachedCallback = function() {
+	prototype.attachedCallback = function () {
 		this.parentNode.dispatchEvent(
-			new CustomEvent('new-tab', { detail: { source: this }})
+			new CustomEvent('new-tab', { 
+				detail: { source: this },
+				bubbles: true
+			})
 		);
 	};
 
@@ -209,27 +235,79 @@
 	};
 
 	/**
+	 * Start the loading effect on tab
+	 */
+	prototype.startLoading = function () {
+		this.classList.add('loading');
+	}
+
+	/**
+	 * Stop the loading effect on tab
+	 */
+	prototype.stopLoading = function () {
+		this.classList.remove('loading');
+	}
+
+	/**
+	 * Sets the tab title
+	 * @param {String} title
+	 */
+	prototype.setTitle = function (title) {
+		this.label.textContent = title;
+	}
+
+	/**
+	 * Set favicon
+	 * @param {Image blob} blob
+	 */
+	prototype.setFavicon = function (blob) {
+		this.favicon.innerHTML = '';
+		if (!blob) return;
+		var img = document.createElement('img');
+		img.src = window.URL.createObjectURL(blob);
+		img.addEventListener('error', function() { img.style.display = 'none' });
+		this.favicon.appendChild(img);
+	}
+
+	/**
 	 * On click, select this tab as current
 	 */
-	prototype.select = function(evt) {
+	prototype.select = function (evt) {
 		if (evt.which === 2) {
 			// middle click button case
 			return this.close(evt);
 		}
 		evt.stopPropagation();
 		this.parentNode.dispatchEvent(
-			new CustomEvent('select-tab', { detail: { source: this }})
+			new CustomEvent('select-tab', { 
+				detail: { source: this },
+				bubbles: true
+			})
 		);
 	}
 
 	/**
 	 * On close icon click, destroy this tab
 	 */
-	prototype.close = function(evt) {
+	prototype.close = function (evt) {
 		evt.stopPropagation();
 		this.parentNode.dispatchEvent(
-			new CustomEvent('closed-tab', { detail: { source: this }})
+			new CustomEvent('closed-tab', { 
+				detail: { source: this },
+				bubbles: true
+			})
 		);
+	}
+
+	/**
+	 * Unique tab id
+	 * @see http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+	 */
+	function generateUID() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+			var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+			return v.toString(16);
+		});
 	}
 
 	/**

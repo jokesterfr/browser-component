@@ -50,7 +50,6 @@
 	 */
 	function addTabListener(evt) {
 		var tab = document.createElement('browser-tab');
-		tab.setAttribute('url', 'https://google.com');
 		var lastTab = this.querySelector('browser-tab:last-of-type');
 		if (lastTab) {
 			if (lastTab.nextSibling) {
@@ -120,7 +119,7 @@
 	var currentScript = document.currentScript;
 	var template = currentScript.ownerDocument.querySelector('template#browser-tab');
 
-	prototype.createdCallback = function() {
+	prototype.createdCallback = function () {
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 
@@ -128,6 +127,12 @@
 		this.label = shadow.querySelector('#label');
 		this.favicon = shadow.querySelector('#favicon');
 		this.closeBtn = shadow.querySelector('#close-btn');
+
+		// If an url attribute has been set
+		this.url = this.getAttribute('url');
+
+		// Unique tab id
+		this.id = generateUID();
 
 		// Fill label
 		var label = this.getAttribute('label') || 'New tab';
@@ -138,9 +143,12 @@
 		this.closeBtn.addEventListener('click', this.close.bind(this), false);
 	};
 
-	prototype.attachedCallback = function() {
+	prototype.attachedCallback = function () {
 		this.parentNode.dispatchEvent(
-			new CustomEvent('new-tab', { detail: { source: this }})
+			new CustomEvent('new-tab', { 
+				detail: { source: this },
+				bubbles: true
+			})
 		);
 	};
 
@@ -159,27 +167,79 @@
 	};
 
 	/**
+	 * Start the loading effect on tab
+	 */
+	prototype.startLoading = function () {
+		this.classList.add('loading');
+	}
+
+	/**
+	 * Stop the loading effect on tab
+	 */
+	prototype.stopLoading = function () {
+		this.classList.remove('loading');
+	}
+
+	/**
+	 * Sets the tab title
+	 * @param {String} title
+	 */
+	prototype.setTitle = function (title) {
+		this.label.textContent = title;
+	}
+
+	/**
+	 * Set favicon
+	 * @param {Image blob} blob
+	 */
+	prototype.setFavicon = function (blob) {
+		this.favicon.innerHTML = '';
+		if (!blob) return;
+		var img = document.createElement('img');
+		img.src = window.URL.createObjectURL(blob);
+		img.addEventListener('error', function() { img.style.display = 'none' });
+		this.favicon.appendChild(img);
+	}
+
+	/**
 	 * On click, select this tab as current
 	 */
-	prototype.select = function(evt) {
+	prototype.select = function (evt) {
 		if (evt.which === 2) {
 			// middle click button case
 			return this.close(evt);
 		}
 		evt.stopPropagation();
 		this.parentNode.dispatchEvent(
-			new CustomEvent('select-tab', { detail: { source: this }})
+			new CustomEvent('select-tab', { 
+				detail: { source: this },
+				bubbles: true
+			})
 		);
 	}
 
 	/**
 	 * On close icon click, destroy this tab
 	 */
-	prototype.close = function(evt) {
+	prototype.close = function (evt) {
 		evt.stopPropagation();
 		this.parentNode.dispatchEvent(
-			new CustomEvent('closed-tab', { detail: { source: this }})
+			new CustomEvent('closed-tab', { 
+				detail: { source: this },
+				bubbles: true
+			})
 		);
+	}
+
+	/**
+	 * Unique tab id
+	 * @see http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
+	 */
+	function generateUID() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+			var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+			return v.toString(16);
+		});
 	}
 
 	/**
@@ -253,6 +313,28 @@
 	prototype.createdCallback = function() {
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
+
+		// Get browser parent
+		this.browser = this;
+		while (this.browser = this.browser.parentNode) {
+			if (this.browser.tagName === 'BROWSER-COMPONENT') break;
+		}
+
+		this.addEventListener('click', function (evt) {
+			evt.stopPropagation();
+			if (evt.target.tagName !== 'BROWSER-BUTTON') return;
+			switch (evt.target.getAttribute('type')) {
+				case 'zoom-in':
+					this.browser.zoomIn();
+					break;
+				case 'zoom-out':
+					this.browser.zoomOut();
+					break;
+				case 'home':
+					this.browser.goHome();
+					break;
+			}
+		});
 	};
 
 	document.registerElement('browser-toolbar', {
@@ -269,28 +351,47 @@
 	var template = currentScript.ownerDocument.querySelector('template#browser-navigation');
 
 	prototype.createdCallback = function() {
+		this.browser = this;
+		while (this.browser = this.browser.parentNode) {
+			if (this.browser.tagName === 'BROWSER-COMPONENT') break;
+		}
+
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 
-		var button = document.createElement('browser-button');
-		button.setAttribute('type', 'back');
-		button.classList.add('rounded');
-		shadow.appendChild(button);
+		this.backBtn = document.createElement('browser-button');
+		this.backBtn.setAttribute('type', 'back');
+		this.backBtn.setAttribute('class', 'rounded disabled');
+		shadow.appendChild(this.backBtn);
+		this.backBtn.addEventListener('click', function (evt) {
+			this.browser.back();
+		}.bind(this));
 
-		var button = document.createElement('browser-button');
-		button.setAttribute('type', 'forward');
-		button.classList.add('hidable');
-		shadow.appendChild(button);
+		this.forwardBtn = document.createElement('browser-button');
+		this.forwardBtn.setAttribute('type', 'forward');
+		this.forwardBtn.setAttribute('class', 'disabled');
+		shadow.appendChild(this.forwardBtn);
+		this.forwardBtn.addEventListener('click', function (evt) {
+			this.browser.forward();
+		}.bind(this));
 
-		var browser = this;
-		while (browser = browser.parentNode) {
-			if (browser.tagName === 'BROWSER-COMPONENT') break;
-		}
-		browser.addEventListener('history-changed', function (evt) {
-			console.log('TODO');
-		});
+		this.browser.addEventListener('idle', function (evt) {
+			if (this.browser.canGoForward()) {
+				this.forwardBtn.classList.remove('disabled');
+				this.forwardBtn.classList.add('show');
+			} else {
+				this.forwardBtn.classList.add('disabled');
+			}
+
+			if (this.browser.canGoBack()) {
+				this.backBtn.classList.remove('disabled');
+			} else {
+				this.backBtn.classList.add('disabled');
+			}
+
+		}.bind(this));
 	};
-	
+
 	document.registerElement('browser-navigation', {
 		prototype: prototype
 	});
@@ -307,31 +408,53 @@
 	prototype.createdCallback = function() {	
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
-		var button = document.createElement('browser-button');
-		button.setAttribute('type', 'reload');
-		button.classList.add('blue');
-		shadow.appendChild(button);
 
 		// Get browser parent
-		var parent = this;
-		while (parent = parent.parentNode) {
-			if (parent && parent.tagName.toLowerCase() === 'browser-component') break;
+		this.browser = this;
+		while (this.browser = this.browser.parentNode) {
+			if (this.browser.tagName === 'BROWSER-COMPONENT') break;
 		}
 
-		// Listen input change
-		var input = shadow.querySelector('input');
-		input.addEventListener('keypress', function (evt) {
-			button.setAttribute('type', 'forward');
-		}, false);
+		// Create control button (stop / reload)
+		this.controlButton = document.createElement('browser-button');
+		this.controlButton.setAttribute('type', 'reload');
+		this.controlButton.classList.add('blue');
+		shadow.appendChild(this.controlButton);
+		this.controlButton.addEventListener('click', function (evt) {
+			switch (this.controlButton.getAttribute('type')) {
+				case 'reload':
+					this.browser.reload();
+					break;
+				case 'stop':
+					this.browser.stop();
+					break;
+			}
+		}.bind(this));
 
-		input.addEventListener('change', function (evt) {
-			evt = new CustomEvent('location-changed', {
-				detail: {
-					uri: input.value
-				}
-			});
-			parent.dispatchEvent(evt);
-		}, false);
+		// Listen input change
+		this.input = shadow.querySelector('input');
+		this.input.addEventListener('keypress', function (evt) {
+			if (evt.keyIdentifier !== 'Enter') return;
+			this.browser.go(this.input.value);
+		}.bind(this), false);
+
+		// Listen to external notifications
+		this.browser.addEventListener('loading', function (evt) {
+			if (!evt || !evt.detail || !evt.detail.uri) return;
+			this.input.value = decodeURIComponent(evt.detail.uri);
+			this.controlButton.setAttribute('type', 'stop');
+		}.bind(this));
+
+		this.browser.addEventListener('idle', function (evt) {
+			if (!evt || !evt.detail || !evt.detail.uri) return;
+			this.input.value = decodeURIComponent(evt.detail.uri);
+			this.controlButton.setAttribute('type', 'reload');
+		}.bind(this));
+
+		this.browser.addEventListener('tab-selected', function (evt) {
+			if (!evt || !evt.detail || !evt.detail.uri) return;
+			this.input.value = decodeURIComponent(evt.detail.uri);
+		}.bind(this));
 	};
 	
 	document.registerElement('browser-location', {
@@ -342,46 +465,314 @@
 
 	(function () {
 		'use strict';
+
+		/**
+		 * Generate a custom webview
+		 * @param {DOMElement browser-tab} tab
+		 * @return {DOMElement webview}
+		 */
+		window.customWebview = function (tab) {
+			var webview = new WebView();
+			webview.tab = tab;
+	
+			webview.addEventListener('loadstart', function (evt) {
+				evt.stopPropagation();
+
+				// Timeout to avoid any blinking effects with the tab loader
+				if (webview.t) clearTimeout(webview.t);
+				webview.dispatchEvent(new CustomEvent('loading', {
+					detail: { uri: webview.src }
+				}));
+				webview.tab.startLoading();
+			});
+
+			webview.addEventListener('loadstop', function (evt) {
+				evt.stopPropagation();
+
+				// Timeout to avoid any blinking effects with the tab loader
+				if (webview.t) clearTimeout(webview.t);
+				webview.t = setTimeout(function () {
+					webview.dispatchEvent(new CustomEvent('idle', {
+						detail: { uri: webview.src }
+					}));
+					webview.tab.stopLoading();
+				}, 300);
+			}.bind(webview));
+
+			webview.addEventListener('contentload', function (evt) {
+				evt.stopPropagation();
+
+				// Update tab title
+				webview.executeScript(
+					{ code: 'document && document.title' },
+					function (title) {
+						if (title) webview.tab.setTitle(title);
+					}
+				);
+
+				// Check if domain changed
+				var anchor = document.createElement('a');
+				anchor.href = webview.src;
+				var domain = anchor.protocol + '//' + anchor.hostname;
+				if (webview.domain !== domain) {
+					webview.dispatchEvent(
+						new CustomEvent('domain-changed', { 
+							detail: { domain: domain },
+							bubbles: true
+						})
+					);
+				}
+				webview.domain = domain;
+			});
+
+			webview.addEventListener('loadabort', function (evt) {
+				evt.stopPropagation();
+
+				// Reset tab loader
+				webview.dispatchEvent(new CustomEvent('idle', {
+					detail: { uri: webview.src }
+				}));
+				webview.tab.stopLoading();
+			});
+
+			webview.addEventListener('newwindow', function (evt) {
+				var newwebview = document.createElement('webview');
+				document.body.appendChild(newwebview);
+				evt.window.attach(newwebview);
+			});
+
+			webview.addEventListener('permissionrequest', function (evt) {
+				if (evt.permission === 'media') evt.request.allow();
+			});
+
+			webview.style.webkitTransition = 'opacity 250ms';
+			webview.addEventListener('unresponsive', function () {
+				webview.style.opacity = '0.5';
+			});
+
+			webview.addEventListener('responsive', function () {
+				webview.style.opacity = '1';
+			});
+
+			/**
+			 * On domain change, update favicon
+			 * @param {DOMEvent} evt
+			 */
+			webview.addEventListener('domain-changed', function (evt) {
+				webview.getFavicon(evt.detail.domain);
+			});
+
+			/**
+			 * Get the page favicon
+			 * @param {String} baseuri - like "http://google.com"
+			 * @param {String} ext - ico or png
+			 */
+			webview.getFavicon = function (baseuri, ext) {
+				ext = ext || 'ico';
+				var anchor = document.createElement('a');
+				anchor.href = webview.src;
+				var uri = baseuri + '/favicon.' + ext;
+
+				var xhr = new XMLHttpRequest();
+				xhr.open('GET', uri, true);
+				xhr.responseType = 'blob';
+				xhr.onload = function (evt) {
+					if (this.status === 200) {
+						var type = ext === 'png' ? 'image/png' : 'image/x-icon';
+						var blob = new Blob([this.response], { type: type });
+						if (blob.size) {
+							return webview.tab.setFavicon(blob);
+						}
+					}
+					if (ext === 'ico') {
+						// Retry with png if ico not found or empty
+						webview.getFavicon(baseuri, 'png');
+					} else {
+						// Reset icon
+						return webview.tab.setFavicon(null);
+					}
+				};
+				xhr.send();
+			}
+
+			webview.attributeChangedCallback = function (attr) {
+				console.log(attr);
+			}
+
+			return webview;
+		};
+	})();
+;
+
+	(function () {
+		'use strict';
 		var prototype = Object.create(HTMLElement.prototype);
 		var template = document.currentScript.ownerDocument.querySelector('template#browser-component');
 
 		prototype.createdCallback = function () {
-			var shadow = this.createShadowRoot();
-			shadow.appendChild(template.content.cloneNode(true));
-			var content = shadow.querySelector('content');
+			this.shadow = this.createShadowRoot();
+			this.shadow.appendChild(template.content.cloneNode(true));
+			this.content = this.shadow.querySelector('content');
 
-			// Add browser against type
-			switch (this.getAttribute('type')) {
-				case 'iframe':
-					var iframe = document.createElement('iframe');
-					iframe.setAttribute('id', 'browser');
-					iframe.setAttribute('width', '100%');
-					iframe.setAttribute('height', '100%');
-					iframe.setAttribute('frameBorder', '0');
-					iframe.setAttribute('seamless', 'seamless');
-					iframe.setAttribute('sandbox', 'allow-forms allow-scripts allow-top-navigation allow-same-origin');
-					content.parentNode.insertBefore(iframe, content.nextSibling);
-					break;
-				case 'webview':
-				default:
-					var webview = document.createElement('webview');
-					webview.setAttribute('id', 'browser');
-					content.parentNode.insertBefore(webview, content.nextSibling);
-					break;
-			}
-			this.addEventListener('select-tab', function () {
-				console.log('lfkdfldkjldfkjk')
-			});
-
-			this.addEventListener('location-changed', function (evt) {
-				var uri = evt.detail.uri;
-				shadow.querySelector('#browser').src = uri;
-			});
+			// Register listeners
+			this.addEventListener('new-tab', newTabListener.bind(this));
+			this.addEventListener('closed-tab', closedTabListener.bind(this));
+			this.addEventListener('select-tab', selectTabListener.bind(this));
 		};
 
 		prototype.attributeChangedCallback = function () {
 			console.log('browser component attribute changed!!');
 		};
+
+		/** 
+		 * Tells the current webview to go to a specific uri
+		 * @param {String} uri
+		 */
+		prototype.go = function (uri) {
+			if (uri === this.currentWebView.src) return;
+			if (!uri) uri = this.getAttribute('defaultPage');
+
+			var parser = document.createElement('a');
+			parser.href = uri;
+			if (parser.protocol === 'chrome-extension:') {
+				uri	= 'http://' + uri;
+			}
+
+			this.currentWebView.src = uri;
+		};
+
+		/**
+		 * Tells the current webview to go to the default uri
+		 */
+		prototype.goHome = function () {
+			this.currentWebView.src = this.getAttribute('defaultPage');
+		};
+
+		/** 
+		 * Zoom-in the current webview
+		 */
+		prototype.zoomIn = function () {
+			var webview = this.currentWebView;
+			webview.getZoom(function (level) {
+				level = level > 0 ? level + 0.1 : 1.1;
+				if (level > 3) level = 3;
+				webview.setZoom(level);
+			});
+		};
+
+		/** 
+		 * Zoom-out the current webview
+		 */
+		prototype.zoomOut = function () {
+			var webview = this.currentWebView;
+			webview.getZoom(function (level) {
+				level = level > 0 ? level - 0.1 : 0.9;
+				if (level < 0.1) level = 0.1;
+				webview.setZoom(level);
+			});
+		};
+
+		/** 
+		 * Stop the current webview
+		 */
+		prototype.stop = function () {
+			this.currentWebView.stop();
+		};
+
+		/** 
+		 * Reload the current webview
+		 */
+		prototype.reload = function () {
+			this.currentWebView.reload();
+		};
+
+		/**
+		 * Change the current webview
+		 * @param {Integer} index
+		 */
+		prototype.selectTab = function (index) {
+			console.log('tab selected:', index);
+		};
+
+		/**
+		 * Check if the current webview can go back
+		 * @return {Boolean} previous history state
+		 */
+		prototype.canGoBack = function() {
+			return this.currentWebView.canGoBack();
+		}
+
+		/**
+		 * Tells the current webview to go back
+		 * @return {Boolean} previous history state
+		 */
+		prototype.back = function() {
+			return this.currentWebView.back();
+		}
+
+		/**
+		 * Check if the current webview can go forward
+		 * @return {Boolean} previous history state
+		 */
+		prototype.canGoForward = function() {
+			return this.currentWebView.canGoForward();
+		}
+
+		/**
+		 * Tells the current webview to go forward
+		 * @return {Boolean} previous history state
+		 */
+		prototype.forward = function() {
+			return this.currentWebView.forward();
+		}
+
+		/**
+		 * Create a webview for the given new tab
+		 * @param {CustomEvent} evt
+		 */
+		function newTabListener(evt) {
+			var webview = customWebview(evt.detail.source);
+			this.shadow.insertBefore(webview, this.shadow.nextSibling);
+			selectTabListener.call(this, evt);
+			this.go(evt.detail.source.url);
+		}
+
+		/**
+		 * Delete the webview of the given tab
+		 * @param {CustomEvent} evt
+		 */
+		function closedTabListener(evt) {
+			var webviews = this.shadow.querySelectorAll('webview');
+			[].forEach.call(webviews, function (webview) {
+				if (webview.tab === evt.detail.source) {
+					this.shadow.removeChild(webview);
+					return;
+				}
+			}.bind(this));
+		}
+
+		/**
+		 * Select the webview of the given tab
+		 * @param {CustomEvent} evt
+		 */
+		function selectTabListener(evt) {
+			var webviews = this.shadow.querySelectorAll('webview');
+			[].forEach.call(webviews, function (webview) {
+				if (webview.tab === evt.detail.source) {
+					if (webview !== this.currentWebView) {
+						if (this.currentWebView) {
+							this.currentWebView.classList.remove('active');
+						}
+						webview.classList.add('active');
+						this.currentWebView = webview;
+						this.dispatchEvent(new CustomEvent('tab-selected', {
+							detail: { uri: this.currentWebView.src }	
+						}));
+					}
+					return;
+				}
+			}.bind(this));
+		}
 
 		document.registerElement('browser-component', {
 			prototype: prototype

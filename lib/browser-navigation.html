@@ -23,7 +23,8 @@
 			position: relative;
 			z-index: 0;
 			left: 1px;
-			padding: 2px 2px 2px 20px;
+			padding: 2px 2px 2px 0px;
+			width: 0px;
 			margin-left: -20px;
 			margin-right: 0px;
 			background-color: #F2F1F0;
@@ -37,9 +38,10 @@
 			border-top-right-radius: 0px;
 			border-bottom-right-radius: 0px;
 			overflow: hidden;
+			transition: all 0.3s;
 		}
 
-		:host::shadow browser-button[type="forward"]:hover {
+		:host::shadow browser-button[type="forward"]:not(.disabled):hover {
 			border: 1px solid #B2AEAA;
 			background-color: #F2F1F0;
 			background-image: -webkit-linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
@@ -50,127 +52,16 @@
 				0 1px 0 hsla(0,0%,10%,.03),
 				0 0 2px hsla(0,0%,10%,.2);
 		}
-		:host::shadow browser-button[type="forward"]:hover:active {
+		:host::shadow browser-button[type="forward"]:not(.disabled):hover:active {
 			background-color: #B2AEAA;
 		}
 
-		:host::shadow browser-button[type="forward"].hidding {
-			-webkit-animation: hidingFadeOut 300ms;
-			-moz-animation: hidingFadeOut 300ms;
-			animation: hidingFadeOut 300ms;
-		}
 
-		:host::shadow browser-button[type="forward"].showing {
-			-webkit-animation: hidingFadeIn 300ms;
-			-moz-animation: hidingFadeIn 300ms;
-			animation: hidingFadeIn 300ms;
-			border-right-width: 0px;
-			width: 0px;
-			margin-left: -45px;
-			padding: 2px 8px 2px 0px;
-			padding-left: 0px;
+		:host::shadow browser-button[type="forward"].show {
+			padding: 2px 5px 2px 20px;
 			width: auto;
 		}
-
-		@-webkit-keyframes hidingFadeOut {
-			to {
-				border-right-width: 0px;
-				border-left: 0px;
-				border-top-left-radius: 100%;
-				border-bottom-left-radius: 100%;
-				margin-left: -51px;
-				padding-left: 0px;
-				background: rgba(255,255,255,0);
-			}
-		}
-
-		@keyframes hidingFadeOut {
-			to {
-				border-right-width: 0px;
-				width: 0px;
-				margin-left: -45px;
-				padding-left: 0px;
-				padding-right: 0px;
-			}
-		}
-
-		@-webkit-keyframes hidingFadeIn {
-			to {
-				padding-left: 14px;
-				margin-left: -20px;
-				background-color: #F2F1F0;
-				background-image: -webkit-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
-				background-image: linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
-				background-clip: padding-box;
-				border: 1px solid #B2AEAA;
-				border-top-right-radius: 0px;
-				border-bottom-right-radius: 0px;
-			}
-		}
-
-		@keyframes hidingFadeIn {
-			to {
-				padding-left: 14px;
-				margin-left: -20px;
-				background-color: #F2F1F0;
-				background-image: -webkit-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
-				background-image: linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
-				background-clip: padding-box;
-				border: 1px solid #B2AEAA;
-				border-top-right-radius: 0px;
-				border-bottom-right-radius: 0px;
-			}
-		}
-		/*
-		:host([type="forward"]) + .locationBar {
-			border-top-left-radius: 0px;
-			border-bottom-left-radius: 0px;
-			border-left: 0px;
-			-moz-padding-start: 10px;
-			-webkit-padding-start: 10px;
-		}*/
-
-		/*:host([type="reload"]) {
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			user-select: none;
-			padding: 3px 4px;
-			font-size: 0;
-			line-height: 0;
-			background-image: linear-gradient(rgba(227, 227, 227, 1), rgba(222, 222, 222, 1));
-			border-left: 1px solid hsla(220,82%,11%,.2);
-			box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1),
-			inset 0 0 2px hsla(0,0%,100%,.15),
-			0 0 0 1px hsla(42,11%,18%,.1);
-		}
-		:host([type="reload"]:hover) {
-			background-image: -webkit-linear-gradient(#73adff, #4c91ff);
-			background-image: linear-gradient(#73adff, #4c91ff);
-			border-left: 1px solid hsla(220,82%,11%,.2);
-			box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1),
-			inset 0 0 2px hsla(0,0%,100%,.15),
-			0 0 0 1px hsla(42,11%,18%,.1);
-		}
-		:host([type="reload"]:hover:active) {
-			background-image: -webkit-linear-gradient(hsla(220,82%,11%,.05), hsla(220,82%,11%,.05)),
-			-webkit-linear-gradient(#73adff, #4c91ff);
-			background-image: linear-gradient(hsla(220,82%,11%,.05), hsla(220,82%,11%,.05)),
-			linear-gradient(#73adff, #4c91ff);
-			box-shadow: inset 0 1px 0 hsla(220,82%,11%,.2),
-			inset 0 0 3px hsla(220,82%,11%,.25);
-		}
-
-		:host([type="reload"])::shadow .icon {
-			background-image: url("../icons/reload.svg");
-			background-position: 0px 2px;
-			background-repeat: no-repeat;
-		}*/
 	</style>
-	<!-- 
-	 added programatically because not known yet at this time:
-	<browser-button type="back" class="rounded"></browser-button>
-	<browser-button type="forward" class="hidable"></browser-button>
-	-->
 </template>
 
 <script>
@@ -182,28 +73,47 @@
 	var template = currentScript.ownerDocument.querySelector('template#browser-navigation');
 
 	prototype.createdCallback = function() {
+		this.browser = this;
+		while (this.browser = this.browser.parentNode) {
+			if (this.browser.tagName === 'BROWSER-COMPONENT') break;
+		}
+
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
 
-		var button = document.createElement('browser-button');
-		button.setAttribute('type', 'back');
-		button.classList.add('rounded');
-		shadow.appendChild(button);
+		this.backBtn = document.createElement('browser-button');
+		this.backBtn.setAttribute('type', 'back');
+		this.backBtn.setAttribute('class', 'rounded disabled');
+		shadow.appendChild(this.backBtn);
+		this.backBtn.addEventListener('click', function (evt) {
+			this.browser.back();
+		}.bind(this));
 
-		var button = document.createElement('browser-button');
-		button.setAttribute('type', 'forward');
-		button.classList.add('hidable');
-		shadow.appendChild(button);
+		this.forwardBtn = document.createElement('browser-button');
+		this.forwardBtn.setAttribute('type', 'forward');
+		this.forwardBtn.setAttribute('class', 'disabled');
+		shadow.appendChild(this.forwardBtn);
+		this.forwardBtn.addEventListener('click', function (evt) {
+			this.browser.forward();
+		}.bind(this));
 
-		var browser = this;
-		while (browser = browser.parentNode) {
-			if (browser.tagName === 'BROWSER-COMPONENT') break;
-		}
-		browser.addEventListener('history-changed', function (evt) {
-			console.log('TODO');
-		});
+		this.browser.addEventListener('idle', function (evt) {
+			if (this.browser.canGoForward()) {
+				this.forwardBtn.classList.remove('disabled');
+				this.forwardBtn.classList.add('show');
+			} else {
+				this.forwardBtn.classList.add('disabled');
+			}
+
+			if (this.browser.canGoBack()) {
+				this.backBtn.classList.remove('disabled');
+			} else {
+				this.backBtn.classList.add('disabled');
+			}
+
+		}.bind(this));
 	};
-	
+
 	document.registerElement('browser-navigation', {
 		prototype: prototype
 	});

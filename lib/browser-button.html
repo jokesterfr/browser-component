@@ -33,7 +33,7 @@
 			overflow: hidden;
 		}
 
-		:host(:hover) {
+		:host(:not(.disabled):hover) {
 			border: 1px solid #B2AEAA;
 			background-color: #F2F1F0;
 			background-image: -webkit-linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
@@ -45,7 +45,7 @@
 				0 0 2px hsla(0,0%,10%,.2);
 		}
 
-		:host(:hover:active) {
+		:host(:not(.disabled):hover:active) {
 			background-color: #B2AEAA;
 		}
 
@@ -62,7 +62,7 @@
 			          0 0 0 1px hsla(0,0%,100%,.3) inset,
 			          0 1px 0 hsla(0,0%,0%,.03);
 		}
-		:host(.rounded:hover) {
+		:host(:not(.disabled).rounded:hover) {
 			background-color: #F2F1F0;
 			background-image: -webkit-linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
 			background-image: linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
@@ -72,7 +72,7 @@
 			          0 1px 0 hsla(0,0%,10%,.03),
 			          0 0 2px hsla(0,0%,10%,.2);
 		}
-		:host(.rounded:active) {
+		:host(:not(.disabled).rounded:active) {
 			background-color: #B2AEAA;
 		}
 
@@ -83,6 +83,15 @@
 			display: block;
 			background-repeat: no-repeat;
 			background-size: 100%;
+			background-position: 50% 50%;
+		}
+
+		:host(.disabled) {
+			cursor: initial;
+		}
+
+		:host(.disabled)::shadow .icon {
+			opacity: 0.6;
 		}
 
 		:host([type="back"])::shadow .icon { background-image: url("../icons/back.svg"); }
@@ -96,12 +105,13 @@
 		:host([type="new-window"])::shadow .icon { background-image: url("../icons/new-window.svg"); }
 		:host([type="print"])::shadow .icon { background-image: url("../icons/print.svg"); }
 		:host([type="reload"])::shadow .icon { background-image: url("../icons/reload.svg"); }
+		:host([type="stop"])::shadow .icon { 
+			background-image: url("../icons/stop.svg");
+			background-size: 60% 60%;
+		}
 		:host([type="zoom-in"])::shadow .icon { background-image: url("../icons/zoom-in.svg"); }
 		:host([type="zoom-out"])::shadow .icon { background-image: url("../icons/zoom-out.svg"); }
 		:host([type="zoom"])::shadow .icon { background-image: url("../icons/zoom.svg"); }
-
-		/* Exception for browser-location */
-		:host([type="reload"].blue:hover)::shadow .icon { background-image: url("../icons/reload-hover.svg"); }
 	</style>
 	<div class="icon"></div>
 </template>

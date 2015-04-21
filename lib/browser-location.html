@@ -64,7 +64,7 @@
 			white-space: nowrap;
 			border: none;
 			background-color: transparent;
-			padding: 0px;
+			padding: 1px 0 0 0;
 			font-family: 'Fira Sans', Arial, sans-serif;
 			font-size: 1em;
 		}
@@ -74,13 +74,13 @@
 		}
 
 		:host::shadow browser-button {
-			border: none;
 			border-radius: 0px;
 			padding: 2px 4px;
 			margin: 0;
 			font-size: 0;
 			line-height: 0;
 			background-image: linear-gradient(rgba(227, 227, 227, 1), rgba(222, 222, 222, 1));
+			border: none;
 			border-left: 1px solid hsla(220,82%,11%,.2);
 			box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1), inset 0 0 2px hsla(0,0%,100%,.15), 0 0 0 1px hsla(42,11%,18%,.1);
 		}
@@ -88,6 +88,7 @@
 		:host::shadow browser-button:hover {
 			background-image: -webkit-linear-gradient(#73adff, #4c91ff);
 			background-image: linear-gradient(#73adff, #4c91ff);
+			border: none;
 			border-left: 1px solid hsla(220,82%,11%,.2);
 			box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1), inset 0 0 2px hsla(0,0%,100%,.15), 0 0 0 1px hsla(42,11%,18%,.1);
 		}
@@ -120,31 +121,53 @@
 	prototype.createdCallback = function() {	
 		var shadow = this.createShadowRoot();
 		shadow.appendChild(template.content.cloneNode(true));
-		var button = document.createElement('browser-button');
-		button.setAttribute('type', 'reload');
-		button.classList.add('blue');
-		shadow.appendChild(button);
 
 		// Get browser parent
-		var parent = this;
-		while (parent = parent.parentNode) {
-			if (parent && parent.tagName.toLowerCase() === 'browser-component') break;
+		this.browser = this;
+		while (this.browser = this.browser.parentNode) {
+			if (this.browser.tagName === 'BROWSER-COMPONENT') break;
 		}
 
-		// Listen input change
-		var input = shadow.querySelector('input');
-		input.addEventListener('keypress', function (evt) {
-			button.setAttribute('type', 'forward');
-		}, false);
+		// Create control button (stop / reload)
+		this.controlButton = document.createElement('browser-button');
+		this.controlButton.setAttribute('type', 'reload');
+		this.controlButton.classList.add('blue');
+		shadow.appendChild(this.controlButton);
+		this.controlButton.addEventListener('click', function (evt) {
+			switch (this.controlButton.getAttribute('type')) {
+				case 'reload':
+					this.browser.reload();
+					break;
+				case 'stop':
+					this.browser.stop();
+					break;
+			}
+		}.bind(this));
 
-		input.addEventListener('change', function (evt) {
-			evt = new CustomEvent('location-changed', {
-				detail: {
-					uri: input.value
-				}
-			});
-			parent.dispatchEvent(evt);
-		}, false);
+		// Listen input change
+		this.input = shadow.querySelector('input');
+		this.input.addEventListener('keypress', function (evt) {
+			if (evt.keyIdentifier !== 'Enter') return;
+			this.browser.go(this.input.value);
+		}.bind(this), false);
+
+		// Listen to external notifications
+		this.browser.addEventListener('loading', function (evt) {
+			if (!evt || !evt.detail || !evt.detail.uri) return;
+			this.input.value = decodeURIComponent(evt.detail.uri);
+			this.controlButton.setAttribute('type', 'stop');
+		}.bind(this));
+
+		this.browser.addEventListener('idle', function (evt) {
+			if (!evt || !evt.detail || !evt.detail.uri) return;
+			this.input.value = decodeURIComponent(evt.detail.uri);
+			this.controlButton.setAttribute('type', 'reload');
+		}.bind(this));
+
+		this.browser.addEventListener('tab-selected', function (evt) {
+			if (!evt || !evt.detail || !evt.detail.uri) return;
+			this.input.value = decodeURIComponent(evt.detail.uri);
+		}.bind(this));
 	};
 	
 	document.registerElement('browser-location', {

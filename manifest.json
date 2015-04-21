@@ -3,7 +3,7 @@
 	"name": "example",
 	"description": "an example for browser-component",
 	"version": "1.0.0",
-	"minimum_chrome_version": "30",
+	"minimum_chrome_version": "42",
 	"author": "Clément Désiles <main@jokester.fr>",
 	"app": {
 		"background": {

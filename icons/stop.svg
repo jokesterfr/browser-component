@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="icon-close"
+   x="0px"
+   y="0px"
+   width="7.414"
+   height="7.414"
+   viewBox="0 0 7.414 7.414"
+   xml:space="preserve"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="icon-close.svg"><metadata
+     id="metadata59"><rdf:RDF><cc:Work
+         rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview57"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="19.25"
+     inkscape:cx="5.9297741"
+     inkscape:cy="4.3909544"
+     inkscape:window-x="53"
+     inkscape:window-y="24"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="icon-close" /><defs
+     id="defs3"><style
+       type="text/css"
+       id="style5">
+      /* Gradient Stops */
+      
+      .gradientOverlay-glyph-stop01 {
+        stop-color: #fff;
+        stop-opacity: .1;
+      }
+      
+      .gradientOverlay-glyph-stop02 {
+        stop-color: #fff;
+        stop-opacity: .2;
+      }
+      
+      
+      /* Glyph Styles */
+      
+      .glyphShape-style-base {
+        fill: ButtonText; 
+        fill-opacity: .8;
+      }
+      
+      .glyphShape-style-overlay {
+        fill: url(&quot;#gradientOverlay-glyph&quot;);
+      }
+      
+      .innerShadow {
+        fill: ButtonText; 
+        stroke: none; 
+        stroke-opacity: .2; 
+        filter: url(&quot;#innerShadow-blur&quot;); 
+      }
+      
+      .glyphShape-style-background {
+        fill: -moz-MenuBarText; 
+        fill-opacity: .8;
+      }
+      
+      .innerShadowBackground {
+        fill: -moz-MenuBarText; 
+        stroke: none; 
+        stroke-opacity: .2; 
+        filter: url(&quot;#innerShadow-blur&quot;); 
+      }
+      
+      
+      /* Close Button Styles */
+      
+      .icon-close-hover-backgroundShape {
+        fill: #d93616;
+      }
+      .icon-close-hover-glyphShadow {
+        fill: #b32c12;
+      }
+      .icon-close-hover-glyphShape {
+        fill: #fff;
+        fill-opacity: 0.9;
+      }
+      .icon-close-hover-glyphHighlight {
+        fill: #fff;
+        fill-opacity: 0.9;
+      }
+      
+      .icon-close-active-backgroundShape {
+        fill: #b32c12;
+      }
+      .icon-close-active-backgroundShapeInnerShadow {
+        fill: #99260f;
+      }
+      .icon-close-active-glyphShadow {
+        fill: #99260f;
+      }
+      .icon-close-active-glyphShape {
+        fill: #fff;
+        fill-opacity: 0.9;
+      }
+      .icon-close-active-glyphHighlight {
+        fill: #fff;
+        fill-opacity: 0.9;
+      }
+    </style><linearGradient
+       id="gradientOverlay-glyph"
+       x1="0"
+       y1="0"
+       x2="0"
+       y2="1"><stop
+         class="gradientOverlay-glyph-stop01"
+         offset="0"
+         id="stop8" /><stop
+         class="gradientOverlay-glyph-stop02"
+         offset="1"
+         id="stop10" /></linearGradient><filter
+       id="innerShadow-blur"
+       color-interpolation-filters="sRGB"><feGaussianBlur
+         stdDeviation=".3"
+         in="SourceGraphic"
+         id="feGaussianBlur13" /></filter><polygon
+       id="glyphShape-closeForeground"
+       points="8,6.586 5.707,4.293 4.293,5.707 6.586,8 4.293,10.293 5.707,11.707 8,9.414 10.293,11.707 11.707,10.293 9.414,8 11.707,5.707 10.293,4.293 " /><polygon
+       id="glyphShape-closeBackground"
+       points="56,6.586 53.707,4.293 52.293,5.707 54.586,8 52.293,10.293 53.707,11.707 56,9.414 58.293,11.707 59.707,10.293 57.414,8 59.707,5.707 58.293,4.293 " /><clipPath
+       id="mask-closeForeground"
+       maskUnits="objectBoundingBox"
+       maskContentUnits="objectBoundingBox"><use
+         xlink:href="#glyphShape-closeForeground"
+         style="fill:#ffffff"
+         id="use18"
+         x="0"
+         y="0"
+         width="64"
+         height="16" /></clipPath><clipPath
+       id="mask-closeBackground"
+       maskUnits="objectBoundingBox"
+       maskContentUnits="objectBoundingBox"><use
+         xlink:href="#glyphShape-closeBackground"
+         style="fill:#ffffff"
+         id="use21"
+         x="0"
+         y="0"
+         width="64"
+         height="16" /></clipPath><linearGradient
+       inkscape:collect="always"
+       xlink:href="#gradientOverlay-glyph"
+       id="linearGradient3036"
+       x1="52.293"
+       y1="4.293"
+       x2="52.293"
+       y2="11.707"
+       gradientUnits="userSpaceOnUse" /></defs><g
+     id="icon-closeBackground-default"
+     transform="translate(-52.293,-4.293)"><use
+       xlink:href="#glyphShape-closeBackground"
+       class="glyphShape-style-background"
+       id="use51"
+       style="fill-opacity:0.8"
+       x="0"
+       y="0"
+       width="64"
+       height="16" /><use
+       xlink:href="#glyphShape-closeBackground"
+       class="glyphShape-style-overlay"
+       id="use53"
+       style="fill:url(#linearGradient3036)"
+       x="0"
+       y="0"
+       width="64"
+       height="16" /><path
+       class="innerShadowBackground"
+       clip-path="url(#mask-closeBackground)"
+       d="M 48,0 V 16 H 64 V 0 H 48 z M 58.293,11.707 56,9.414 53.707,11.707 52.293,10.293 54.586,8 52.559,5.973 53.715,4.816 55.998,7.1 58.314,4.784 59.472,5.942 57.414,8 l 2.293,2.293 -1.414,1.414 z"
+       id="path55"
+       inkscape:connector-curvature="0"
+       style="stroke:none;filter:url(#innerShadow-blur)" /></g></svg>

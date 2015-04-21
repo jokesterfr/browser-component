@@ -161,6 +161,6 @@ You can also digg deeper into browsing threw a third party webservice, such as t
 
 # Licence
 
-This work is largely inspired by Firefox Australis UI, therefore the same licence applies here:
+This work is largely inspired by Firefox [Australis UI](http://people.mozilla.org/~shorlander/files/australis-linux-svg-test/australis-liveDemo-linux.html), therefore the same licence applies here:
 
 [Mozilla Public License - Version 2.0](https://www.mozilla.org/MPL/2.0/)
