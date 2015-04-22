@@ -24,7 +24,7 @@ module.exports = function(grunt) {
       default: {
         files: {
           'dist/browser-component.html': 'lib/browser-component.html'
-        },
+        }
       },
     },
 

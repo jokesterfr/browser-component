@@ -25,8 +25,5 @@
   "license": "Mozilla Public Licence version 2",
   "bugs": {
     "url": "https://github.com/jokesterfr/browser-component/issues"
-  },
-  "dependencies": {
-    "grunt-fontsmith": "^0.9.1"
   }
 }
