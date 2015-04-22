@@ -147,9 +147,6 @@
 		// If an url attribute has been set
 		this.url = this.getAttribute('url');
 
-		// Unique tab id
-		this.id = generateUID();
-
 		// Fill label
 		var label = this.getAttribute('label') || 'New tab';
 		this.label.textContent = label;
@@ -261,17 +258,6 @@
 				bubbles: true
 			})
 		);
-	}
-
-	/**
-	 * Unique tab id
-	 * @see http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
-	 */
-	function generateUID() {
-		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-			var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-			return v.toString(16);
-		});
 	}
 
 	/**
@@ -408,15 +394,15 @@
 		}.bind(this));
 
 		// Force the button states to the browser context
-		this.browser.addEventListener('loading', this.setButtonStates.bind(this));
-		this.browser.addEventListener('idle', this.setButtonStates.bind(this));
-		this.browser.addEventListener('tab-selected', this.setButtonStates.bind(this));
+		this.browser.addEventListener('loading', setButtonStates.bind(this));
+		this.browser.addEventListener('idle', setButtonStates.bind(this));
+		this.browser.addEventListener('tab-selected', setButtonStates.bind(this));
 	};
 
 	/**
 	 * Set the states of back / forward navigation buttons
 	 */
-	prototype.setButtonStates = function() {
+	var setButtonStates = function() {
 		if (this.browser.canGoForward()) {
 			this.forwardBtn.classList.remove('disabled');
 			this.forwardBtn.classList.add('show');
@@ -749,12 +735,20 @@
 		};
 
 		/**
-		 * Change the current webview
-		 * @param {Integer} index
+		 * Tells the current webview to go back
+		 * @return {Boolean} previous history state
 		 */
-		prototype.selectTab = function (index) {
-			console.log('tab selected:', index);
-		};
+		prototype.back = function() {
+			return this.currentWebView.back();
+		}
+
+		/**
+		 * Tells the current webview to go forward
+		 * @return {Boolean} previous history state
+		 */
+		prototype.forward = function() {
+			return this.currentWebView.forward();
+		}
 
 		/**
 		 * Check if the current webview can go back
@@ -762,14 +756,6 @@
 		 */
 		prototype.canGoBack = function() {
 			return this.currentWebView.canGoBack();
-		}
-
-		/**
-		 * Tells the current webview to go back
-		 * @return {Boolean} previous history state
-		 */
-		prototype.back = function() {
-			return this.currentWebView.back();
 		}
 
 		/**
@@ -781,11 +767,17 @@
 		}
 
 		/**
-		 * Tells the current webview to go forward
-		 * @return {Boolean} previous history state
+		 * Shows the browser top controls
 		 */
-		prototype.forward = function() {
-			return this.currentWebView.forward();
+		prototype.showControls = function() {
+			this.removeAttribute('controls');
+		}
+
+		/**
+		 * Shows the browser top controls
+		 */
+		prototype.hideControls = function() {
+			this.setAttribute('controls', 'hidden');
 		}
 
 		/**

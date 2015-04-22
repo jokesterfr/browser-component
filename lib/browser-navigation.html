@@ -98,15 +98,15 @@
 		}.bind(this));
 
 		// Force the button states to the browser context
-		this.browser.addEventListener('loading', this.setButtonStates.bind(this));
-		this.browser.addEventListener('idle', this.setButtonStates.bind(this));
-		this.browser.addEventListener('tab-selected', this.setButtonStates.bind(this));
+		this.browser.addEventListener('loading', setButtonStates.bind(this));
+		this.browser.addEventListener('idle', setButtonStates.bind(this));
+		this.browser.addEventListener('tab-selected', setButtonStates.bind(this));
 	};
 
 	/**
 	 * Set the states of back / forward navigation buttons
 	 */
-	prototype.setButtonStates = function() {
+	var setButtonStates = function() {
 		if (this.browser.canGoForward()) {
 			this.forwardBtn.classList.remove('disabled');
 			this.forwardBtn.classList.add('show');

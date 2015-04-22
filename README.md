@@ -1,7 +1,7 @@
 Browser-component
 =================
 
-*Browser component* is a web component designed to get a browser into the browser itself. It can be used to extend a headless browser, or give some more features to a web application, such as *firefox/xulrunner* or *chrome/chromium apps*. This project comes with many sub components, to let you customize the browser of your wish.
+*Browser component* is a web component designed to get a browser into the browser itself. It can be used to extend a headless browser, or give some more features to a web application, such as *firefox/xulrunner* or *chrome/chromium apps*. This project comes with sub components, to let you customize the browser of your wish.
 
 ## Overview
 
@@ -26,22 +26,25 @@ Import it in your page like so:
 And use it:
 
 ```html
-<browser-component type="webview" homepage="https://www.google.com">
+<browser-component defaultPage="https://github.com">
   <browser-tabbar>
-    <browser-tab url="http://www.chucknorrisfacts.com"></browser-tab>
+    <browser-tab url="https://www.laquadrature.net/en"></browser-tab>
     <browser-tab url="http://lestrans.com"></browser-tab>
-    <browser-addtab></browser-addtab>
+    <browser-tab-new></browser-tab-new>
   </browser-tabbar>
   <browser-toolbar>
     <browser-navigation></browser-navigation>
     <browser-location></browser-location>
+    <browser-button type="home"></browser-button>
+    <browser-button type="zoom-in"></browser-button>
+    <browser-button type="zoom-out"></browser-button>
   </browser-toolbar>
 </browser-component>
 ```
 
 ## Testing example
 
-If you want to test this component in a [chrome app](https://developer.chrome.com/apps/about_apps) context, simply run:
+If you want to test this component in a [chrome app](https://developer.chrome.com/apps/about_apps) context, simply type:
 
   $ npm run example
 
@@ -52,22 +55,39 @@ Chrome and chromium support web components since version 35.
 
 [Check browser compatibility](http://caniuse.com/#feat=shadowdom).
 
-This `browser-component` uses the chrome [webview](https://developer.chrome.com/apps/tags/webview) tag. A tweak could be made to use the equivalent [XUL browser](https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XUL/browser) tag, so be supported by Firefox, therefore, the lack of Web components support does not urge me to do so.
+This `browser-component` uses the chrome [webview](https://developer.chrome.com/apps/tags/webview) tag. A tweak could be made to use the equivalent [XUL browser](https://developer.mozilla.org/en-US/docs/Mozilla/Tech/XUL/browser) tag, to be supported by Firefox. Therefore, the lack of Web components support does not urge me to do so.
 
 ## Components API
 
 ### browser-component
 
-Browser component can be based upon *"iframe"* element, or "webview" (default) element.
+```html
+<browser-component defaultPage="https://github.com">
+  <!-- y mucho mas aqui -->
+</browser-component>
+```
 
-#### webview
+The browser component is the key element of this package. Its main role is to deal with multiple *webview*s, masking states that does not rely on the selected tab / webview.
 
-A webview is a non standard *HTML5* element, designed to be used a __chrome/chromium__ app or extension context.
-Please refer to the [following documentation](https://developer.chrome.com/apps/tags/webview) for more information. 
+#### Attributes
 
-#### iframe
+* __defaultPage__ the default page to go when a tab with no url is opened, or when the home button is pressed. Defaults to *null*.
+* __controls__ when the value is "hidden", no controls will be displayed on screen, fullscreen browsing is activated. Defaults to "visible".
 
-This feature is not recommended, and experimental because you may encounter many issues, due to your browser protections. If you still want to keep on this way, you can read down this how to deal with the [CORS Policy](#cors-policy) and the [X-Frame-Options](#x-frame-options) *HTTP* header.
+#### Methods
+
+* __go(uri)__ tells the current tab to go to this uri
+* __goHome()__ tells the current tab to go to the home page (@see *defaultPage*)
+* __zoomIn()__ zoom in the current tab
+* __zoomOut()__ zoom out the current tab
+* __stop()__ stop loading the current tab
+* __reload()__ reload the current tab
+* __back()__ tells the current tab to go back to last page in history
+* __forward()__ tells the current tab to go forward to the next page in history
+* __canGoBack()__ return true if the current tab can go back
+* __canGoForward()__ return true if the current tab can go forward
+* __showControls()__ displays the browser top controls
+* __hideControls()__ hides the browser top controls
 
 ### browser-tabbar
 
@@ -75,32 +95,68 @@ The browser tabbar will display all tabs you filled in, you can use the selected
 
 ```html
 <browser-tabbar>
-  <browser-tab selected url="https://www.google.fr"></browser-tab>
+  <browser-tab url="https://www.laquadrature.net/en"></browser-tab>
   <browser-tab url="http://lestrans.com"></browser-tab>
+  <browser-tab-new></browser-tab-new>
 </browser-tabbar>
 ```
 
-If you add the `<browser-addtab>` component, you will be able to add some more tabs dynamically.
+There is no methods nor attributes to use with `<browser-tabbar>`.
 
 ### browser-tab
 
-Tabs sorting out currently browsed contents. Here are the available attributes for tabs:
+<browser-tab url="http://lestrans.com"></browser-tab>
+
+A nice favicon and title are automatically added there. The actual behaviour is that a single tab in the tabbar cannot be closed. Also, only active tabs can be closed.
+
+#### Attributes
+
 * __url__: URL of the content to browse
-* __selected__: Only one tabbar tab can be selected this way, selected tab url content is displayed in browser. Defaults to false.
-* __closable__: If the tab can be closed (using middle-click or clicking the top-right cross). Defaults to true.
-* __pinned__: Only the tab favicon is displayed, taking less space in the tabbar. Defaults to false.
 
-### browser-add-new
+#### Methods
 
-Allows you to add some more tabs dynamically. To be placed right after the `<browser-tab>` element(s).
+* __select__: selects this tab (to use the corresponding *webview*)
+* __close__: closes the tab (and the corresponding *webview*)
+
+### browser-tab-new
+
+```html
+<browser-tab-new></browser-tab-new>
+```
+
+Allows you to dynamically add some more tabs. To be placed right after the `<browser-tab>` element(s).
+
+### browser-tab-separator
+
+```html
+<browser-tab></browser-tab>
+<browser-tab-separator></browser-tab-separator>
+<browser-tab></browser-tab>
+```
+
+A graphical separation between tabs.
 
 ### browser-toolbar
 
-A tool bar is a generic space to let customize the browser like you want it. You may place buttons or location fields in it, feel free to suggest any other components of your like to be used here.
+You may place buttons or location fields in it, feel free to suggest any other components you would like to use here.
+
+```html
+<browser-toolbar>
+  <browser-navigation></browser-navigation>
+  <browser-location></browser-location>
+  <browser-button type="home"></browser-button>
+  <browser-button type="zoom-in"></browser-button>
+  <browser-button type="zoom-out"></browser-button>
+</browser-toolbar>
+```
 
 ### browser-button
 
-A simple button, customizable with an icon if you specify a type like:
+```html
+<browser-button type="zoom-in"></browser-button>
+```
+
+A simple button, customizable with any icon of your wish:
 
 * __back__
 * __bookmark__
@@ -117,47 +173,24 @@ A simple button, customizable with an icon if you specify a type like:
 * __zoom-out__
 * __zoom__
 
-The list can of course grow, feel free to submit any new one.
+Feel free to PR a new one.
+Actions are triggered by the `<browser-button>` parent.
 
 ### browser-navigation
 
-This component is made of a back button and a forward button. The forward button disappear when there is no next page in the browsing history. Simple.
+```html
+<browser-navigation></browser-navigation>
+```
+
+This component is made of a back button and a forward button. The forward button disappear when there is no next page in the browsing history. States are related to current tab. Simple.
 
 ### browser-location
 
-The input letting you choosing how to browse the web! Comes with a go/reload button on its right, and a nice favicon retrieved from the browsed website.
-
-# CORS Policy
-
-Browser's CORS (Cross-origin resource sharing) policy may prevent this component to be fully suitable for testing. If you try to launch it from a standard hosted page, or even from the locale filesystem, you may refer to these commands to start-up your brower:
-
-## Chrome
-
-```bash
-google-chrome --disable-web-security file:///path-to-browser-component/index.html
+```html
+<browser-location></browser-location>
 ```
 
-## Chromium
-
-```bash
-chromium --disable-web-security file:///path-to-browser-component/index.html
-```
-
-## Firefox
-
-Open "about:config" in a page, then modify the property __security.fileuri.strict_origin_policy__ to false.
-
-# X-Frame-Options
-
-Browsing web content within an iframe can be nice, but allowing your browser doing it is very risky: phishing attacks may occur! Keep that in mind.
-If you already disabled CORS protection of your browser for testing purpose, you may also want to disable the `X-Frame-Options` header sent whithin the context of the iframe. For instance, if you target `http://google.com` this error will pop out in your developper console:
-
-  Refused to display 'https://www.google.com/?gws_rd=ssl' in a frame because it set 'X-Frame-Options' to 'SAMEORIGIN'.
-
-This is because *google* protected their website from phishing / clickjacking within an iframe. That's great, or may be not so great, depending on what your are doing. Definitely, I would not recommend the use of iframes for such a generalistic browsing purpose, but if you wanna do so:
-[Ignore X-Frame Header](https://chrome.google.com/webstore/detail/ignore-x-frame-headers/gleekbfjekiniecknbkamfmkohkpodhe/) is a Chrome extension letting you all the nasty things you want to do within an Iframe. You can also perform this kind of stuff with Firefox, using the extension [modify-headers](https://addons.mozilla.org/fr/firefox/addon/modify-headers) for example.
-
-You can also digg deeper into browsing threw a third party webservice, such as the yahoo api. A POOC is available on [jsfiddle](http://jsfiddle.net/dkdnaxaq/4/light/), I let you play with it, and won't support this kind of hack any time soon.
+The input which let you choose how to browse the web! Comes with a go/reload button on its right.
 
 # Licence
 
