@@ -54,6 +54,14 @@
 		} else {
 			this.insertBefore(tab, this.firstChild);
 		}
+
+		// Calculate width margin
+		var nb = this.querySelectorAll('browser-tab').length;
+		var tabNewWidth = this.querySelector('browser-tab-new').clientWidth;
+		var tabWidth = this.querySelector('browser-tab').clientWidth - 37;
+		var maxtabs = (this.clientWidth - tabNewWidth) / tabWidth;
+		var margin = parseInt((maxtabs - nb) * tabWidth, 10);
+		if (margin < 0) this.style.left = margin + 'px';
 	}
 
 	/**
