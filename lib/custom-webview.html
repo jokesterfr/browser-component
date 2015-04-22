@@ -59,14 +59,6 @@
 			webview.addEventListener('contentload', function (evt) {
 				evt.stopPropagation();
 
-				// Update tab title
-				webview.executeScript(
-					{ code: 'document && document.title' },
-					function (title) {
-						if (title) webview.tab.setTitle(title);
-					}
-				);
-
 				// Check if domain changed
 				var anchor = document.createElement('a');
 				anchor.href = webview.src;
@@ -80,6 +72,20 @@
 					);
 				}
 				webview.domain = domain;
+
+				// Update tab title
+				webview.executeScript(
+					{ code: 'document && document.title' },
+					function (title) {
+						if (title && title[0] && title[0].length) {
+							webview.tab.setTitle(title);
+						} else {
+							var path = webview.src.split('/');
+							webview.tab.setTitle(path[path.length - 1]);
+						}
+					}
+				);
+
 			});
 
 			webview.addEventListener('loadabort', function (evt) {
