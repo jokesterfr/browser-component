@@ -84,11 +84,11 @@
 		this.removeChild(evt.detail.source);
 		var tabs = this.querySelectorAll('browser-tab');
 		if (!tabs.length) {
-			tabs[0].classList.add('active');
+			tabs[0].select(evt);
 		} else {
 			[].forEach.call(tabs, function (tab, i) {
 				if ((i + 1) === tabs.length) {
-					tab.classList.add('active');
+					tab.select(evt);
 				} else {
 					tab.classList.remove('active');
 				}
