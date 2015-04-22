@@ -60,6 +60,14 @@
 		} else {
 			this.insertBefore(tab, this.firstChild);
 		}
+
+		// Calculate width margin
+		var nb = this.querySelectorAll('browser-tab').length;
+		var tabNewWidth = this.querySelector('browser-tab-new').clientWidth;
+		var tabWidth = this.querySelector('browser-tab').clientWidth - 37;
+		var maxtabs = (this.clientWidth - tabNewWidth) / tabWidth;
+		var margin = parseInt((maxtabs - nb) * tabWidth, 10);
+		if (margin < 0) this.style.left = margin + 'px';
 	}
 
 	/**
@@ -82,11 +90,11 @@
 		this.removeChild(evt.detail.source);
 		var tabs = this.querySelectorAll('browser-tab');
 		if (!tabs.length) {
-			tabs[0].classList.add('active');
+			tabs[0].select(evt);
 		} else {
 			[].forEach.call(tabs, function (tab, i) {
 				if ((i + 1) === tabs.length) {
-					tab.classList.add('active');
+					tab.select(evt);
 				} else {
 					tab.classList.remove('active');
 				}
@@ -203,6 +211,7 @@
 
 	/**
 	 * On click, select this tab as current
+	 * @param {DOMEvent} evt
 	 */
 	prototype.select = function (evt) {
 		if (evt.which === 2) {
@@ -375,22 +384,29 @@
 			this.browser.forward();
 		}.bind(this));
 
-		this.browser.addEventListener('idle', function (evt) {
-			if (this.browser.canGoForward()) {
-				this.forwardBtn.classList.remove('disabled');
-				this.forwardBtn.classList.add('show');
-			} else {
-				this.forwardBtn.classList.add('disabled');
-			}
-
-			if (this.browser.canGoBack()) {
-				this.backBtn.classList.remove('disabled');
-			} else {
-				this.backBtn.classList.add('disabled');
-			}
-
-		}.bind(this));
+		// Force the button states to the browser context
+		this.browser.addEventListener('loading', this.setButtonStates.bind(this));
+		this.browser.addEventListener('idle', this.setButtonStates.bind(this));
+		this.browser.addEventListener('tab-selected', this.setButtonStates.bind(this));
 	};
+
+	/**
+	 * Set the states of back / forward navigation buttons
+	 */
+	prototype.setButtonStates = function() {
+		if (this.browser.canGoForward()) {
+			this.forwardBtn.classList.remove('disabled');
+			this.forwardBtn.classList.add('show');
+		} else {
+			this.forwardBtn.classList.add('disabled');
+		}
+
+		if (this.browser.canGoBack()) {
+			this.backBtn.classList.remove('disabled');
+		} else {
+			this.backBtn.classList.add('disabled');
+		}
+	}
 
 	document.registerElement('browser-navigation', {
 		prototype: prototype
@@ -480,9 +496,12 @@
 
 				// Timeout to avoid any blinking effects with the tab loader
 				if (webview.t) clearTimeout(webview.t);
-				webview.dispatchEvent(new CustomEvent('loading', {
-					detail: { uri: webview.src }
-				}));
+				if (webview.classList.contains('active')) {
+					// Only active webview exposes event to the parent
+					webview.dispatchEvent(new CustomEvent('loading', {
+						detail: { uri: webview.src }
+					}));
+				}
 				webview.tab.startLoading();
 			});
 
@@ -492,8 +511,10 @@
 				// Timeout to avoid any blinking effects with the tab loader
 				if (webview.t) clearTimeout(webview.t);
 				webview.t = setTimeout(function () {
+					// Only active webview exposes event to the parent
+					if (!webview.classList.contains('active')) return;
 					webview.dispatchEvent(new CustomEvent('idle', {
-						detail: { uri: webview.src }
+						detail: { uri: webview.src  }
 					}));
 					webview.tab.stopLoading();
 				}, 300);
@@ -501,14 +522,6 @@
 
 			webview.addEventListener('contentload', function (evt) {
 				evt.stopPropagation();
-
-				// Update tab title
-				webview.executeScript(
-					{ code: 'document && document.title' },
-					function (title) {
-						if (title) webview.tab.setTitle(title);
-					}
-				);
 
 				// Check if domain changed
 				var anchor = document.createElement('a');
@@ -523,15 +536,32 @@
 					);
 				}
 				webview.domain = domain;
+
+				// Update tab title
+				webview.executeScript(
+					{ code: 'document && document.title' },
+					function (title) {
+						if (title && title[0] && title[0].length) {
+							webview.tab.setTitle(title);
+						} else {
+							var path = webview.src.split('/');
+							webview.tab.setTitle(path[path.length - 1]);
+						}
+					}
+				);
+
 			});
 
 			webview.addEventListener('loadabort', function (evt) {
 				evt.stopPropagation();
 
 				// Reset tab loader
-				webview.dispatchEvent(new CustomEvent('idle', {
-					detail: { uri: webview.src }
-				}));
+				if (webview.classList.contains('active')) {
+					// Only active webview exposes event to the parent
+					webview.dispatchEvent(new CustomEvent('idle', {
+						detail: { uri: webview.src }
+					}));
+				}
 				webview.tab.stopLoading();
 			});
 

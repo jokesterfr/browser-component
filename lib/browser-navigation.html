@@ -97,22 +97,29 @@
 			this.browser.forward();
 		}.bind(this));
 
-		this.browser.addEventListener('idle', function (evt) {
-			if (this.browser.canGoForward()) {
-				this.forwardBtn.classList.remove('disabled');
-				this.forwardBtn.classList.add('show');
-			} else {
-				this.forwardBtn.classList.add('disabled');
-			}
-
-			if (this.browser.canGoBack()) {
-				this.backBtn.classList.remove('disabled');
-			} else {
-				this.backBtn.classList.add('disabled');
-			}
-
-		}.bind(this));
+		// Force the button states to the browser context
+		this.browser.addEventListener('loading', this.setButtonStates.bind(this));
+		this.browser.addEventListener('idle', this.setButtonStates.bind(this));
+		this.browser.addEventListener('tab-selected', this.setButtonStates.bind(this));
 	};
+
+	/**
+	 * Set the states of back / forward navigation buttons
+	 */
+	prototype.setButtonStates = function() {
+		if (this.browser.canGoForward()) {
+			this.forwardBtn.classList.remove('disabled');
+			this.forwardBtn.classList.add('show');
+		} else {
+			this.forwardBtn.classList.add('disabled');
+		}
+
+		if (this.browser.canGoBack()) {
+			this.backBtn.classList.remove('disabled');
+		} else {
+			this.backBtn.classList.add('disabled');
+		}
+	}
 
 	document.registerElement('browser-navigation', {
 		prototype: prototype

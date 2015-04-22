@@ -37,9 +37,12 @@
 
 				// Timeout to avoid any blinking effects with the tab loader
 				if (webview.t) clearTimeout(webview.t);
-				webview.dispatchEvent(new CustomEvent('loading', {
-					detail: { uri: webview.src }
-				}));
+				if (webview.classList.contains('active')) {
+					// Only active webview exposes event to the parent
+					webview.dispatchEvent(new CustomEvent('loading', {
+						detail: { uri: webview.src }
+					}));
+				}
 				webview.tab.startLoading();
 			});
 
@@ -49,8 +52,10 @@
 				// Timeout to avoid any blinking effects with the tab loader
 				if (webview.t) clearTimeout(webview.t);
 				webview.t = setTimeout(function () {
+					// Only active webview exposes event to the parent
+					if (!webview.classList.contains('active')) return;
 					webview.dispatchEvent(new CustomEvent('idle', {
-						detail: { uri: webview.src }
+						detail: { uri: webview.src  }
 					}));
 					webview.tab.stopLoading();
 				}, 300);
@@ -92,9 +97,12 @@
 				evt.stopPropagation();
 
 				// Reset tab loader
-				webview.dispatchEvent(new CustomEvent('idle', {
-					detail: { uri: webview.src }
-				}));
+				if (webview.classList.contains('active')) {
+					// Only active webview exposes event to the parent
+					webview.dispatchEvent(new CustomEvent('idle', {
+						detail: { uri: webview.src }
+					}));
+				}
 				webview.tab.stopLoading();
 			});
 
