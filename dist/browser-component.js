@@ -205,6 +205,13 @@
 	}
 
 	/**
+	 * Last tab cannot be closed
+	 */
+	prototype.closable = function () {
+		return this.parentNode.querySelectorAll('browser-tab').length > 1;
+	}
+
+	/**
 	 * Set favicon
 	 * @param {Image blob} blob
 	 */
@@ -226,6 +233,13 @@
 			// middle click button case
 			return this.close(evt);
 		}
+
+		if (!this.closable()) {
+			this.classList.add('not-closable');
+		} else {
+			this.classList.remove('not-closable');
+		}
+
 		evt.stopPropagation();
 		this.parentNode.dispatchEvent(
 			new CustomEvent('select-tab', { 
@@ -240,6 +254,7 @@
 	 */
 	prototype.close = function (evt) {
 		evt.stopPropagation();
+		if (!this.closable()) return;
 		this.parentNode.dispatchEvent(
 			new CustomEvent('closed-tab', { 
 				detail: { source: this },
@@ -519,11 +534,12 @@
 				// Timeout to avoid any blinking effects with the tab loader
 				if (webview.t) clearTimeout(webview.t);
 				webview.t = setTimeout(function () {
-					// Only active webview exposes event to the parent
-					if (!webview.classList.contains('active')) return;
-					webview.dispatchEvent(new CustomEvent('idle', {
-						detail: { uri: webview.src  }
-					}));
+					if (webview.classList.contains('active')) {
+						// Only active webview exposes event to the parent
+						webview.dispatchEvent(new CustomEvent('idle', {
+							detail: { uri: webview.src  }
+						}));
+					}
 					webview.tab.stopLoading();
 				}, 300);
 			}.bind(webview));

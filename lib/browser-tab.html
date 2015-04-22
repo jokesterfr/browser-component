@@ -161,16 +161,23 @@
 			background-repeat: no-repeat;
 			background-position: center center;
 			opacity: .8;
+			display: none;
+		}
+
+		:host(.not-closable.active) #close-btn {
+			display: none;
 		}
 
 		:host(.active) #close-btn {
 			background-image: url("../icons/close-simple.svg");
+			display: block;
 		}
 
-		:host #close-btn:hover {
+		:host(.active) #close-btn:hover {
 			background-image: url("../icons/close-hover.svg");
 		}
-		:host #close-btn:hover:active {
+		
+		:host(.active) #close-btn:hover:active {
 			background-image: url("../icons/close-active.svg");
 		}
 	</style>
@@ -257,6 +264,13 @@
 	}
 
 	/**
+	 * Last tab cannot be closed
+	 */
+	prototype.closable = function () {
+		return this.parentNode.querySelectorAll('browser-tab').length > 1;
+	}
+
+	/**
 	 * Set favicon
 	 * @param {Image blob} blob
 	 */
@@ -278,6 +292,13 @@
 			// middle click button case
 			return this.close(evt);
 		}
+
+		if (!this.closable()) {
+			this.classList.add('not-closable');
+		} else {
+			this.classList.remove('not-closable');
+		}
+
 		evt.stopPropagation();
 		this.parentNode.dispatchEvent(
 			new CustomEvent('select-tab', { 
@@ -292,6 +313,7 @@
 	 */
 	prototype.close = function (evt) {
 		evt.stopPropagation();
+		if (!this.closable()) return;
 		this.parentNode.dispatchEvent(
 			new CustomEvent('closed-tab', { 
 				detail: { source: this },
