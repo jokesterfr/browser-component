@@ -1,6 +1,6 @@
 {
   "name": "browser-component",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Components for rendering browser style UIs.",
   "private": true,
   "directories": {
