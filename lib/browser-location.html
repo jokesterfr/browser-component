@@ -166,6 +166,11 @@
 
 		this.browser.addEventListener('tab-selected', function (evt) {
 			if (!evt || !evt.detail || !evt.detail.uri) return;
+			if (evt.detail.loading) {
+				this.controlButton.setAttribute('type', 'stop');
+			} else {
+				this.controlButton.setAttribute('type', 'reload');
+			}
 			this.input.value = decodeURIComponent(evt.detail.uri);
 		}.bind(this));
 	};

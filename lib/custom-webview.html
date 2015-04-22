@@ -43,6 +43,7 @@
 						detail: { uri: webview.src }
 					}));
 				}
+				webview.loading = true;
 				webview.tab.startLoading();
 			});
 
@@ -58,6 +59,7 @@
 							detail: { uri: webview.src  }
 						}));
 					}
+					webview.loading = false;
 					webview.tab.stopLoading();
 				}, 300);
 			}.bind(webview));
@@ -104,6 +106,7 @@
 						detail: { uri: webview.src }
 					}));
 				}
+				webview.loading = false;
 				webview.tab.stopLoading();
 			});
 

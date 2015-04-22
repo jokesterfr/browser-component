@@ -198,7 +198,10 @@
 						webview.classList.add('active');
 						this.currentWebView = webview;
 						this.dispatchEvent(new CustomEvent('tab-selected', {
-							detail: { uri: this.currentWebView.src }	
+							detail: { 
+								uri: this.currentWebView.src,
+								loading: webview.loading
+							}	
 						}));
 					}
 					return;

@@ -492,6 +492,11 @@
 
 		this.browser.addEventListener('tab-selected', function (evt) {
 			if (!evt || !evt.detail || !evt.detail.uri) return;
+			if (evt.detail.loading) {
+				this.controlButton.setAttribute('type', 'stop');
+			} else {
+				this.controlButton.setAttribute('type', 'reload');
+			}
 			this.input.value = decodeURIComponent(evt.detail.uri);
 		}.bind(this));
 	};
@@ -525,6 +530,7 @@
 						detail: { uri: webview.src }
 					}));
 				}
+				webview.loading = true;
 				webview.tab.startLoading();
 			});
 
@@ -540,6 +546,7 @@
 							detail: { uri: webview.src  }
 						}));
 					}
+					webview.loading = false;
 					webview.tab.stopLoading();
 				}, 300);
 			}.bind(webview));
@@ -586,6 +593,7 @@
 						detail: { uri: webview.src }
 					}));
 				}
+				webview.loading = false;
 				webview.tab.stopLoading();
 			});
 
@@ -820,7 +828,10 @@
 						webview.classList.add('active');
 						this.currentWebView = webview;
 						this.dispatchEvent(new CustomEvent('tab-selected', {
-							detail: { uri: this.currentWebView.src }	
+							detail: { 
+								uri: this.currentWebView.src,
+								loading: webview.loading
+							}	
 						}));
 					}
 					return;
