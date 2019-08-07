@@ -6,58 +6,19 @@
   description: A space where browser elements can be displayed in line.
 -->
 <template id="browser-toolbar">
-	<style>
-		:host {
-			display: flex;
-			align-items: center;
-			height: 60px;
-			background-color: #F2F1F0;
-			background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(242,241,240,1) 25%,rgba(242,241,240,1) 100%);
-			border-bottom: 1px solid hsla(240,17%,17%,.25);
-			padding: 0px 0.6em;
-			z-index: 599;
-		}
-	</style>
-	<content></content>
+  <style>
+    :host {
+      display: flex;
+      align-items: center;
+      height: 60px;
+      background-color: #F2F1F0;
+      background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(242,241,240,1) 25%,rgba(242,241,240,1) 100%);
+      border-bottom: 1px solid hsla(240,17%,17%,.25);
+      padding: 0px 0.6em;
+      z-index: 599;
+    }
+  </style>
+  <content></content>
 </template>
 
-<script>
-/* browser-toolbar */
-(function () {
-	'use strict';
-	var prototype = Object.create(HTMLElement.prototype);
-	var currentScript = document.currentScript;
-	var template = currentScript.ownerDocument.querySelector('template#browser-toolbar');
-
-	prototype.createdCallback = function() {
-		var shadow = this.createShadowRoot();
-		shadow.appendChild(template.content.cloneNode(true));
-
-		// Get browser parent
-		this.browser = this;
-		while (this.browser = this.browser.parentNode) {
-			if (this.browser.tagName === 'BROWSER-COMPONENT') break;
-		}
-
-		this.addEventListener('click', function (evt) {
-			evt.stopPropagation();
-			if (evt.target.tagName !== 'BROWSER-BUTTON') return;
-			switch (evt.target.getAttribute('type')) {
-				case 'zoom-in':
-					this.browser.zoomIn();
-					break;
-				case 'zoom-out':
-					this.browser.zoomOut();
-					break;
-				case 'home':
-					this.browser.goHome();
-					break;
-			}
-		});
-	};
-
-	document.registerElement('browser-toolbar', {
-		prototype: prototype
-	});
-})();
-</script>
+<script src="./browser-toolbar.js"></script>

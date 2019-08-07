@@ -3,6 +3,8 @@ Browser-component
 
 *Browser component* is a web component designed to get a browser into the browser itself. It can be used to extend a headless browser, or give some more features to a web application, such as *firefox/xulrunner* or *chrome/chromium apps*. This project comes with sub components, to let you customize the browser of your wish.
 
+![Interface overview](./assets/overview.png)
+
 ## Overview
 
 Get it directly by cloning this repository:
@@ -46,7 +48,9 @@ And use it:
 
 If you want to test this component in a [chrome app](https://developer.chrome.com/apps/about_apps) context, simply type:
 
-  $ npm run example
+```bash
+npm run example
+```
 
 ## Browser compatibility
 

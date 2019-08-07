@@ -6,88 +6,55 @@
   description: A special tab to create a new empty one
 -->
 <style>
-	/* when no tab is displayed reset negative margin */
-	browser-tab-new:first-child {
-		margin-left: 0px;
-	}
+  /* when no tab is displayed reset negative margin */
+  browser-tab-new:first-child {
+    margin-left: 0px;
+  }
 </style>
 
 <template id="browser-tab-new">
-	<style>
-		:host {
-			display: -webkit-box;
-			display: flex;
-			padding: 8px 25px 7px 40px;
-			height: 29px;
-			margin-left: -32px;
-			min-width: 250px;
-			max-width: 250px;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			user-select: none;
-			cursor: default;
-			font-family: "Fira Sans Medium", Arial, sans-serif;
-			width: 36px;
-			min-width: 36px;
-			padding-left: 25px;
-		}
+  <style>
+    :host {
+      display: -webkit-box;
+      display: flex;
+      padding: 8px 25px 7px 40px;
+      height: 29px;
+      margin-left: -32px;
+      min-width: 250px;
+      max-width: 250px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      cursor: default;
+      font-family: "Fira Sans Medium", Arial, sans-serif;
+      width: 36px;
+      min-width: 36px;
+      padding-left: 25px;
+    }
 
-		:host(:hover) {
-			position: relative;
-			background: url("../icons/tabBackgroundStart.svg") no-repeat left,
-						url("../icons/tabBackgroundEnd.svg") no-repeat right;
-		}
+    :host(:hover) {
+      position: relative;
+      background: url("../icons/tabBackgroundStart.svg") no-repeat left,
+            url("../icons/tabBackgroundEnd.svg") no-repeat right;
+    }
 
-		:host #favicon {
-			background-image: url("../icons/newTab-Icon.svg");
-			width: 32px;
-			height: 32px;
-			background-size: 32px 32px;
-			margin-top: 0px;
-			margin-left: 2px;
-		}
+    :host #favicon {
+      background-image: url("../icons/newTab-Icon.svg");
+      width: 32px;
+      height: 32px;
+      background-size: 32px 32px;
+      margin-top: 0px;
+      margin-left: 2px;
+    }
 
-		:host(:active) {
-			margin-top: 1px;
-		}
+    :host(:active) {
+      margin-top: 1px;
+    }
 
-	</style>
-	<content>
-		<div id="favicon"></div>
-	</content>
+  </style>
+  <content>
+    <div id="favicon"></div>
+  </content>
 </template>
 
-<script>
-/* browser-tab-new */
-(function () {
-	'use strict';
-	var prototype = Object.create(HTMLElement.prototype);
-	var currentScript = document.currentScript;
-	var template = currentScript.ownerDocument.querySelector('template#browser-tab-new');
-
-	prototype.createdCallback = function() {
-		var shadow = this.createShadowRoot()
-		shadow.appendChild(template.content.cloneNode(true));
-
-		this.addEventListener('click', function (evt) {
-			addTab.call(this, evt);
-		}.bind(this), false);
-	};
-	
-	/**
-	 * Select the current tab
-	 */
-	function addTab(evt) {
-		evt.stopPropagation();
-		evt = new CustomEvent('add-tab', { detail: { source: this }});
-		this.parentNode.dispatchEvent(evt);
-	}
-
-	/**
-	 * Register the element protoype
-	 */
-	document.registerElement('browser-tab-new', {
-		prototype: prototype
-	});
-})();
-</script>
+<script src="./browser-tab-new.js"></script>

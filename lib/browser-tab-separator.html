@@ -6,33 +6,16 @@
   description: A graphical separator between two tabs
 -->
 <template id="browser-tab-separator">
-	<style>
-		:host {
-			width: 3px;
-			height: 45px;
-			background-image: url("../icons/tabSeparator.png");
-			background-repeat: no-repeat;
-			margin-left: -16px;
-		}
-	</style>
-	<content></content>
+  <style>
+    :host {
+      width: 3px;
+      height: 45px;
+      background-image: url("../icons/tabSeparator.png");
+      background-repeat: no-repeat;
+      margin-left: -16px;
+    }
+  </style>
+  <content></content>
 </template>
 
-<script>
-/* browser-tab-separator */
-(function () {
-	'use strict';
-	var prototype = Object.create(HTMLElement.prototype);
-	var currentScript = document.currentScript;
-	var template = currentScript.ownerDocument.querySelector('template#browser-tab-separator');
-
-	prototype.createdCallback = function() {	
-		var shadow = this.createShadowRoot();
-		shadow.appendChild(template.content.cloneNode(true));
-	};
-	
-	document.registerElement('browser-tab-separator', {
-		prototype: prototype
-	});
-})();
-</script>
+<script src="./browser-tab-separator.js"></script>

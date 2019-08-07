@@ -6,324 +6,184 @@
   description: A tab for changing browsing context easily
 -->
 <template id="browser-tab">
-	<style>
-		:host {
-			display: -webkit-box;
-			display: flex;
-			padding: 9px 25px 7px 35px;
-			height: 29px;
-			margin-left: -37px;
-			min-width: 255px;
-			max-width: 255px;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			user-select: none;
-			cursor: default;
-			font-family: "Fira Sans Medium", Arial, sans-serif;
-			margin-top: 1px;
-		}
-		:host(:first-child) {
-			margin-left: 0px;
-		}
+  <style>
+    :host {
+      display: -webkit-box;
+      display: flex;
+      padding: 9px 25px 7px 35px;
+      height: 29px;
+      margin-left: -37px;
+      min-width: 255px;
+      max-width: 255px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      cursor: default;
+      font-family: "Fira Sans Medium", Arial, sans-serif;
+      margin-top: 1px;
+    }
+    :host(:first-child) {
+      margin-left: 0px;
+    }
 
-		:host(.newTab) {
-			width: 36px;
-			min-width: 36px;
-			padding-left: 25px;
-		}
+    :host(.newTab) {
+      width: 36px;
+      min-width: 36px;
+      padding-left: 25px;
+    }
 
-		:host(.newTab) #favicon {
-			background-image: url("../icons/newTab-Icon.svg");
-			width: 32px;
-			height: 32px;
-			background-size: 32px 32px;
-			margin-top: 0px;
-			margin-left: 2px;
-		}
+    :host(.newTab) #favicon {
+      background-image: url("../icons/newTab-Icon.svg");
+      width: 32px;
+      height: 32px;
+      background-size: 32px 32px;
+      margin-top: 0px;
+      margin-left: 2px;
+    }
 
-		:host(:hover) {
-			background: url("../icons/tabBackgroundStart.svg") no-repeat left,
-						url("../icons/tabBackgroundMiddle.svg") no-repeat 43px,
-						url("../icons/tabBackgroundEnd.svg") no-repeat right;
-		}
+    :host(:hover) {
+      background: url("../icons/tabBackgroundStart.svg") no-repeat left,
+            url("../icons/tabBackgroundMiddle.svg") no-repeat 43px,
+            url("../icons/tabBackgroundEnd.svg") no-repeat right;
+    }
 
-		:host(.newTab:hover) {
-			background: url("../icons/tabBackgroundStart.svg") no-repeat left,
-						url("../icons/tabBackgroundEnd.svg") no-repeat right;
-		}
+    :host(.newTab:hover) {
+      background: url("../icons/tabBackgroundStart.svg") no-repeat left,
+            url("../icons/tabBackgroundEnd.svg") no-repeat right;
+    }
 
-		/**
-		Because for now Chrome does not support these instructions :(
-		 I had to change the size of tabActiveMiddle precisely to the size we want it to.
-		:host:hover {
-			background-image: url("../icons/tabBackgroundStart.svg"),
-							url("../icons/tabBackgroundMiddle.svg"),
-							url("../icons/tabBackgroundEnd.svg");
-			background-repeat: no-repeat,
-							 no-repeat,
-							 no-repeat;
-			background-position: left,
-								 43px,
-								 right;
-			background-size: 43px 45px,
-								 calc(100% - 86px) 45px,
-								 43px 45px;
-		}
-		*/
+    /**
+    Because for now Chrome does not support these instructions :(
+     I had to change the size of tabActiveMiddle precisely to the size we want it to.
+    :host:hover {
+      background-image: url("../icons/tabBackgroundStart.svg"),
+              url("../icons/tabBackgroundMiddle.svg"),
+              url("../icons/tabBackgroundEnd.svg");
+      background-repeat: no-repeat,
+               no-repeat,
+               no-repeat;
+      background-position: left,
+                 43px,
+                 right;
+      background-size: 43px 45px,
+                 calc(100% - 86px) 45px,
+                 43px 45px;
+    }
+    */
 
-		/* CSS4 spec.. :(
-		 * :host:hover + :hostSeparator,
-		!:host:hover + :hostSeparator, {
-			background-image: none;
-		}*/
+    /* CSS4 spec.. :(
+     * :host:hover + :hostSeparator,
+    !:host:hover + :hostSeparator, {
+      background-image: none;
+    }*/
 
-		:host(.active) {
-			background: url("../icons/tabActiveStart.svg") no-repeat left,
-						url("../icons/tabActiveMiddle.svg") no-repeat 42px,
-						url("../icons/tabActiveEnd.svg") no-repeat right;
-			z-index: 399;
-		}
+    :host(.active) {
+      background: url("../icons/tabActiveStart.svg") no-repeat left,
+            url("../icons/tabActiveMiddle.svg") no-repeat 42px,
+            url("../icons/tabActiveEnd.svg") no-repeat right;
+      z-index: 399;
+    }
 
-		/**
-		 Because for now Chrome does not support these instructions :(
-		 I had to change the size of tabActiveMiddle precisely to the size we want it to.
-		:host.active {
-			background-image: url("../icons/tabActiveStart.svg"),
-												url("../icons/tabActiveMiddle.svg"),
-												url("../icons/tabActiveEnd.svg");
-			background-repeat: no-repeat,
-												 no-repeat,
-												 no-repeat;
-			background-position: left,
-													 43px,
-													 right;
-			background-size: 43px 45px,
-											 calc(100% - 86px) 45px,
-											 43px 45px;
-			z-index: 399;
-		}
-		*/
+    /**
+     Because for now Chrome does not support these instructions :(
+     I had to change the size of tabActiveMiddle precisely to the size we want it to.
+    :host.active {
+      background-image: url("../icons/tabActiveStart.svg"),
+                        url("../icons/tabActiveMiddle.svg"),
+                        url("../icons/tabActiveEnd.svg");
+      background-repeat: no-repeat,
+                         no-repeat,
+                         no-repeat;
+      background-position: left,
+                           43px,
+                           right;
+      background-size: 43px 45px,
+                       calc(100% - 86px) 45px,
+                       43px 45px;
+      z-index: 399;
+    }
+    */
 
-		:host(.loading) > #favicon {
-			width: 24px;
-			height: 24px;
-			background-repeat: no-repeat;
-			background-size: 24px 24px;
-			background-position: 0px 0px;
-			margin-top: 4px;
-			margin-right: 0.4em;
-			background-image: url("../icons/spinner-dark.gif");
-		}
+    :host(.loading) > #favicon {
+      width: 24px;
+      height: 24px;
+      background-repeat: no-repeat;
+      background-size: 24px 24px;
+      background-position: 0px 0px;
+      margin-top: 4px;
+      margin-right: 0.4em;
+      background-image: url("../icons/spinner-dark.gif");
+    }
 
-		
-		:host(:hover.loading) > #favicon {
-			background-image: url("../icons/spinner-gradient.gif");
-		}
+    
+    :host(:hover.loading) > #favicon {
+      background-image: url("../icons/spinner-gradient.gif");
+    }
 
-		:host(.active.loading) > #favicon {
-			background-image: url("../icons/spinner.gif");
-		}
+    :host(.active.loading) > #favicon {
+      background-image: url("../icons/spinner.gif");
+    }
 
-		:host(.newTab) > #favicon {
-			margin-right: 0;
-		}
-		
-		:host > #favicon > img { 
-			width: 24px;
-			height: 24px;
-			margin-right: 6px;
-			margin-top: 4px;
-		}
+    :host(.newTab) > #favicon {
+      margin-right: 0;
+    }
+    
+    :host > #favicon > img { 
+      width: 24px;
+      height: 24px;
+      margin-right: 6px;
+      margin-top: 4px;
+    }
 
-		:host(.loading) > #favicon > img {
-			display:none;
-		}
+    :host(.loading) > #favicon > img {
+      display:none;
+    }
 
-		:host > #label {
-			-webkit-box-flex: 1;
-			flex: 1;
-			height: 34px;
-			color: #DFDBD2;
-			font-size: 16px;
-			line-height: 34px;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			white-space: nowrap;
-		}
-		:host(.active) > #label {
-			color: #4C4C4C;
-		}
+    :host > #label {
+      -webkit-box-flex: 1;
+      flex: 1;
+      height: 34px;
+      color: #DFDBD2;
+      font-size: 16px;
+      line-height: 34px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    :host(.active) > #label {
+      color: #4C4C4C;
+    }
 
-		:host #close-btn {
-			width: 32px;
-			height: 32px;
-			background-image: url("../icons/close-simple-white.svg");
-			background-repeat: no-repeat;
-			background-position: center center;
-			opacity: .8;
-			display: none;
-		}
+    :host #close-btn {
+      width: 32px;
+      height: 32px;
+      background-image: url("../icons/close-simple-white.svg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      opacity: .8;
+      display: none;
+    }
 
-		:host(.not-closable.active) #close-btn {
-			display: none;
-		}
+    :host(.not-closable.active) #close-btn {
+      display: none;
+    }
 
-		:host(.active) #close-btn {
-			background-image: url("../icons/close-simple.svg");
-			display: block;
-		}
+    :host(.active) #close-btn {
+      background-image: url("../icons/close-simple.svg");
+      display: block;
+    }
 
-		:host(.active) #close-btn:hover {
-			background-image: url("../icons/close-hover.svg");
-		}
-		
-		:host(.active) #close-btn:hover:active {
-			background-image: url("../icons/close-active.svg");
-		}
-	</style>
-	<div id="favicon"></div>
-	<div id="label"></div>
-	<div id="close-btn"></div>
+    :host(.active) #close-btn:hover {
+      background-image: url("../icons/close-hover.svg");
+    }
+    
+    :host(.active) #close-btn:hover:active {
+      background-image: url("../icons/close-active.svg");
+    }
+  </style>
+  <div id="favicon"></div>
+  <div id="label"></div>
+  <div id="close-btn"></div>
 </template>
 
-<script>
-/* browser-tab */
-(function () {
-	'use strict';
-	var prototype = Object.create(HTMLElement.prototype);
-	var currentScript = document.currentScript;
-	var template = currentScript.ownerDocument.querySelector('template#browser-tab');
-
-	prototype.createdCallback = function () {
-		var shadow = this.createShadowRoot();
-		shadow.appendChild(template.content.cloneNode(true));
-
-		// Register inner components
-		this.label = shadow.querySelector('#label');
-		this.favicon = shadow.querySelector('#favicon');
-		this.closeBtn = shadow.querySelector('#close-btn');
-
-		// If an url attribute has been set
-		this.url = this.getAttribute('url');
-
-		// Fill label
-		var label = this.getAttribute('label') || 'New tab';
-		this.label.textContent = label;
-
-		// Register select and close events
-		this.addEventListener('click', this.select.bind(this), false);
-		this.closeBtn.addEventListener('click', this.close.bind(this), false);
-	};
-
-	prototype.attachedCallback = function () {
-		this.parentNode.dispatchEvent(
-			new CustomEvent('new-tab', { 
-				detail: { source: this },
-				bubbles: true
-			})
-		);
-	};
-
-	prototype.attributeChangedCallback = function (attr) {
-		switch (attr) {
-			case 'url':
-				console.log('url attribute changed!!');
-				// var label = this.shadow.getElementById('label');
-				break;
-
-			case 'label':
-				var label = this.getAttribute('label') || 'New tab';
-				this.label.textContent = label;
-				break;
-		}
-	};
-
-	/**
-	 * Start the loading effect on tab
-	 */
-	prototype.startLoading = function () {
-		this.classList.add('loading');
-	}
-
-	/**
-	 * Stop the loading effect on tab
-	 */
-	prototype.stopLoading = function () {
-		this.classList.remove('loading');
-	}
-
-	/**
-	 * Sets the tab title
-	 * @param {String} title
-	 */
-	prototype.setTitle = function (title) {
-		this.label.textContent = title;
-	}
-
-	/**
-	 * Last tab cannot be closed
-	 */
-	prototype.closable = function () {
-		return this.parentNode.querySelectorAll('browser-tab').length > 1;
-	}
-
-	/**
-	 * Set favicon
-	 * @param {Image blob} blob
-	 */
-	prototype.setFavicon = function (blob) {
-		this.favicon.innerHTML = '';
-		if (!blob) return;
-		var img = document.createElement('img');
-		img.src = window.URL.createObjectURL(blob);
-		img.addEventListener('error', function() { img.style.display = 'none' });
-		this.favicon.appendChild(img);
-	}
-
-	/**
-	 * On click, select this tab as current
-	 * @param {DOMEvent} evt
-	 */
-	prototype.select = function (evt) {
-		if (evt.which === 2) {
-			// middle click button case
-			return this.close(evt);
-		}
-
-		if (!this.closable()) {
-			this.classList.add('not-closable');
-		} else {
-			this.classList.remove('not-closable');
-		}
-
-		evt.stopPropagation();
-		this.parentNode.dispatchEvent(
-			new CustomEvent('select-tab', { 
-				detail: { source: this },
-				bubbles: true
-			})
-		);
-	}
-
-	/**
-	 * On close icon click, destroy this tab
-	 */
-	prototype.close = function (evt) {
-		evt.stopPropagation();
-		if (!this.closable()) return;
-		this.parentNode.dispatchEvent(
-			new CustomEvent('closed-tab', { 
-				detail: { source: this },
-				bubbles: true
-			})
-		);
-	}
-
-	/**
-	 * Register the element protoype
-	 */
-	document.registerElement('browser-tab', {
-		prototype: prototype
-	});
-})();
-</script>
+<script src="./browser-tab.js"></script>

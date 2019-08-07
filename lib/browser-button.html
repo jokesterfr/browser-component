@@ -6,140 +6,114 @@
   description: A modular button to use in navigation / toolbar..
 -->
 <template id="browser-button">
-	<style>
-		/* Default buttons */
-		:host {
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			user-select: none;
-			
-			padding: 5px;
-			margin: 8px 2px 8px 0;
-			width: 32px;
-			height: 32px;
-			border-radius: 3px;
-			transition-property: all;
-			transition-duration: 250ms;
-			cursor: pointer;
+  <style>
+    /* Default buttons */
+    :host {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+      
+      padding: 5px;
+      margin: 8px 2px 8px 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 3px;
+      transition-property: all;
+      transition-duration: 250ms;
+      cursor: pointer;
 
-			background-color: #F2F1F0;
-			background-image: -webkit-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
-			background-image: linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
-			background-clip: padding-box;
-			border: 1px solid transparent;
-			box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
-				0 0 0 1px hsla(0,0%,100%,.3) inset,
-				0 1px 0 hsla(0,0%,0%,.03);
-			overflow: hidden;
-		}
+      background-color: #F2F1F0;
+      background-image: -webkit-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+      background-image: linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+      background-clip: padding-box;
+      border: 1px solid transparent;
+      box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
+        0 0 0 1px hsla(0,0%,100%,.3) inset,
+        0 1px 0 hsla(0,0%,0%,.03);
+      overflow: hidden;
+    }
 
-		:host(:not(.disabled):hover) {
-			border: 1px solid #B2AEAA;
-			background-color: #F2F1F0;
-			background-image: -webkit-linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
-			background-image: linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
-			border-color: hsla(0,0%,10%,.3) hsla(0,0%,10%,.35) hsla(0,0%,10%,.4);
-			box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
-				0 0 0 1px hsla(0,0%,100%,.3) inset,
-				0 1px 0 hsla(0,0%,10%,.03),
-				0 0 2px hsla(0,0%,10%,.2);
-		}
+    :host(:not(.disabled):hover) {
+      border: 1px solid #B2AEAA;
+      background-color: #F2F1F0;
+      background-image: -webkit-linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
+      background-image: linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
+      border-color: hsla(0,0%,10%,.3) hsla(0,0%,10%,.35) hsla(0,0%,10%,.4);
+      box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
+        0 0 0 1px hsla(0,0%,100%,.3) inset,
+        0 1px 0 hsla(0,0%,10%,.03),
+        0 0 2px hsla(0,0%,10%,.2);
+    }
 
-		:host(:not(.disabled):hover:active) {
-			background-color: #B2AEAA;
-		}
+    :host(:not(.disabled):hover:active) {
+      background-color: #B2AEAA;
+    }
 
-		/* Rounded buttons */
-		:host(.rounded) {
-			padding: 6px;
-			background-color: #F2F1F0;
-			background-image: -webkit-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
-			background-image: linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
-			background-clip: padding-box;
-			border: 1px solid #B2AEAA;
-			border-radius: 100%;
-			box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
-			          0 0 0 1px hsla(0,0%,100%,.3) inset,
-			          0 1px 0 hsla(0,0%,0%,.03);
-		}
-		:host(:not(.disabled).rounded:hover) {
-			background-color: #F2F1F0;
-			background-image: -webkit-linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
-			background-image: linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
-			border-color: hsla(0,0%,10%,.3) hsla(0,0%,10%,.35) hsla(0,0%,10%,.4);
-			box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
-			          0 0 0 1px hsla(0,0%,100%,.3) inset,
-			          0 1px 0 hsla(0,0%,10%,.03),
-			          0 0 2px hsla(0,0%,10%,.2);
-		}
-		:host(:not(.disabled).rounded:active) {
-			background-color: #B2AEAA;
-		}
+    /* Rounded buttons */
+    :host(.rounded) {
+      padding: 6px;
+      background-color: #F2F1F0;
+      background-image: -webkit-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+      background-image: linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+      background-clip: padding-box;
+      border: 1px solid #B2AEAA;
+      border-radius: 100%;
+      box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
+                0 0 0 1px hsla(0,0%,100%,.3) inset,
+                0 1px 0 hsla(0,0%,0%,.03);
+    }
+    :host(:not(.disabled).rounded:hover) {
+      background-color: #F2F1F0;
+      background-image: -webkit-linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
+      background-image: linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
+      border-color: hsla(0,0%,10%,.3) hsla(0,0%,10%,.35) hsla(0,0%,10%,.4);
+      box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
+                0 0 0 1px hsla(0,0%,100%,.3) inset,
+                0 1px 0 hsla(0,0%,10%,.03),
+                0 0 2px hsla(0,0%,10%,.2);
+    }
+    :host(:not(.disabled).rounded:active) {
+      background-color: #B2AEAA;
+    }
 
-		/* Shadowed icons */
-		:host::shadow .icon {
-			width: 32px;
-			height: 32px;
-			display: block;
-			background-repeat: no-repeat;
-			background-size: 100%;
-			background-position: 50% 50%;
-		}
+    /* Shadowed icons */
+    :host .icon {
+      width: 32px;
+      height: 32px;
+      display: block;
+      background-repeat: no-repeat;
+      background-size: 100%;
+      background-position: 50% 50%;
+    }
 
-		:host(.disabled) {
-			cursor: initial;
-		}
+    :host(.disabled) {
+      cursor: initial;
+    }
 
-		:host(.disabled)::shadow .icon {
-			opacity: 0.6;
-		}
+    :host(.disabled) .icon {
+      opacity: 0.6;
+    }
 
-		:host([type="back"])::shadow .icon { background-image: url("../icons/back.svg"); }
-		:host([type="bookmark"])::shadow .icon { background-image: url("../icons/bookmark.svg"); }
-		:host([type="download"])::shadow .icon { background-image: url("../icons/download.svg"); }
-		:host([type="feed"])::shadow .icon { background-image: url("../icons/feed.svg"); }
-		:host([type="forward"])::shadow .icon { background-image: url("../icons/forward.svg"); }
-		:host([type="history"])::shadow .icon { background-image: url("../icons/history.svg"); }
-		:host([type="home"])::shadow .icon { background-image: url("../icons/home.svg"); }
-		:host([type="menu"])::shadow .icon { background-image: url("../icons/menu.svg"); }
-		:host([type="new-window"])::shadow .icon { background-image: url("../icons/new-window.svg"); }
-		:host([type="print"])::shadow .icon { background-image: url("../icons/print.svg"); }
-		:host([type="reload"])::shadow .icon { background-image: url("../icons/reload.svg"); }
-		:host([type="stop"])::shadow .icon { 
-			background-image: url("../icons/stop.svg");
-			background-size: 60% 60%;
-		}
-		:host([type="zoom-in"])::shadow .icon { background-image: url("../icons/zoom-in.svg"); }
-		:host([type="zoom-out"])::shadow .icon { background-image: url("../icons/zoom-out.svg"); }
-		:host([type="zoom"])::shadow .icon { background-image: url("../icons/zoom.svg"); }
-	</style>
-	<div class="icon"></div>
+    :host([type="back"]) .icon { background-image: url("../icons/back.svg"); }
+    :host([type="bookmark"]) .icon { background-image: url("../icons/bookmark.svg"); }
+    :host([type="download"]) .icon { background-image: url("../icons/download.svg"); }
+    :host([type="feed"]) .icon { background-image: url("../icons/feed.svg"); }
+    :host([type="forward"]) .icon { background-image: url("../icons/forward.svg"); }
+    :host([type="history"]) .icon { background-image: url("../icons/history.svg"); }
+    :host([type="home"]) .icon { background-image: url("../icons/home.svg"); }
+    :host([type="menu"]) .icon { background-image: url("../icons/menu.svg"); }
+    :host([type="new-window"]) .icon { background-image: url("../icons/new-window.svg"); }
+    :host([type="print"]) .icon { background-image: url("../icons/print.svg"); }
+    :host([type="reload"]) .icon { background-image: url("../icons/reload.svg"); }
+    :host([type="stop"]) .icon { 
+      background-image: url("../icons/stop.svg");
+      background-size: 60% 60%;
+    }
+    :host([type="zoom-in"]) .icon { background-image: url("../icons/zoom-in.svg"); }
+    :host([type="zoom-out"]) .icon { background-image: url("../icons/zoom-out.svg"); }
+    :host([type="zoom"]) .icon { background-image: url("../icons/zoom.svg"); }*/
+  </style>
+  <div class="icon"></div>
 </template>
 
-<script>
-/* browser-button */
-(function () {
-	'use strict';
-	var prototype = Object.create(HTMLElement.prototype);
-	var currentScript = document.currentScript;
-	var template = currentScript.ownerDocument.querySelector('template#browser-button');
-
-	// Hack url of css style
-	// @see https://www.w3.org/Bugs/Public/show_bug.cgi?id=20976#c8
-	var importBaseURL = document.currentScript.ownerDocument.baseURI;
-	// var style = template.content.querySelector('link[rel="stylesheet"]');
-	// var href = new URL(style.getAttribute('href'), importBaseURL).toString();
-	// style.setAttribute('href', href);
-	var style = template.content.querySelector('style');
-	style.innerHTML.replace(/\"\.\.\/icons/g, importBaseURL + '/.../img');
-	
-	prototype.createdCallback = function() {
-		var shadow = this.createShadowRoot();
-		shadow.appendChild(template.content.cloneNode(true));
-	};
-	
-	document.registerElement('browser-button', {
-		prototype: prototype
-	});
-})();
-</script>
+<script src="./browser-button.js"></script>

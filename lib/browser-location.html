@@ -7,176 +7,107 @@
 -->
 <link rel="import" href="./browser-button.html"></link>
 <template id="browser-location">
-	<style>
-		::selection {
-			background-color: #4C9ED9;
-			color: white;
-		}
+  <style>
+    ::selection {
+      background-color: #4C9ED9;
+      color: white;
+    }
 
-		/* Gecko Browsers */
-		::-moz-selection {
-			background-color: #4C9ED9;
-			color: white;
-		}
+    /* Gecko Browsers */
+    ::-moz-selection {
+      background-color: #4C9ED9;
+      color: white;
+    }
 
-		:host {
-			display: flex;
-			flex: 1;
-			margin: 8px 10px 8px 0px;
-			-webkit-padding-start: 20px;
-			-webkit-padding-end: 0;
-			-moz-padding-start: 20px;
-			-moz-padding-end: 0;
-			background-color: #FFF;
-			border: 1px solid #B2AEAA;
-			height: 36px;
-			box-shadow: 0 1px 0 hsla(0,0%,0%,.01) inset, 0 1px 0 hsla(0,0%,100%,.1);
-			color: #4C4C4C;
-			font-size: 20px;
-			line-height: 40px;
-			outline-style: none;
-			z-index: 49;
-			opacity: .8;
-			border-bottom-right-radius: 4px;
-			border-top-right-radius: 4px;
-		}
+    :host {
+      display: flex;
+      flex: 1;
+      margin: 8px 10px 8px 0px;
+      -webkit-padding-start: 20px;
+      -webkit-padding-end: 0;
+      -moz-padding-start: 20px;
+      -moz-padding-end: 0;
+      background-color: #FFF;
+      border: 1px solid #B2AEAA;
+      height: 36px;
+      box-shadow: 0 1px 0 hsla(0,0%,0%,.01) inset, 0 1px 0 hsla(0,0%,100%,.1);
+      color: #4C4C4C;
+      font-size: 20px;
+      line-height: 40px;
+      outline-style: none;
+      z-index: 49;
+      opacity: .8;
+      border-bottom-right-radius: 4px;
+      border-top-right-radius: 4px;
+    }
 
-		:host(:hover) {
-			box-shadow: 0 1px 0 hsla(0,0%,0%,.01) inset,
-			0 1px 0 hsla(0,0%,100%,.1),
-			0 0 1px hsla(0,0%,0%,.1);
-			opacity: .9;
-		}
+    :host(:hover) {
+      box-shadow: 0 1px 0 hsla(0,0%,0%,.01) inset,
+      0 1px 0 hsla(0,0%,100%,.1),
+      0 0 1px hsla(0,0%,0%,.1);
+      opacity: .9;
+    }
 
-		:host(:focus) {
-			border-color: #3866b4;
-			box-shadow: 0 0px 1px #3866b4 inset;
-			opacity: 1;
-		}
+    :host(:focus) {
+      border-color: #3866b4;
+      box-shadow: 0 0px 1px #3866b4 inset;
+      opacity: 1;
+    }
 
-		:host::shadow input {
-			-webkit-box-flex: 1;
-			flex: 1;
-			color: #4C4C4C;
-			outline-style: none;
-			cursor: text;
-			overflow: hidden;
-			white-space: nowrap;
-			border: none;
-			background-color: transparent;
-			padding: 1px 0 0 0;
-			font-family: 'Fira Sans', Arial, sans-serif;
-			font-size: 1em;
-		}
+    :host input {
+      -webkit-box-flex: 1;
+      flex: 1;
+      color: #4C4C4C;
+      outline-style: none;
+      cursor: text;
+      overflow: hidden;
+      white-space: nowrap;
+      border: none;
+      background-color: transparent;
+      padding: 1px 0 0 0;
+      font-family: 'Fira Sans', Arial, sans-serif;
+      font-size: 1em;
+    }
 
-		:host::shadow input:focus {
-			color: #1a1a1a;
-		}
+    :host input:focus {
+      color: #1a1a1a;
+    }
 
-		:host::shadow browser-button {
-			border-radius: 0px;
-			padding: 2px 4px;
-			margin: 0;
-			font-size: 0;
-			line-height: 0;
-			background-image: linear-gradient(rgba(227, 227, 227, 1), rgba(222, 222, 222, 1));
-			border: none;
-			border-left: 1px solid hsla(220,82%,11%,.2);
-			box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1), inset 0 0 2px hsla(0,0%,100%,.15), 0 0 0 1px hsla(42,11%,18%,.1);
-		}
+    :host browser-button {
+      border-radius: 0px;
+      padding: 2px 4px;
+      margin: 0;
+      font-size: 0;
+      line-height: 0;
+      background-image: linear-gradient(rgba(227, 227, 227, 1), rgba(222, 222, 222, 1));
+      border: none;
+      border-left: 1px solid hsla(220,82%,11%,.2);
+      box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1), inset 0 0 2px hsla(0,0%,100%,.15), 0 0 0 1px hsla(42,11%,18%,.1);
+    }
 
-		:host::shadow browser-button:hover {
-			background-image: -webkit-linear-gradient(#73adff, #4c91ff);
-			background-image: linear-gradient(#73adff, #4c91ff);
-			border: none;
-			border-left: 1px solid hsla(220,82%,11%,.2);
-			box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1), inset 0 0 2px hsla(0,0%,100%,.15), 0 0 0 1px hsla(42,11%,18%,.1);
-		}
+    :host browser-button:hover {
+      background-image: -webkit-linear-gradient(#73adff, #4c91ff);
+      background-image: linear-gradient(#73adff, #4c91ff);
+      border: none;
+      border-left: 1px solid hsla(220,82%,11%,.2);
+      box-shadow: inset 0 1px 0 hsla(0,0%,100%,.1), inset 0 0 2px hsla(0,0%,100%,.15), 0 0 0 1px hsla(42,11%,18%,.1);
+    }
 
-		:host::shadow browser-button:hover:active {
-			background-image: -webkit-linear-gradient(hsla(220,82%,11%,.05), hsla(220,82%,11%,.05)), -webkit-linear-gradient(#73adff, #4c91ff);
-			background-image: linear-gradient(hsla(220,82%,11%,.05), hsla(220,82%,11%,.05)), linear-gradient(#73adff, #4c91ff);
-			box-shadow: inset 0 1px 0 hsla(220,82%,11%,.2), inset 0 0 3px hsla(220,82%,11%,.25);
-		}
+    :host browser-button:hover:active {
+      background-image: -webkit-linear-gradient(hsla(220,82%,11%,.05), hsla(220,82%,11%,.05)), -webkit-linear-gradient(#73adff, #4c91ff);
+      background-image: linear-gradient(hsla(220,82%,11%,.05), hsla(220,82%,11%,.05)), linear-gradient(#73adff, #4c91ff);
+      box-shadow: inset 0 1px 0 hsla(220,82%,11%,.2), inset 0 0 3px hsla(220,82%,11%,.25);
+    }
 
-		:host::shadow browser-button .icon {
-			background-image: url("../icons/reload-hover.svg");
-		}
-	</style>
-	<input type="input" class="input" maxlength="2048" contenteditable="true" value="about:customize" />
-	<!-- 
-	 added programatically because not known yet at this time:
-	 <browser-button class="blue" type="reload"></browser-button>
-	-->
+    :host browser-button .icon {
+      background-image: url("../icons/reload-hover.svg");
+    }
+  </style>
+  <input type="input" class="input" maxlength="2048" contenteditable="true" value="about:customize" />
+  <!-- 
+   added programatically because not known yet at this time:
+   <browser-button class="blue" type="reload"></browser-button>
+  -->
 </template>
 
-<script>
-/* browser-location */
-(function () {
-	'use strict';
-	var prototype = Object.create(HTMLElement.prototype);
-	var currentScript = document.currentScript;
-	var template = currentScript.ownerDocument.querySelector('template#browser-location');
-
-	prototype.createdCallback = function() {	
-		var shadow = this.createShadowRoot();
-		shadow.appendChild(template.content.cloneNode(true));
-
-		// Get browser parent
-		this.browser = this;
-		while (this.browser = this.browser.parentNode) {
-			if (this.browser.tagName === 'BROWSER-COMPONENT') break;
-		}
-
-		// Create control button (stop / reload)
-		this.controlButton = document.createElement('browser-button');
-		this.controlButton.setAttribute('type', 'reload');
-		this.controlButton.classList.add('blue');
-		shadow.appendChild(this.controlButton);
-		this.controlButton.addEventListener('click', function (evt) {
-			switch (this.controlButton.getAttribute('type')) {
-				case 'reload':
-					this.browser.reload();
-					break;
-				case 'stop':
-					this.browser.stop();
-					break;
-			}
-		}.bind(this));
-
-		// Listen input change
-		this.input = shadow.querySelector('input');
-		this.input.addEventListener('keypress', function (evt) {
-			if (evt.keyIdentifier !== 'Enter') return;
-			this.browser.go(this.input.value);
-		}.bind(this), false);
-
-		// Listen to external notifications
-		this.browser.addEventListener('loading', function (evt) {
-			if (!evt || !evt.detail || !evt.detail.uri) return;
-			this.input.value = decodeURIComponent(evt.detail.uri);
-			this.controlButton.setAttribute('type', 'stop');
-		}.bind(this));
-
-		this.browser.addEventListener('idle', function (evt) {
-			if (!evt || !evt.detail || !evt.detail.uri) return;
-			this.input.value = decodeURIComponent(evt.detail.uri);
-			this.controlButton.setAttribute('type', 'reload');
-		}.bind(this));
-
-		this.browser.addEventListener('tab-selected', function (evt) {
-			if (!evt || !evt.detail || !evt.detail.uri) return;
-			if (evt.detail.loading) {
-				this.controlButton.setAttribute('type', 'stop');
-			} else {
-				this.controlButton.setAttribute('type', 'reload');
-			}
-			this.input.value = decodeURIComponent(evt.detail.uri);
-		}.bind(this));
-	};
-	
-	document.registerElement('browser-location', {
-		prototype: prototype
-	});
-})();
-</script>
+<script src="./browser-location.js"></script>

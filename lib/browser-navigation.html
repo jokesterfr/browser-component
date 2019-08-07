@@ -7,122 +7,61 @@
 -->
 <link rel="import" href="./browser-button.html"></link>
 <template id="browser-navigation">
-	<style>
-		:host {
-			display: flex;
-			align-items: center;
-			min-height: 100%;
-		}
+  <style>
+    :host {
+      display: flex;
+      align-items: center;
+      min-height: 100%;
+    }
 
-		:host::shadow browser-button[type="back"] {
-			position: relative;
-			z-index: 100;
-		}
+    :host browser-button[type="back"] {
+      position: relative;
+      z-index: 100;
+    }
 
-		:host::shadow browser-button[type="forward"] {
-			position: relative;
-			z-index: 0;
-			left: 1px;
-			padding: 2px 2px 2px 0px;
-			width: 0px;
-			margin-left: -20px;
-			margin-right: 0px;
-			background-color: #F2F1F0;
-			background-image: -webkit-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
-			background-image: linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
-			background-clip: padding-box;
-			border: 1px solid #B2AEAA;
-			box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
-						0 0 0 1px hsla(0,0%,100%,.3) inset,
-						0 1px 0 hsla(0,0%,0%,.03);
-			border-top-right-radius: 0px;
-			border-bottom-right-radius: 0px;
-			overflow: hidden;
-			transition: all 0.3s;
-		}
+    :host browser-button[type="forward"] {
+      position: relative;
+      z-index: 0;
+      left: 1px;
+      padding: 2px 2px 2px 0px;
+      width: 0px;
+      margin-left: -20px;
+      margin-right: 0px;
+      background-color: #F2F1F0;
+      background-image: -webkit-linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+      background-image: linear-gradient(hsla(0,0%,100%,.7), hsla(0,0%,100%,.2));
+      background-clip: padding-box;
+      border: 1px solid #B2AEAA;
+      box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
+            0 0 0 1px hsla(0,0%,100%,.3) inset,
+            0 1px 0 hsla(0,0%,0%,.03);
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
 
-		:host::shadow browser-button[type="forward"]:not(.disabled):hover {
-			border: 1px solid #B2AEAA;
-			background-color: #F2F1F0;
-			background-image: -webkit-linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
-			background-image: linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
-			border-color: hsla(0,0%,10%,.3) hsla(0,0%,10%,.35) hsla(0,0%,10%,.4);
-			box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
-				0 0 0 1px hsla(0,0%,100%,.3) inset,
-				0 1px 0 hsla(0,0%,10%,.03),
-				0 0 2px hsla(0,0%,10%,.2);
-		}
-		:host::shadow browser-button[type="forward"]:not(.disabled):hover:active {
-			background-color: #B2AEAA;
-		}
+    :host browser-button[type="forward"]:not(.disabled):hover {
+      border: 1px solid #B2AEAA;
+      background-color: #F2F1F0;
+      background-image: -webkit-linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
+      background-image: linear-gradient(hsla(0,0%,100%,.9), hsla(0,0%,100%,.4));
+      border-color: hsla(0,0%,10%,.3) hsla(0,0%,10%,.35) hsla(0,0%,10%,.4);
+      box-shadow: 0 1px 0 hsla(0,0%,100%,.3) inset,
+        0 0 0 1px hsla(0,0%,100%,.3) inset,
+        0 1px 0 hsla(0,0%,10%,.03),
+        0 0 2px hsla(0,0%,10%,.2);
+    }
+    :host browser-button[type="forward"]:not(.disabled):hover:active {
+      background-color: #B2AEAA;
+    }
 
 
-		:host::shadow browser-button[type="forward"].show {
-			padding: 2px 5px 2px 20px;
-			width: auto;
-		}
-	</style>
+    :host browser-button[type="forward"].show {
+      padding: 2px 5px 2px 20px;
+      width: auto;
+    }
+  </style>
 </template>
 
-<script>
-/* browser-navigation */
-(function () {
-	'use strict';
-	var prototype = Object.create(HTMLElement.prototype);
-	var currentScript = document.currentScript;
-	var template = currentScript.ownerDocument.querySelector('template#browser-navigation');
-
-	prototype.createdCallback = function() {
-		this.browser = this;
-		while (this.browser = this.browser.parentNode) {
-			if (this.browser.tagName === 'BROWSER-COMPONENT') break;
-		}
-
-		var shadow = this.createShadowRoot();
-		shadow.appendChild(template.content.cloneNode(true));
-
-		this.backBtn = document.createElement('browser-button');
-		this.backBtn.setAttribute('type', 'back');
-		this.backBtn.setAttribute('class', 'rounded disabled');
-		shadow.appendChild(this.backBtn);
-		this.backBtn.addEventListener('click', function (evt) {
-			this.browser.back();
-		}.bind(this));
-
-		this.forwardBtn = document.createElement('browser-button');
-		this.forwardBtn.setAttribute('type', 'forward');
-		this.forwardBtn.setAttribute('class', 'disabled');
-		shadow.appendChild(this.forwardBtn);
-		this.forwardBtn.addEventListener('click', function (evt) {
-			this.browser.forward();
-		}.bind(this));
-
-		// Force the button states to the browser context
-		this.browser.addEventListener('loading', setButtonStates.bind(this));
-		this.browser.addEventListener('idle', setButtonStates.bind(this));
-		this.browser.addEventListener('tab-selected', setButtonStates.bind(this));
-	};
-
-	/**
-	 * Set the states of back / forward navigation buttons
-	 */
-	var setButtonStates = function() {
-		if (this.browser.canGoForward()) {
-			this.forwardBtn.classList.remove('disabled');
-			this.forwardBtn.classList.add('show');
-		} else {
-			this.forwardBtn.classList.add('disabled');
-		}
-
-		if (this.browser.canGoBack()) {
-			this.backBtn.classList.remove('disabled');
-		} else {
-			this.backBtn.classList.add('disabled');
-		}
-	}
-
-	document.registerElement('browser-navigation', {
-		prototype: prototype
-	});
-})();
-</script>
+<script src="./browser-navigation.js"></script>

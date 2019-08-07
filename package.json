@@ -6,11 +6,12 @@
     "example": "examples"
   },
   "devDependencies": {
-    "grunt": "~0.4.5",
-    "grunt-vulcanize": "~0.4.1",
-    "grunt-data-uri": "~0.2.0",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-webfont": "~0.4.8"
+    "bower": "^1.8.8",
+    "grunt": "^1.0.4",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-data-uri": "~0.3.0",
+    "grunt-vulcanize": "^1.0.0",
+    "grunt-webfont": "^1.7.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -24,5 +25,8 @@
   "license": "Mozilla Public Licence version 2",
   "bugs": {
     "url": "https://github.com/jokesterfr/browser-component/issues"
+  },
+  "dependencies": {
+    "typeface-fira-sans": "0.0.75"
   }
 }
